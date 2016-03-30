@@ -1,15 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LazyEntityGraph.Core;
+﻿using LazyEntityGraph.Core;
 using Ploeh.AutoFixture.Kernel;
+using System;
+using System.Collections.Generic;
 
 namespace LazyEntityGraph.AutoFixture
 {
     public class EntitySpecimenBuilder : ISpecimenBuilder
     {
+        private readonly IReadOnlyCollection<Type> _entityTypes;
+        private readonly IReadOnlyCollection<IPropertyConstraint> _constraints;
+
+        public EntitySpecimenBuilder(IReadOnlyCollection<Type> entityTypes, IReadOnlyCollection<IPropertyConstraint> constraints)
+        {
+            if (entityTypes == null)
+                throw new ArgumentNullException(nameof(entityTypes));
+            if (constraints == null)
+                throw new ArgumentNullException(nameof(constraints));
+
+            _entityTypes = entityTypes;
+            _constraints = constraints;
+        }
+
         class InstanceCreator : IInstanceCreator
         {
             private readonly ISpecimenContext _context;
@@ -31,7 +42,7 @@ namespace LazyEntityGraph.AutoFixture
             if (t == null)
                 return context.Resolve(request);
 
-            var proxyCreator = new ProxyInstanceCreator(new InstanceCreator(context));
+            var proxyCreator = new ProxyInstanceCreator(_entityTypes, new InstanceCreator(context), _constraints);
             return proxyCreator.Create(t);
         }
     }

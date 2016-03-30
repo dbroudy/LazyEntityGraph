@@ -6,4 +6,12 @@ namespace LazyEntityGraph.Core
     {
         object Create(Type type);
     }
+
+    public static class InstaceCreatorExtensions
+    {
+        public static T Create<T>(this IInstanceCreator creator)
+        {
+            return (T)creator.Create(typeof(T));
+        }
+    }
 }

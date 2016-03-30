@@ -34,28 +34,24 @@
       <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constraints\ManyToManyConstraint.cs" />
-    <Compile Include="Constraints\OneToManyConstraint.cs" />
-    <Compile Include="Constraints\OneToOneConstraint.cs" />
-    <Compile Include="Constraints\PropertyMatchConstraint.cs" />
+    <Compile Include="CollectionProperty.cs" />
+    <Compile Include="Extensions\ReflectionExtensions.cs" />
+    <Compile Include="IProperty.cs" />
+    <Compile Include="IPropertyConstraint.cs" />
+    <Compile Include="LazyEntityCollection.cs" />
+    <Compile Include="OneToManyPropertyConstraint.cs" />
+    <Compile Include="OneToOnePropertyConstraint.cs" />
+    <Compile Include="Property.cs" />
+    <Compile Include="PropertyGenerator.cs" />
     <Compile Include="ProxyInstanceCreator.cs" />
     <Compile Include="IInstanceCreator.cs" />
-    <Compile Include="InterceptionPolicies\AndInterceptionPolicy.cs" />
-    <Compile Include="InterceptionPolicies\IInterceptionPolicy.cs" />
-    <Compile Include="InterceptionPolicies\InverseInterceptionPolicy.cs" />
-    <Compile Include="InterceptionPolicies\OrInterceptionPolicy.cs" />
-    <Compile Include="InterceptionPolicies\PropertyGetterInterceptionPolicy.cs" />
-    <Compile Include="InterceptionPolicies\PropertySetterInterceptionPolicy.cs" />
-    <Compile Include="Interceptors\CompositeInterceptor.cs" />
-    <Compile Include="Interceptors\FilteringInterceptor.cs" />
-    <Compile Include="Interceptors\NullInterceptor.cs" />
-    <Compile Include="Interceptors\ProceedingInterceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Constraints\IConstraint.cs" />
+    <Compile Include="VirtualPropertyInterceptor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

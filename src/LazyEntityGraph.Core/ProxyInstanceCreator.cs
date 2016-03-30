@@ -1,32 +1,48 @@
 ﻿using Castle.DynamicProxy;
-using LazyEntityGraph.Core.Interceptors;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace LazyEntityGraph.Core
 {
     public class ProxyInstanceCreator : IInstanceCreator
     {
-        private readonly IInstanceCreator _fallback;
+        private readonly IReadOnlyCollection<Type> _entityTypes;
+        private readonly IInstanceCreator _instanceCreator;
+        private readonly IReadOnlyCollection<IPropertyConstraint> _constraints;
         private readonly ProxyGenerator _proxyGenerator = new ProxyGenerator();
 
-        public ProxyInstanceCreator(IInstanceCreator fallback)
+        public ProxyInstanceCreator(IReadOnlyCollection<Type> entityTypes, IInstanceCreator instanceCreator, IReadOnlyCollection<IPropertyConstraint> constraints)
         {
-            if (fallback == null)
-                throw new ArgumentNullException(nameof(fallback));
+            if (instanceCreator == null)
+                throw new ArgumentNullException(nameof(instanceCreator));
+            if (constraints == null)
+                throw new ArgumentNullException(nameof(constraints));
 
-            _fallback = fallback;
+            _entityTypes = entityTypes;
+            _instanceCreator = instanceCreator;
+            _constraints = constraints;
         }
 
         public object Create(Type type)
         {
-            var interceptor = GetInterceptor();
-            var instance = _proxyGenerator.CreateClassProxy(type, interceptor);
-            return instance;
+            if (!_entityTypes.Contains(type))
+                return _instanceCreator.Create(type);
+
+            return GetType()
+                .GetMethod("CreateGeneric", BindingFlags.Instance | BindingFlags.NonPublic)
+                .MakeGenericMethod(type)
+                .Invoke(this, new object[] { });
         }
 
-        private IInterceptor GetInterceptor()
+        private T CreateGeneric<T>()
         {
-            return NullInterceptor.Instance;
+            var interceptor = new VirtualPropertyInterceptor<T>();
+            var entity = (T)_proxyGenerator.CreateClassProxy(typeof(T), new[] { typeof(IPropertyAccessor<T>) }, interceptor);
+            var propertyGenerator = new PropertyGenerator<T>(_entityTypes, _instanceCreator, _constraints);
+            interceptor.SetProperties(propertyGenerator.Get(entity));
+            return entity;
         }
     }
 }

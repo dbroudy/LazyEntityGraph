@@ -6,11 +6,11 @@ using System.Reflection;
 
 namespace LazyEntityGraph.AutoFixture
 {
-    public class EntityPropertyRequestSpecification : IRequestSpecification
+    public class EntityPropertyCollectionRequestSpecification : IRequestSpecification
     {
-        private readonly IEnumerable<Type> _entityTypes;
+        private readonly IReadOnlyCollection<Type> _entityTypes;
 
-        public EntityPropertyRequestSpecification(IReadOnlyCollection<Type> entityTypes)
+        public EntityPropertyCollectionRequestSpecification(IReadOnlyCollection<Type> entityTypes)
         {
             _entityTypes = entityTypes;
         }
