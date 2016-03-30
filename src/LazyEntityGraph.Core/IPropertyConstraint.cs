@@ -4,7 +4,7 @@ namespace LazyEntityGraph.Core
 {
     public interface IPropertyConstraint<in THost, in TProperty> : IPropertyConstraint
     {
-        void Bind(THost host, TProperty value);
+        void Rebind(THost host, TProperty previousValue, TProperty value);
     }
 
     public interface IPropertyConstraint

@@ -24,7 +24,7 @@ namespace LazyEntityGraph.Core
             _inverse = inverse;
         }
 
-        public void Bind(THost host, TProperty value)
+        public void Rebind(THost host, TProperty previousValue, TProperty value)
         {
             Property.Set(value, _inverse, host);
         }

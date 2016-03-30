@@ -27,7 +27,7 @@ namespace LazyEntityGraph.Core
 
         public PropertyInfo PropInfo { get; }
 
-        public void Bind(THost host, ICollection<TProperty> value)
+        public void Rebind(THost host, ICollection<TProperty> previousValue, ICollection<TProperty> value)
         {
             var collection = value as LazyEntityCollection<TProperty>;
             if (collection == null)
@@ -43,35 +43,5 @@ namespace LazyEntityGraph.Core
                 Property.Set(item, _inverse, host);
             }
         }
-    }
-
-    public class ManyToOnePropertyConstraint<THost, TProperty> : IPropertyConstraint<THost, TProperty>
-    {
-        private readonly PropertyInfo _inverse;
-
-        public ManyToOnePropertyConstraint(
-            Expression<Func<THost, TProperty>> propExpr,
-            Expression<Func<TProperty, ICollection<THost>>> inverseExpr)
-            : this(propExpr.GetProperty(), inverseExpr.GetProperty())
-        {
-        }
-
-        public ManyToOnePropertyConstraint(PropertyInfo propInfo, PropertyInfo inverse)
-        {
-            PropInfo = propInfo;
-            _inverse = inverse;
-        }
-
-        public void Bind(THost host, TProperty value)
-        {
-            // host = foo
-            // value = bar
-            // inverse = bar.Foos
-
-
-            throw new NotImplementedException();
-        }
-
-        public PropertyInfo PropInfo { get; }
     }
 }

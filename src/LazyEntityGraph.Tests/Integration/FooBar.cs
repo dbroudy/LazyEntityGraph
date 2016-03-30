@@ -4,6 +4,11 @@ namespace LazyEntityGraph.Tests.Integration
 {
     public class Foo
     {
+        public Foo()
+        {
+            Bars = new HashSet<Bar>();
+        }
+
         public int Id { get; set; }
         public int BarId { get; set; }
         public virtual Bar Bar { get; set; }
@@ -12,6 +17,11 @@ namespace LazyEntityGraph.Tests.Integration
 
     public class Bar
     {
+        public Bar()
+        {
+            Foos = new HashSet<Foo>();
+        }
+
         public int Id { get; set; }
         public virtual Foo Foo { get; set; }
         public virtual ICollection<Foo> Foos { get; set; }

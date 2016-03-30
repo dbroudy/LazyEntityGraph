@@ -28,6 +28,12 @@ namespace LazyEntityGraph.Core
                 return;
             }
 
+            if (_properties == null)
+            {
+                invocation.Proceed();
+                return;
+            }
+
             var propInfo = invocation.Method.GetParentProperty();
             if (propInfo == null)
             {

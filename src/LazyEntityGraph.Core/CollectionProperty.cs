@@ -11,6 +11,7 @@ namespace LazyEntityGraph.Core
         private readonly T _host;
         private readonly IInstanceCreator _instanceCreator;
         private LazyEntityCollection<TProperty> _collection;
+        private HashSet<TProperty> _addOnCreation = new HashSet<TProperty>();
 
         public CollectionProperty(T host, PropertyInfo propInfo, IInstanceCreator instanceCreator,
             IEnumerable<IPropertyConstraint> constraints)
@@ -35,15 +36,44 @@ namespace LazyEntityGraph.Core
                 if (_collection == null)
                 {
                     _collection = new LazyEntityCollection<TProperty>(value);
+                    foreach (var item in _addOnCreation)
+                        _collection.Add(item);
                     foreach (var c in _constraints)
-                        c.Bind(_host, _collection);
+                        c.Rebind(_host, null, _collection);
                 }
                 else
                 {
-                    _collection.Clear();
-                    foreach (var x in value)
-                        _collection.Add(x);
+                    var add = value.Except(_collection).ToList();
+                    var remove = _collection.Except(value).ToList();
+                    foreach (var item in add)
+                        _collection.Add(item);
+                    foreach (var item in remove)
+                        _collection.Remove(item);
                 }
+            }
+        }
+
+        public void Insert(TProperty item)
+        {
+            if (_collection != null && !_collection.Contains(item))
+            {
+                _collection.Add(item);
+            }
+            else
+            {
+                _addOnCreation.Add(item);
+            }
+        }
+
+        public void Remove(TProperty item)
+        {
+            if (_collection != null)
+            {
+                _collection.Remove(item);
+            }
+            else
+            {
+                _addOnCreation.Remove(item);
             }
         }
 
@@ -60,15 +90,10 @@ namespace LazyEntityGraph.Core
         public bool TryGet(out ICollection<TProperty> value)
         {
             value = _collection;
-            return IsSet;
+            return _collection != null;
         }
 
         public PropertyInfo PropInfo { get; }
-
-        public bool IsSet
-        {
-            get { return _collection != null; }
-        }
 
         void IProperty<T>.Set(object value)
         {

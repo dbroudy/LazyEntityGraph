@@ -9,7 +9,7 @@ namespace LazyEntityGraph.Core
         public static void Set<T, TValue>(T obj, PropertyInfo pi, TValue value)
             where TValue : class
         {
-            var propertyAccessor = value as IPropertyAccessor<T>;
+            var propertyAccessor = obj as IPropertyAccessor<T>;
             if (propertyAccessor == null)
             {
                 // property object is not proxy but we can still set the value
@@ -18,6 +18,9 @@ namespace LazyEntityGraph.Core
             }
 
             var property = propertyAccessor.Get<TValue>(pi);
+            if (property == null)
+                return;
+
             TValue existing;
             if (property.TryGet(out existing) && existing == value)
                 return;
@@ -46,15 +49,15 @@ namespace LazyEntityGraph.Core
         }
 
         public PropertyInfo PropInfo { get; }
-        public bool IsSet => !_generate;
 
         public void Set(TProperty value)
         {
+            var previousValue = _value;
             _generate = false;
             _value = value;
 
             foreach (var c in _constraints)
-                c.Bind(_host, _value);
+                c.Rebind(_host, previousValue, _value);
         }
 
         public TProperty Get()
@@ -70,7 +73,7 @@ namespace LazyEntityGraph.Core
         public bool TryGet(out TProperty value)
         {
             value = _value;
-            return IsSet;
+            return !_generate;
         }
 
         void IProperty<THost>.Set(object value)

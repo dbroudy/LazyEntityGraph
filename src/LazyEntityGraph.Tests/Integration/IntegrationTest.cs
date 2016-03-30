@@ -194,7 +194,7 @@ namespace LazyEntityGraph.Tests.Integration
         }
 
         [Fact]
-        public void ManyToOneConstraint()
+        public void ManyToOneConstraintAddsItemToGeneratedCollection()
         {
             // arrange
             var fixture = GetFixture(new ManyToOnePropertyConstraint<Foo, Bar>(f => f.Bar, b => b.Foos));
@@ -202,6 +202,21 @@ namespace LazyEntityGraph.Tests.Integration
 
             // act
             var bar = foo.Bar;
+
+            // assert
+            bar.Foos.Should().Contain(foo);
+        }
+
+        [Fact]
+        public void ManyToOneConstraintAddsItemToPOCOCollection()
+        {
+            // arrange 
+            var fixture = GetFixture(new ManyToOnePropertyConstraint<Foo, Bar>(f => f.Bar, b => b.Foos));
+            var foo = fixture.Create<Foo>();
+            var bar = new Bar();
+
+            // act
+            foo.Bar = bar;
 
             // assert
             bar.Foos.Should().Contain(foo);

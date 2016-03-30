@@ -5,7 +5,6 @@ namespace LazyEntityGraph.Core
     public interface IProperty<T>
     {
         PropertyInfo PropInfo { get; }
-        bool IsSet { get; }
         void Set(object value);
         object Get();
     }
