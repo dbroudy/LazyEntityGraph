@@ -31,5 +31,30 @@ namespace LazyEntityGraph.Core.Constraints
         }
 
         public PropertyInfo PropInfo { get; }
+
+        protected bool Equals(ManyToOnePropertyConstraint<THost, TProperty> other)
+        {
+            return Equals(_inverse, other._inverse) && Equals(PropInfo, other.PropInfo);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != GetType())
+                return false;
+            return Equals((ManyToOnePropertyConstraint<THost, TProperty>)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((_inverse != null ? _inverse.GetHashCode() : 0) * 397) ^
+                       (PropInfo != null ? PropInfo.GetHashCode() : 0);
+            }
+        }
     }
 }

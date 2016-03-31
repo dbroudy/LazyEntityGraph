@@ -10,11 +10,11 @@ namespace LazyEntityGraph.Core
     {
         private readonly IReadOnlyCollection<Type> _entityTypes;
         private readonly IInstanceCreator _instanceCreator;
-        private readonly IEnumerable<IPropertyConstraint> _constraints;
+        private readonly IReadOnlyCollection<IPropertyConstraint> _constraints;
 
         private static bool IsCollection(Type t) => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(ICollection<>);
 
-        public PropertyGenerator(IReadOnlyCollection<Type> entityTypes, IInstanceCreator instanceCreator, IEnumerable<IPropertyConstraint> constraints)
+        public PropertyGenerator(IReadOnlyCollection<Type> entityTypes, IInstanceCreator instanceCreator, IReadOnlyCollection<IPropertyConstraint> constraints)
         {
             _entityTypes = entityTypes;
             _instanceCreator = instanceCreator;

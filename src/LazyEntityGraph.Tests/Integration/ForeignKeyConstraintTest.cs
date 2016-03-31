@@ -34,5 +34,16 @@ namespace LazyEntityGraph.Tests.Integration
             // assert
             foo.BarId.Should().Be(bar.Id);
         }
+
+        [Fact]
+        public void ConstraintsAreEqualWhenPropertiesAreEqual()
+        {
+            // arrange
+            var first = new ForeignKeyConstraint<Foo, Bar, int>(f => f.Bar, f => f.BarId, b => b.Id);
+            var second = new ForeignKeyConstraint<Foo, Bar, int>(x => x.Bar, x => x.BarId, x => x.Id);
+
+            // act and assert
+            first.Should().Be(second);
+        }
     }
 }

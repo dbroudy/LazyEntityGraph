@@ -1,8 +1,8 @@
 using FluentAssertions;
 using LazyEntityGraph.Core;
+using LazyEntityGraph.Core.Constraints;
 using Ploeh.AutoFixture;
 using System.Collections.Generic;
-using LazyEntityGraph.Core.Constraints;
 using Xunit;
 
 namespace LazyEntityGraph.Tests.Integration
@@ -67,6 +67,17 @@ namespace LazyEntityGraph.Tests.Integration
 
             // assert
             bar.Foo.Should().BeSameAs(foo);
+        }
+
+        [Fact]
+        public void ConstraintsAreEqualWhenPropertiesAreEqual()
+        {
+            // arrange
+            var first = new OneToManyPropertyConstraint<Foo, Bar>(f => f.Bars, b => b.Foo);
+            var second = new OneToManyPropertyConstraint<Foo, Bar>(x => x.Bars, x => x.Foo);
+
+            // act and assert
+            first.Should().Be(second);
         }
     }
 }

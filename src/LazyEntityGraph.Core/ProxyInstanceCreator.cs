@@ -23,7 +23,7 @@ namespace LazyEntityGraph.Core
 
             _entityTypes = entityTypes;
             _instanceCreator = instanceCreator;
-            _constraints = constraints;
+            _constraints = constraints.Distinct().ToList().AsReadOnly();
         }
 
         public object Create(Type type)

@@ -22,5 +22,16 @@ namespace LazyEntityGraph.Tests.Integration
             foreach (var bar in bars)
                 bar.Foos.Should().Contain(foo);
         }
+
+        [Fact]
+        public void ConstraintsAreEqualWhenPropertiesAreEqual()
+        {
+            // arrange
+            var first = new ManyToManyPropertyConstraint<Foo, Bar>(f => f.Bars, b => b.Foos);
+            var second = new ManyToManyPropertyConstraint<Foo, Bar>(x => x.Bars, x => x.Foos);
+
+            // act and assert
+            first.Should().Be(second);
+        }
     }
 }

@@ -48,7 +48,19 @@ namespace LazyEntityGraph.Tests.Integration
             // act
             foo.Bar = bar;
 
+            // assert
             bar.Foo.Should().BeSameAs(foo);
+        }
+
+        [Fact]
+        public void ConstraintsAreEqualWhenPropertiesAreEqual()
+        {
+            // arrange
+            var first = new OneToOnePropertyConstraint<Foo, Bar>(f => f.Bar, b => b.Foo);
+            var second = new OneToOnePropertyConstraint<Foo, Bar>(x => x.Bar, x => x.Foo);
+
+            // act and assert
+            first.Should().Be(second);
         }
     }
 }
