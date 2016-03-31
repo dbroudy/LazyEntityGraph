@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Integration\FooBar.cs" />
+    <Compile Include="Integration\ForeignKeyConstraintTest.cs" />
     <Compile Include="Integration\IntegrationTest.cs" />
     <Compile Include="Integration\ManyToManyConstraintTest.cs" />
     <Compile Include="Integration\ManyToOneConstraintTest.cs" />

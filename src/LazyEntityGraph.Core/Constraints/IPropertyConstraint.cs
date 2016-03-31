@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace LazyEntityGraph.Core
+namespace LazyEntityGraph.Core.Constraints
 {
     public interface IPropertyConstraint<in THost, in TProperty> : IPropertyConstraint
     {

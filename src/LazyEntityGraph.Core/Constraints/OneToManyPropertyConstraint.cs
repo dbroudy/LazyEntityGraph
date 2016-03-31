@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace LazyEntityGraph.Core
+namespace LazyEntityGraph.Core.Constraints
 {
     public class OneToManyPropertyConstraint<THost, TProperty> : IPropertyConstraint<THost, ICollection<TProperty>>
         where THost : class
@@ -33,12 +33,9 @@ namespace LazyEntityGraph.Core
             if (collection == null)
                 return;
 
-            collection.ItemAdded += x =>
-            {
-                Property.Set(x, _inverse, host);
-            };
+            collection.ItemAdded += x => Property.Set(x, _inverse, host);
 
-            foreach (var item in collection)
+            foreach (var item in value)
             {
                 Property.Set(item, _inverse, host);
             }

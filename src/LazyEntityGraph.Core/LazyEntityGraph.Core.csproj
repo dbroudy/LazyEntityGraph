@@ -40,14 +40,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollectionProperty.cs" />
+    <Compile Include="Constraints\ForeignKeyConstraint.cs" />
     <Compile Include="Extensions\ReflectionExtensions.cs" />
     <Compile Include="IProperty.cs" />
-    <Compile Include="IPropertyConstraint.cs" />
+    <Compile Include="Constraints\IPropertyConstraint.cs" />
     <Compile Include="LazyEntityCollection.cs" />
-    <Compile Include="ManyToManyPropertyConstraint.cs" />
-    <Compile Include="ManyToOnePropertyConstraint.cs" />
-    <Compile Include="OneToManyPropertyConstraint.cs" />
-    <Compile Include="OneToOnePropertyConstraint.cs" />
+    <Compile Include="Constraints\ManyToManyPropertyConstraint.cs" />
+    <Compile Include="Constraints\ManyToOnePropertyConstraint.cs" />
+    <Compile Include="Constraints\OneToManyPropertyConstraint.cs" />
+    <Compile Include="Constraints\OneToOnePropertyConstraint.cs" />
     <Compile Include="Property.cs" />
     <Compile Include="PropertyGenerator.cs" />
     <Compile Include="ProxyInstanceCreator.cs" />

@@ -3,6 +3,7 @@ using LazyEntityGraph.AutoFixture;
 using LazyEntityGraph.Core;
 using Ploeh.AutoFixture;
 using System.Collections.Generic;
+using LazyEntityGraph.Core.Constraints;
 using Xunit;
 
 namespace LazyEntityGraph.Tests.Integration

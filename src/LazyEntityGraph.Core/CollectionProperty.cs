@@ -1,3 +1,4 @@
+using LazyEntityGraph.Core.Constraints;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -18,12 +19,20 @@ namespace LazyEntityGraph.Core
                 return;
             }
 
-            var collectionProperty = (CollectionProperty<T, TValue>)propertyAccessor.Get<ICollection<TValue>>(pi);
+            var collectionProperty = (ICollectionProperty<T, TValue>)propertyAccessor.Get<ICollection<TValue>>(pi);
             collectionProperty.Insert(value);
         }
     }
 
-    public class CollectionProperty<T, TProperty> : IProperty<T, ICollection<TProperty>>
+    public interface ICollectionProperty<T, TProperty> : IProperty<T, ICollection<TProperty>>
+    {
+        void Insert(TProperty item);
+        void Remove(TProperty item);
+
+        event CollectionEventHandler<TProperty> ItemAdded;
+    }
+
+    public class CollectionProperty<T, TProperty> : ICollectionProperty<T, TProperty>
         where TProperty : class
     {
         private readonly HashSet<TProperty> _addOnCreation = new HashSet<TProperty>();
@@ -55,6 +64,7 @@ namespace LazyEntityGraph.Core
                 if (_collection == null)
                 {
                     _collection = new LazyEntityCollection<TProperty>(value);
+                    _collection.ItemAdded += ItemAdded;
                     foreach (var item in _addOnCreation)
                         _collection.Add(item);
                     foreach (var c in _constraints)
@@ -123,5 +133,7 @@ namespace LazyEntityGraph.Core
                 _addOnCreation.Remove(item);
             }
         }
+
+        public event CollectionEventHandler<TProperty> ItemAdded;
     }
 }

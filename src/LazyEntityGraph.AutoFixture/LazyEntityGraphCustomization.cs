@@ -3,6 +3,7 @@ using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Kernel;
 using System;
 using System.Collections.Generic;
+using LazyEntityGraph.Core.Constraints;
 
 namespace LazyEntityGraph.AutoFixture
 {

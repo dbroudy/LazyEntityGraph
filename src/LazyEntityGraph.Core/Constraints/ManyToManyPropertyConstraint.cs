@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace LazyEntityGraph.Core
+namespace LazyEntityGraph.Core.Constraints
 {
     public class ManyToManyPropertyConstraint<THost, TProperty> : IPropertyConstraint<THost, ICollection<TProperty>>
         where THost : class

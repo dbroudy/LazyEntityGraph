@@ -48,11 +48,11 @@ namespace LazyEntityGraph.Core
                 Raise(ItemRemoved, item);
         }
 
-        public delegate void CollectionEventHandler(T item);
+        public event CollectionEventHandler<T> ItemAdded;
+        public event CollectionEventHandler<T> ItemRemoved;
 
-        public event CollectionEventHandler ItemAdded;
-        public event CollectionEventHandler ItemRemoved;
-
-        private static void Raise(CollectionEventHandler handler, T item) => handler?.Invoke(item);
+        private static void Raise(CollectionEventHandler<T> handler, T item) => handler?.Invoke(item);
     }
+
+    public delegate void CollectionEventHandler<in T>(T item);
 }
