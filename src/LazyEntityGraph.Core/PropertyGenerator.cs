@@ -24,6 +24,7 @@ namespace LazyEntityGraph.Core
         {
             return typeof(T)
                 .GetProperties()
+                .Where(pi => pi.GetGetMethod().IsVirtual)
                 .Where(pi => _entityTypes.Contains(pi.PropertyType) || IsCollection(pi.PropertyType))
                 .Select(pi => GetProperty(pi, host));
         }

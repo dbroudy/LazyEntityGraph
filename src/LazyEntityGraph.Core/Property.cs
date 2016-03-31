@@ -7,6 +7,7 @@ namespace LazyEntityGraph.Core
     public static class Property
     {
         public static void Set<T, TValue>(T obj, PropertyInfo pi, TValue value)
+            where T : class
             where TValue : class
         {
             var propertyAccessor = obj as IPropertyAccessor<T>;

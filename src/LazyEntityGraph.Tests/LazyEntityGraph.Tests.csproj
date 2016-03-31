@@ -66,6 +66,10 @@
   <ItemGroup>
     <Compile Include="Integration\FooBar.cs" />
     <Compile Include="Integration\IntegrationTest.cs" />
+    <Compile Include="Integration\ManyToManyConstraintTest.cs" />
+    <Compile Include="Integration\ManyToOneConstraintTest.cs" />
+    <Compile Include="Integration\OneToManyConstraintTest.cs" />
+    <Compile Include="Integration\OneToOneConstraintTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

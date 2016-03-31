@@ -7,7 +7,7 @@ namespace LazyEntityGraph.Core
         object Create(Type type);
     }
 
-    public static class InstaceCreatorExtensions
+    public static class InstanceCreatorExtensions
     {
         public static T Create<T>(this IInstanceCreator creator)
         {

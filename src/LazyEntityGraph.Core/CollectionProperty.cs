@@ -4,14 +4,33 @@ using System.Reflection;
 
 namespace LazyEntityGraph.Core
 {
+    public static class CollectionProperty
+    {
+        public static void Add<T, TValue>(T obj, PropertyInfo pi, TValue value)
+            where T : class
+            where TValue : class
+        {
+            var propertyAccessor = obj as IPropertyAccessor<T>;
+            if (propertyAccessor == null)
+            {
+                var collection = pi.GetValue(obj) as ICollection<TValue>;
+                collection?.Add(value);
+                return;
+            }
+
+            var collectionProperty = (CollectionProperty<T, TValue>)propertyAccessor.Get<ICollection<TValue>>(pi);
+            collectionProperty.Insert(value);
+        }
+    }
+
     public class CollectionProperty<T, TProperty> : IProperty<T, ICollection<TProperty>>
         where TProperty : class
     {
+        private readonly HashSet<TProperty> _addOnCreation = new HashSet<TProperty>();
         private readonly IEnumerable<IPropertyConstraint<T, ICollection<TProperty>>> _constraints;
         private readonly T _host;
         private readonly IInstanceCreator _instanceCreator;
         private LazyEntityCollection<TProperty> _collection;
-        private HashSet<TProperty> _addOnCreation = new HashSet<TProperty>();
 
         public CollectionProperty(T host, PropertyInfo propInfo, IInstanceCreator instanceCreator,
             IEnumerable<IPropertyConstraint> constraints)
@@ -53,30 +72,6 @@ namespace LazyEntityGraph.Core
             }
         }
 
-        public void Insert(TProperty item)
-        {
-            if (_collection != null && !_collection.Contains(item))
-            {
-                _collection.Add(item);
-            }
-            else
-            {
-                _addOnCreation.Add(item);
-            }
-        }
-
-        public void Remove(TProperty item)
-        {
-            if (_collection != null)
-            {
-                _collection.Remove(item);
-            }
-            else
-            {
-                _addOnCreation.Remove(item);
-            }
-        }
-
         public ICollection<TProperty> Get()
         {
             if (_collection != null)
@@ -103,6 +98,30 @@ namespace LazyEntityGraph.Core
         object IProperty<T>.Get()
         {
             return Get();
+        }
+
+        public void Insert(TProperty item)
+        {
+            if (_collection != null && !_collection.Contains(item))
+            {
+                _collection.Add(item);
+            }
+            else
+            {
+                _addOnCreation.Add(item);
+            }
+        }
+
+        public void Remove(TProperty item)
+        {
+            if (_collection != null)
+            {
+                _collection.Remove(item);
+            }
+            else
+            {
+                _addOnCreation.Remove(item);
+            }
         }
     }
 }
