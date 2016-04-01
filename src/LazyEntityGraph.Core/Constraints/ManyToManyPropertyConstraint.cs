@@ -35,6 +35,7 @@ namespace LazyEntityGraph.Core.Constraints
 
         public PropertyInfo PropInfo { get; }
 
+        #region Equality
         protected bool Equals(ManyToManyPropertyConstraint<THost, TProperty> other)
         {
             return Equals(_inverse, other._inverse) && Equals(PropInfo, other.PropInfo);
@@ -59,5 +60,6 @@ namespace LazyEntityGraph.Core.Constraints
                        (PropInfo != null ? PropInfo.GetHashCode() : 0);
             }
         }
+        #endregion
     }
 }

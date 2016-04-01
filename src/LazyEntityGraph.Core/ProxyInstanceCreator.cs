@@ -14,7 +14,7 @@ namespace LazyEntityGraph.Core
         private readonly IReadOnlyCollection<IPropertyConstraint> _constraints;
         private readonly ProxyGenerator _proxyGenerator = new ProxyGenerator();
 
-        public ProxyInstanceCreator(IReadOnlyCollection<Type> entityTypes, IInstanceCreator instanceCreator, IReadOnlyCollection<IPropertyConstraint> constraints)
+        public ProxyInstanceCreator(IInstanceCreator instanceCreator, IReadOnlyCollection<Type> entityTypes, IReadOnlyCollection<IPropertyConstraint> constraints)
         {
             if (instanceCreator == null)
                 throw new ArgumentNullException(nameof(instanceCreator));
@@ -41,7 +41,7 @@ namespace LazyEntityGraph.Core
         {
             var interceptor = new VirtualPropertyInterceptor<T>();
             var entity = (T)_proxyGenerator.CreateClassProxy(typeof(T), new[] { typeof(IPropertyAccessor<T>) }, interceptor);
-            var propertyGenerator = new PropertyGenerator<T>(_entityTypes, _instanceCreator, _constraints);
+            var propertyGenerator = new PropertyFactory<T>(_instanceCreator, _entityTypes, _constraints);
             interceptor.SetProperties(propertyGenerator.Get(entity));
             return entity;
         }

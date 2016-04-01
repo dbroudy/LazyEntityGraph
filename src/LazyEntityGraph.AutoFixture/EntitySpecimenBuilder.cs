@@ -1,8 +1,8 @@
 ﻿using LazyEntityGraph.Core;
+using LazyEntityGraph.Core.Constraints;
 using Ploeh.AutoFixture.Kernel;
 using System;
 using System.Collections.Generic;
-using LazyEntityGraph.Core.Constraints;
 
 namespace LazyEntityGraph.AutoFixture
 {
@@ -22,11 +22,11 @@ namespace LazyEntityGraph.AutoFixture
             _constraints = constraints;
         }
 
-        class InstanceCreator : IInstanceCreator
+        class SpecimenContextInstanceCreatorAdapter : IInstanceCreator
         {
             private readonly ISpecimenContext _context;
 
-            public InstanceCreator(ISpecimenContext context)
+            public SpecimenContextInstanceCreatorAdapter(ISpecimenContext context)
             {
                 _context = context;
             }
@@ -43,7 +43,8 @@ namespace LazyEntityGraph.AutoFixture
             if (t == null)
                 return context.Resolve(request);
 
-            var proxyCreator = new ProxyInstanceCreator(_entityTypes, new InstanceCreator(context), _constraints);
+            var adapter = new SpecimenContextInstanceCreatorAdapter(context);
+            var proxyCreator = new ProxyInstanceCreator(adapter, _entityTypes, _constraints);
             return proxyCreator.Create(t);
         }
     }

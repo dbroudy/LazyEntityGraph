@@ -33,6 +33,7 @@ namespace LazyEntityGraph.Core.Constraints
 
         public PropertyInfo PropInfo { get; }
 
+        #region Equality
         protected bool Equals(ForeignKeyConstraint<T, TProp, TKey> other)
         {
             return Equals(_foreignKeyProp, other._foreignKeyProp) && Equals(_idProp, other._idProp) &&
@@ -60,5 +61,6 @@ namespace LazyEntityGraph.Core.Constraints
                 return hashCode;
             }
         }
+        #endregion
     }
 }

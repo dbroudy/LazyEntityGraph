@@ -6,18 +6,18 @@ using System.Reflection;
 
 namespace LazyEntityGraph.Core
 {
-    class PropertyGenerator<T>
+    class PropertyFactory<T>
     {
-        private readonly IReadOnlyCollection<Type> _entityTypes;
         private readonly IInstanceCreator _instanceCreator;
+        private readonly IReadOnlyCollection<Type> _entityTypes;
         private readonly IReadOnlyCollection<IPropertyConstraint> _constraints;
 
         private static bool IsCollection(Type t) => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(ICollection<>);
 
-        public PropertyGenerator(IReadOnlyCollection<Type> entityTypes, IInstanceCreator instanceCreator, IReadOnlyCollection<IPropertyConstraint> constraints)
+        public PropertyFactory(IInstanceCreator instanceCreator, IReadOnlyCollection<Type> entityTypes, IReadOnlyCollection<IPropertyConstraint> constraints)
         {
-            _entityTypes = entityTypes;
             _instanceCreator = instanceCreator;
+            _entityTypes = entityTypes;
             _constraints = constraints;
         }
 
