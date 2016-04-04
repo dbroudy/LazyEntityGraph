@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using LazyEntityGraph.Core;
 using LazyEntityGraph.Core.Constraints;
 using LazyEntityGraph.EntityFramework;
 using Xunit;
@@ -7,16 +8,22 @@ namespace LazyEntityGraph.Tests.EntityFramework
 {
     public class EntityFrameworkTests
     {
+        private static ModelMetadata GetMetadata()
+        {
+            return ModelMetadataGenerator.LoadFromCodeFirstContext(str => new BlogContext(str), true);
+        }
+
         [Fact]
         public void EntityTypesShouldBeDetected()
         {
             // arrange & act
-            var metadata = ModelMetadataGenerator.LoadFromCodeFirstContext(str => new BlogContext(str));
+            var metadata = GetMetadata();
 
             // assert
             metadata.EntityTypes.Should()
-                .BeEquivalentTo(typeof(Post), typeof(User), typeof(Tag), typeof(ContactDetails));
+                .BeEquivalentTo(typeof(Post), typeof(User), typeof(Tag), typeof(ContactDetails), typeof(Category));
         }
+
 
         [Fact]
         public void ManyToManyConstraintsShouldBeGenerated()
@@ -29,7 +36,7 @@ namespace LazyEntityGraph.Tests.EntityFramework
             };
 
             // act
-            var metadata = ModelMetadataGenerator.LoadFromCodeFirstContext(str => new BlogContext(str));
+            var metadata = GetMetadata();
 
             // assert
             metadata.Constraints.Should().Contain(expected);
@@ -46,7 +53,7 @@ namespace LazyEntityGraph.Tests.EntityFramework
             };
 
             // act
-            var metadata = ModelMetadataGenerator.LoadFromCodeFirstContext(str => new BlogContext(str));
+            var metadata = GetMetadata();
 
             // assert
             metadata.Constraints.Should().Contain(expected);
@@ -63,10 +70,30 @@ namespace LazyEntityGraph.Tests.EntityFramework
             };
 
             // act
-            var metadata = ModelMetadataGenerator.LoadFromCodeFirstContext(str => new BlogContext(str));
+            var metadata = GetMetadata();
 
             // assert
             metadata.Constraints.Should().Contain(expected);
+        }
+
+        [Fact]
+        public void ForeignKeyConstraintsShouldBeGenerated()
+        {
+            // arrange
+            var expected = new IPropertyConstraint[]
+            {
+                new ForeignKeyConstraint<Post, User, int>(p => p.Poster, p => p.PosterId, u => u.Id),
+                new ForeignKeyConstraint<ContactDetails, User, int>(c => c.User, c => c.Id, u => u.Id)
+            };
+
+            // act
+            var metadata = GetMetadata();
+
+            // assert
+            metadata.Constraints.Should()
+                .Contain(x => x.Equals(expected[0]))
+                .And
+                .Contain(x => x.Equals(expected[1]));
         }
     }
 }

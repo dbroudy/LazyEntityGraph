@@ -36,6 +36,8 @@ namespace LazyEntityGraph.Tests.EntityFramework
         public virtual User Poster { get; set; }
 
         public virtual ICollection<Tag> Tags { get; set; }
+
+        public virtual ICollection<Category> Categories { get; set; }
     }
 
     public class Tag : Entity
@@ -43,6 +45,11 @@ namespace LazyEntityGraph.Tests.EntityFramework
         public string TagName { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }
+    }
+
+    public class Category : Entity
+    {
+        public string CategoryName { get; set; }
     }
 
     public class BlogContext : DbContext

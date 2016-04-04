@@ -36,8 +36,9 @@ namespace LazyEntityGraph.Core.Constraints
         #region Equality
         protected bool Equals(ForeignKeyConstraint<T, TProp, TKey> other)
         {
-            return Equals(_foreignKeyProp, other._foreignKeyProp) && Equals(_idProp, other._idProp) &&
-                   Equals(PropInfo, other.PropInfo);
+            return _foreignKeyProp.PropertyEquals(other._foreignKeyProp)
+                   && _idProp.PropertyEquals(other._idProp)
+                   && PropInfo.PropertyEquals(other.PropInfo);
         }
 
         public override bool Equals(object obj)

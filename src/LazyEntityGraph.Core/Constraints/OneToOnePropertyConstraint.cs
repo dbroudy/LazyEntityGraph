@@ -34,7 +34,7 @@ namespace LazyEntityGraph.Core.Constraints
         #region Equality
         protected bool Equals(OneToOnePropertyConstraint<THost, TProperty> other)
         {
-            return Equals(_inverse, other._inverse) && Equals(PropInfo, other.PropInfo);
+            return _inverse.PropertyEquals(other._inverse) && PropInfo.PropertyEquals(other.PropInfo);
         }
 
         public override bool Equals(object obj)

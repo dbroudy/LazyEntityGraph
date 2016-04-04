@@ -56,6 +56,10 @@ namespace LazyEntityGraph.Core.Extensions
                 return false;
             if (x.Name != y.Name)
                 return false;
+            if (x.PropertyType != y.PropertyType)
+                return false;
+            if (x.DeclaringType != y.DeclaringType)
+                return false;
             return true;
         }
     }

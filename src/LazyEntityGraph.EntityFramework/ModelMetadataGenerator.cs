@@ -17,10 +17,10 @@ namespace LazyEntityGraph.EntityFramework
             return GenerateModelMetadata(metadataWorkspace);
         }
 
-        public static ModelMetadata LoadFromCodeFirstContext<TContext>(Func<string, TContext> createFromConnectionString)
+        public static ModelMetadata LoadFromCodeFirstContext<TContext>(Func<string, TContext> createFromConnectionString, bool hardCache = false)
             where TContext : DbContext
         {
-            var metadataWorkspace = MetadataWorkspaceFactory<TContext>.GetMetadataWorkspaceFromCodeFirst(createFromConnectionString);
+            var metadataWorkspace = MetadataWorkspaceFactory<TContext>.GetMetadataWorkspaceFromCodeFirst(createFromConnectionString, hardCache);
             return GenerateModelMetadata(metadataWorkspace);
         }
 
@@ -72,6 +72,35 @@ namespace LazyEntityGraph.EntityFramework
                 yield return CreateGenericConstraint(typeof(OneToOnePropertyConstraint<,>), fromProp, toProp);
                 yield return CreateGenericConstraint(typeof(OneToOnePropertyConstraint<,>), toProp, fromProp);
             }
+
+            var fromForeignKey = GetForeignKeyConstraint(from);
+            if (fromForeignKey != null)
+                yield return fromForeignKey;
+
+            var toForeignKey = GetForeignKeyConstraint(to);
+            if (toForeignKey != null)
+                yield return toForeignKey;
+        }
+
+        private static IPropertyConstraint GetForeignKeyConstraint(NavigationProperty navProp)
+        {
+            if (navProp.GetDependentProperties().Count() != 1
+                || navProp.ToEndMember.GetEntityType().KeyProperties.Count != 1)
+                return null;
+
+            var dependencyProp = navProp.GetDependentProperties().Single();
+            var keyProp = navProp.ToEndMember.GetEntityType().KeyProperties.Single();
+            var fromType = navProp.FromEndMember.GetEntityType().GetClrType();
+            var toType = navProp.ToEndMember.GetEntityType().GetClrType();
+
+            var navPropInfo = navProp.GetProperty();
+            var foreignKeyPropInfo = fromType.GetProperty(dependencyProp);
+            var keyPropInfo = toType.GetProperty(keyProp);
+            var keyType = keyPropInfo.PropertyType;
+
+            var type = typeof(ForeignKeyConstraint<,,>)
+                .MakeGenericType(fromType, toType, keyType);
+            return (IPropertyConstraint)Activator.CreateInstance(type, navPropInfo, foreignKeyPropInfo, keyPropInfo);
         }
     }
 }

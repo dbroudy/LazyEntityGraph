@@ -23,5 +23,11 @@ namespace LazyEntityGraph.EntityFramework
                 .GetProperty(navProp.Name,
                     BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty | BindingFlags.SetProperty);
         }
+
+        public static PropertyInfo GetProperty(this Type t, EdmProperty property)
+        {
+            return t.GetProperty(property.Name,
+                BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty | BindingFlags.SetProperty);
+        }
     }
 }
