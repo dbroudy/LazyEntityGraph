@@ -2,25 +2,19 @@
 using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.Kernel;
 using System;
-using System.Collections.Generic;
-using LazyEntityGraph.Core.Constraints;
 
 namespace LazyEntityGraph.AutoFixture
 {
     public class LazyEntityGraphCustomization : ICustomization
     {
-        private readonly IReadOnlyCollection<Type> _entityTypes;
-        private readonly IReadOnlyCollection<IPropertyConstraint> _constraints;
+        private readonly ModelMetadata _modelMetadata;
 
-        public LazyEntityGraphCustomization(IReadOnlyCollection<Type> entityTypes, IReadOnlyCollection<IPropertyConstraint> constraints)
+        public LazyEntityGraphCustomization(ModelMetadata modelMetadata)
         {
-            if (entityTypes == null)
-                throw new ArgumentNullException(nameof(entityTypes));
-            if (constraints == null)
-                throw new ArgumentNullException(nameof(constraints));
+            if (modelMetadata == null)
+                throw new ArgumentNullException(nameof(modelMetadata));
 
-            _entityTypes = entityTypes;
-            _constraints = constraints;
+            _modelMetadata = modelMetadata;
         }
 
         public void Customize(IFixture fixture)
@@ -28,13 +22,13 @@ namespace LazyEntityGraph.AutoFixture
             fixture.Customizations.Insert(0,
                 new FilteringSpecimenBuilder(
                     new Postprocessor(
-                        new EntitySpecimenBuilder(_entityTypes, _constraints),
+                        new EntitySpecimenBuilder(_modelMetadata),
                         new AutoPropertiesCommand(
                             new InverseRequestSpecification(
                                 new OrRequestSpecification(
-                                    new EntityPropertyCollectionRequestSpecification(_entityTypes),
+                                    new EntityPropertyCollectionRequestSpecification(_modelMetadata.EntityTypes),
                                     new InterceptorsFieldRequestSpecification())))),
-                    new MatchingTypeRequestSpecification(_entityTypes)));
+                    new MatchingTypeRequestSpecification(_modelMetadata.EntityTypes)));
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using LazyEntityGraph.AutoFixture;
 using LazyEntityGraph.Core;
+using LazyEntityGraph.Core.Constraints;
 using Ploeh.AutoFixture;
 using System.Collections.Generic;
-using LazyEntityGraph.Core.Constraints;
 using Xunit;
 
 namespace LazyEntityGraph.Tests.Integration
@@ -12,8 +12,11 @@ namespace LazyEntityGraph.Tests.Integration
     {
         public static Fixture GetFixture(params IPropertyConstraint[] constraints)
         {
-            var entityTypes = new[] { typeof(Foo), typeof(Bar) };
-            var customization = new LazyEntityGraphCustomization(entityTypes, constraints);
+            var customization = new LazyEntityGraphCustomization(
+                new ModelMetadata(
+                    new[] { typeof(Foo), typeof(Bar) },
+                    constraints));
+
             var fixture = new Fixture();
             fixture.Customize(customization);
             return fixture;

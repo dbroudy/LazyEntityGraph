@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyEntityGraph.AutoFixture
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyEntityGraph.Tests", "LazyEntityGraph.Tests\LazyEntityGraph.Tests.csproj", "{1DEB42E2-18A4-4F48-9443-F20535BCF80F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyEntityGraph.EntityFramework", "LazyEntityGraph.EntityFramework\LazyEntityGraph.EntityFramework.csproj", "{35DE7C5D-017F-4250-9179-B02D9621FC94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{1DEB42E2-18A4-4F48-9443-F20535BCF80F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DEB42E2-18A4-4F48-9443-F20535BCF80F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DEB42E2-18A4-4F48-9443-F20535BCF80F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35DE7C5D-017F-4250-9179-B02D9621FC94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35DE7C5D-017F-4250-9179-B02D9621FC94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35DE7C5D-017F-4250-9179-B02D9621FC94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35DE7C5D-017F-4250-9179-B02D9621FC94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
