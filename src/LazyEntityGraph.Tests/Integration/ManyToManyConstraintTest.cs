@@ -2,6 +2,7 @@ using FluentAssertions;
 using LazyEntityGraph.Core;
 using LazyEntityGraph.Core.Constraints;
 using Ploeh.AutoFixture;
+using System.Linq;
 using Xunit;
 
 namespace LazyEntityGraph.Tests.Integration
@@ -21,6 +22,22 @@ namespace LazyEntityGraph.Tests.Integration
             // assert
             foreach (var bar in bars)
                 bar.Foos.Should().Contain(foo);
+        }
+
+        [Fact]
+        public void RemovesItemFromCollection()
+        {
+            // arrange
+            var fixture = IntegrationTest.GetFixture(new ManyToManyPropertyConstraint<Foo, Bar>(f => f.Bars, b => b.Foos));
+            var foo = fixture.Create<Foo>();
+            var bar = foo.Bars.First();
+
+            // act
+            foo.Bars.Remove(bar);
+            var foos = bar.Foos;
+
+            // assert
+            foos.Should().NotContain(foo);
         }
 
         [Fact]

@@ -27,15 +27,13 @@ namespace LazyEntityGraph.Core.Constraints
 
         public PropertyInfo PropInfo { get; }
 
-        public void Rebind(THost host, ICollection<TProperty> previousValue, ICollection<TProperty> value)
+        public void Rebind(THost host, ICollection<TProperty> nullCollection, ICollection<TProperty> collection)
         {
-            var collection = value as LazyEntityCollection<TProperty>;
-            if (collection == null)
-                return;
+            var lazyCollection = collection as LazyEntityCollection<TProperty>;
+            if (lazyCollection != null)
+                lazyCollection.ItemAdded += x => Property.Set(x, _inverse, host);
 
-            collection.ItemAdded += x => Property.Set(x, _inverse, host);
-
-            foreach (var item in value)
+            foreach (var item in collection)
             {
                 Property.Set(item, _inverse, host);
             }

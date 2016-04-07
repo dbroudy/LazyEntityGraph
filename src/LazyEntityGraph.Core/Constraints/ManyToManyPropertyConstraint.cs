@@ -25,9 +25,16 @@ namespace LazyEntityGraph.Core.Constraints
             _inverse = inverse;
         }
 
-        public void Rebind(THost host, ICollection<TProperty> previousValue, ICollection<TProperty> value)
+        public void Rebind(THost host, ICollection<TProperty> nullCollection, ICollection<TProperty> collection)
         {
-            foreach (var x in value)
+            var lazyCollection = collection as LazyEntityCollection<TProperty>;
+            if (lazyCollection != null)
+            {
+                lazyCollection.ItemAdded += x => CollectionProperty.Add(x, _inverse, host);
+                lazyCollection.ItemRemoved += x => CollectionProperty.Remove(x, _inverse, host);
+            }
+
+            foreach (var x in collection)
             {
                 CollectionProperty.Add(x, _inverse, host);
             }

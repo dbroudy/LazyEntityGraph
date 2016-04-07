@@ -13,14 +13,14 @@ namespace LazyEntityGraph.EntityFramework
     {
         public static ModelMetadata LoadFromEdmxContext<TContext>(string contextName) where TContext : DbContext
         {
-            var metadataWorkspace = MetadataWorkspaceFactory<TContext>.GetMetadataWorkspaceFromEdmx(contextName);
+            var metadataWorkspace = EdmxMetadataWorkspaceFactory<TContext>.GetMetadataWorkspace(contextName);
             return GenerateModelMetadata(metadataWorkspace);
         }
 
         public static ModelMetadata LoadFromCodeFirstContext<TContext>(Func<string, TContext> createFromConnectionString, bool hardCache = false)
             where TContext : DbContext
         {
-            var metadataWorkspace = MetadataWorkspaceFactory<TContext>.GetMetadataWorkspaceFromCodeFirst(createFromConnectionString, hardCache);
+            var metadataWorkspace = CodeFirstMetadataWorkspaceFactory<TContext>.GetMetadataWorkspace(createFromConnectionString, hardCache);
             return GenerateModelMetadata(metadataWorkspace);
         }
 

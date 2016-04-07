@@ -38,6 +38,21 @@ namespace LazyEntityGraph.Tests.Integration
         }
 
         [Fact]
+        public void RemovesItemFromCollection()
+        {
+            // arrange
+            var fixture = IntegrationTest.GetFixture(new ManyToOnePropertyConstraint<Foo, Bar>(f => f.Bar, b => b.Foos));
+            var foo = fixture.Create<Foo>();
+            var bar = foo.Bar;
+
+            // act
+            foo.Bar = fixture.Create<Bar>();
+
+            // assert
+            bar.Foos.Should().NotContain(foo);
+        }
+
+        [Fact]
         public void ConstraintsAreEqualWhenPropertiesAreEqual()
         {
             // arrange
