@@ -1,5 +1,5 @@
 # LazyEntityGraph
-LazyEntityGraph is the successor to [AutoEntityFramework](/alexfoxgill/AutoFixture.AutoEntityFramework). This project aims to both improve upon the functionality of the original, and open the door to integration with other test object creators and ORMS.
+LazyEntityGraph is the successor to [AutoEntityFramework](/alexfoxgill/AutoFixture.AutoEntityFramework). This project aims to both improve upon the functionality of the original, and open the door to integration with other test object creators and ORMs.
 
 ## Objective
 When writing tests, we often need to create test objects without necessarily caring about the data used to populate them. There are many projects which accomplish this in .NET, among them [AutoFixture](/AutoFixture/AutoFixture), [ObjectHydrator](/PrintsCharming/ObjectHydrator), [NBuilder](/garethdown44/nbuilder/) and more.
@@ -24,4 +24,4 @@ However, if you are using a test object creation library like AutoFixture, you w
 
 When using the ORM to retrieve one of these objects, you typically don't want to retrieve the entire object graph...! For this reason, relationship properties are often marked `virtual`, to enable them to be lazy-loaded.
 
-So, we come to the purpose of this library: *to permit test object creation tools like AutoFixture to create entity graphs with circular references*.
+So, we come to the purpose of this library: **to permit test object creation tools like AutoFixture to create entity graphs with circular references**.
