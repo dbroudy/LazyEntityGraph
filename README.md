@@ -20,7 +20,7 @@ public class Product
 }
 ```
 
-However, if you are using a test object creation library like AutoFixture, you will run into a problem when trying to create an instance of the `Order` class above: the [circular reference](http://stackoverflow.com/questions/19840537) between `Product` and `Order`. 
+However, if you are using a test object creation library like AutoFixture, you will run into a problem when trying to create an instance of the `Order` class above: the circular reference between `Product` and `Order`. 
 
 When using the ORM to retrieve one of these objects, you typically don't want to retrieve the entire object graph...! For this reason, relationship properties are often marked `virtual`, to enable them to be lazy-loaded.
 
