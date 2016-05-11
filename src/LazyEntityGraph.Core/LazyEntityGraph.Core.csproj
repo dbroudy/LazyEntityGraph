@@ -50,6 +50,7 @@
     <Compile Include="Constraints\ManyToOnePropertyConstraint.cs" />
     <Compile Include="Constraints\OneToManyPropertyConstraint.cs" />
     <Compile Include="Constraints\OneToOnePropertyConstraint.cs" />
+    <Compile Include="ModelMetadata.cs" />
     <Compile Include="Property.cs" />
     <Compile Include="PropertyFactory.cs" />
     <Compile Include="ProxyInstanceCreator.cs" />

@@ -7,18 +7,6 @@ using System.Reflection;
 
 namespace LazyEntityGraph.Core
 {
-    public class ModelMetadata
-    {
-        public ModelMetadata(IEnumerable<Type> entityTypes, IEnumerable<IPropertyConstraint> constraints)
-        {
-            EntityTypes = entityTypes.Distinct().ToList();
-            Constraints = constraints.Distinct().ToList();
-        }
-
-        public IReadOnlyCollection<Type> EntityTypes { get; }
-        public IReadOnlyCollection<IPropertyConstraint> Constraints { get; }
-    }
-
     public class ProxyInstanceCreator : IInstanceCreator
     {
         private readonly IReadOnlyCollection<IPropertyConstraint> _constraints;
