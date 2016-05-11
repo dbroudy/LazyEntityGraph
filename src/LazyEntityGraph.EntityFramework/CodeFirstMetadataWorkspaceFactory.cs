@@ -4,6 +4,8 @@ using System.Data.Entity;
 using System.Data.Entity.Core.Mapping;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Migrations;
+using System.Data.Entity.Migrations.Infrastructure;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,18 +16,32 @@ namespace LazyEntityGraph.EntityFramework
 {
     internal static class CodeFirstMetadataWorkspaceFactory<TContext> where TContext : DbContext
     {
-        private const string HardCacheEdmx = "cached.edmx";
         private static MetadataWorkspace _cachedWorkspace;
 
-        public static MetadataWorkspace GetMetadataWorkspace(
-            Func<string, TContext> createFromConnectionString, bool hardCache)
+        private static string GetCacheName()
+        {
+            var migration = typeof(TContext).Assembly.GetExportedTypes()
+                .Where(typeof(DbMigration).IsAssignableFrom)
+                .Select(Activator.CreateInstance)
+                .Cast<IMigrationMetadata>()
+                .Select(x => x.Id)
+                .OrderByDescending(x => x)
+                .FirstOrDefault()
+                   ?? "NoMigration";
+
+            return typeof(TContext).Name + "_" + migration + ".edmx";
+        }
+
+        public static MetadataWorkspace GetMetadataWorkspace(Func<string, TContext> createFromConnectionString, bool hardCache)
         {
             if (_cachedWorkspace != null)
                 return _cachedWorkspace;
 
-            if (hardCache && File.Exists(HardCacheEdmx))
+            var cacheName = GetCacheName();
+
+            if (hardCache && File.Exists(cacheName))
             {
-                var xDoc = XDocument.Load(HardCacheEdmx);
+                var xDoc = XDocument.Load(cacheName);
                 return _cachedWorkspace = GetMetadataWorkspace(xDoc);
             }
 
@@ -38,7 +54,7 @@ namespace LazyEntityGraph.EntityFramework
                 if (hardCache)
                 {
                     ms.Seek(0, SeekOrigin.Begin);
-                    using (var file = File.Create(HardCacheEdmx))
+                    using (var file = File.Create(cacheName))
                         ms.WriteTo(file);
                 }
 
