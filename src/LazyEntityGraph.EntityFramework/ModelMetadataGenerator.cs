@@ -17,7 +17,7 @@ namespace LazyEntityGraph.EntityFramework
             return GenerateModelMetadata(metadataWorkspace);
         }
 
-        public static ModelMetadata LoadFromCodeFirstContext<TContext>(Func<string, TContext> createFromConnectionString, bool hardCache = false)
+        public static ModelMetadata LoadFromCodeFirstContext<TContext>(Func<string, TContext> createFromConnectionString, bool hardCache = true)
             where TContext : DbContext
         {
             var metadataWorkspace = CodeFirstMetadataWorkspaceFactory<TContext>.GetMetadataWorkspace(createFromConnectionString, hardCache);
