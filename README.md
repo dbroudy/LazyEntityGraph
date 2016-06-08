@@ -1,6 +1,13 @@
 # LazyEntityGraph
 LazyEntityGraph is the successor to [AutoEntityFramework](/alexfoxgill/AutoFixture.AutoEntityFramework). This project aims to both improve upon the functionality of the original, and open the door to integration with other test object creators and ORMs.
 
+### What's New?
+The key benefits of LazyEntityGraph over AutoEntityFramework are:
+
+- **Extensible architecture**: AutoFixture and Entity Framework integration is available through extensions; similarly it would be possible to create extensions for NHibernate, ObjectHydrator, etc
+- **Constrained relationships**: Specify one-to-one, one-to-many or many-to-many relationships between entities and the generation process will respect those relationships
+- **Entity Framework integration**: Automatically generate model metadata from EDMX or Code First DbContexts, including foreign keys
+
 [For documentation, see this project's wiki page](/alexfoxgill/LazyEntityGraph/wiki)
 
 ## Objective
