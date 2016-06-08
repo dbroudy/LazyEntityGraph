@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>LazyEntityGraph.EntityFramework</id>
+    <version>$version$</version>
+    <title>LazyEntityGraph.EntityFramework</title>
+    <authors>Alex Fox Gill</authors>
+    <owners>Alex Fox Gill</owners>
+    <licenseUrl>https://github.com/alexfoxgill/LazyEntityGraph/blob/master/license.txt</licenseUrl>
+    <projectUrl>https://github.com/alexfoxgill/LazyEntityGraph</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Configure LazyEntityGraph with Entity Framework metadata (Code First or EDMX)</description>
+    <releaseNotes>Initial release</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>LazyEntityGraph EF EntityFramework Entity Framework</tags>
+    <dependencies>
+        <dependency id="LazyEntityGraph" version="1.0.0" />
+        <dependency id="EntityFramework" version="6.0.0" />
+    </dependencies>
+  </metadata>
+</package>
