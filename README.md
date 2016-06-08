@@ -1,6 +1,8 @@
 # LazyEntityGraph
 LazyEntityGraph is the successor to [AutoEntityFramework](/alexfoxgill/AutoFixture.AutoEntityFramework). This project aims to both improve upon the functionality of the original, and open the door to integration with other test object creators and ORMs.
 
+[For documentation, see this project's wiki page](/alexfoxgill/LazyEntityGraph/wiki)
+
 ## Objective
 When writing tests, we often need to create test objects without necessarily caring about the data used to populate them. There are many projects which accomplish this in .NET, among them [AutoFixture](/AutoFixture/AutoFixture), [ObjectHydrator](/PrintsCharming/ObjectHydrator), [NBuilder](/garethdown44/nbuilder/) and more.
 
