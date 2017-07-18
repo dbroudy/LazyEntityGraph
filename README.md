@@ -8,7 +8,7 @@ The key benefits of LazyEntityGraph over AutoEntityFramework are:
 - **Constrained relationships**: Specify one-to-one, one-to-many or many-to-many relationships between entities and the generation process will respect those relationships
 - **Entity Framework integration**: Automatically generate model metadata from EDMX or Code First DbContexts, including foreign keys
 
-[For documentation, see this project's wiki page](/alexfoxgill/LazyEntityGraph/wiki)
+[For documentation, see this wiki page](//github.com/alexfoxgill/LazyEntityGraph/wiki)
 
 ## Objective
 When writing tests, we often need to create test objects without necessarily caring about the data used to populate them. There are many projects which accomplish this in .NET, among them [AutoFixture](/AutoFixture/AutoFixture), [ObjectHydrator](/PrintsCharming/ObjectHydrator), [NBuilder](/garethdown44/nbuilder/) and more.
