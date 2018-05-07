@@ -27,7 +27,7 @@ namespace LazyEntityGraph.Tests.EntityFramework
             var metadata = GetMetadata();
 
             // assert
-            metadata.EntityTypes.Should().BeEquivalentTo((IEnumerable)expected);
+            metadata.EntityTypes.Should().BeEquivalentTo(expected);
         }
 
 
@@ -51,7 +51,7 @@ namespace LazyEntityGraph.Tests.EntityFramework
             var metadata = GetMetadata();
 
             // assert
-            metadata.Constraints.Should().BeEquivalentTo((IEnumerable)expected);
+            metadata.Constraints.Should().BeEquivalentTo(expected);
         }
     }
 }

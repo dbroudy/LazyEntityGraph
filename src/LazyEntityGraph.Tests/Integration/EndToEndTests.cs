@@ -2,20 +2,24 @@
 using LazyEntityGraph.AutoFixture;
 using LazyEntityGraph.EntityFramework;
 using LazyEntityGraph.Tests.EntityFramework;
-using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.Xunit2;
+using AutoFixture;
+using AutoFixture.Xunit2;
 using Xunit;
+using System;
 
 namespace LazyEntityGraph.Tests.Integration
 {
     public class BlogModelDataAttribute : AutoDataAttribute
     {
-        public BlogModelDataAttribute()
-            : base(new Fixture()
-                  .Customize(new LazyEntityGraphCustomization(
-                      ModelMetadataGenerator.LoadFromCodeFirstContext(str => new BlogContext(str), true))))
+        public BlogModelDataAttribute() : base(CreateFixture)
         {
+        }
 
+        private static IFixture CreateFixture()
+        {
+            return new Fixture()
+                .Customize(new LazyEntityGraphCustomization(
+                                ModelMetadataGenerator.LoadFromCodeFirstContext(str => new BlogContext(str), true)));
         }
     }
 

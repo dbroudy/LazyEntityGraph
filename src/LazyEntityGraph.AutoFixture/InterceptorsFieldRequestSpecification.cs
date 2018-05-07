@@ -1,5 +1,5 @@
 ﻿using Castle.DynamicProxy;
-using Ploeh.AutoFixture.Kernel;
+using AutoFixture.Kernel;
 using System;
 using System.Reflection;
 

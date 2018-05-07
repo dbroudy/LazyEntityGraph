@@ -1,5 +1,5 @@
 ﻿using LazyEntityGraph.Core;
-using Ploeh.AutoFixture.Kernel;
+using AutoFixture.Kernel;
 using System;
 
 namespace LazyEntityGraph.AutoFixture

@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using LazyEntityGraph.Core.Constraints;
-using Ploeh.AutoFixture;
+using AutoFixture;
 using Xunit;
 
 namespace LazyEntityGraph.Tests.Integration
