@@ -4,7 +4,7 @@ I have moved away from .NET and Windows in my work, so if anyone would like to t
 ---
 
 # LazyEntityGraph
-LazyEntityGraph is the successor to [AutoEntityFramework](/alexfoxgill/AutoFixture.AutoEntityFramework). This project aims to both improve upon the functionality of the original, and open the door to integration with other test object creators and ORMs.
+LazyEntityGraph is the successor to [AutoEntityFramework](//github.com/alexfoxgill/AutoFixture.AutoEntityFramework). This project aims to both improve upon the functionality of the original, and open the door to integration with other test object creators and ORMs.
 
 ### What's New?
 The key benefits of LazyEntityGraph over AutoEntityFramework are:
