@@ -1,3 +1,8 @@
+# Not actively maintained
+I have moved away from .NET and Windows in my work, so if anyone would like to take over the project, raise an issue and I'll see what I can do about handing it over.
+
+---
+
 # LazyEntityGraph
 LazyEntityGraph is the successor to [AutoEntityFramework](/alexfoxgill/AutoFixture.AutoEntityFramework). This project aims to both improve upon the functionality of the original, and open the door to integration with other test object creators and ORMs.
 
