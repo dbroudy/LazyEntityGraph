@@ -1,7 +1,7 @@
 using FluentAssertions;
 using LazyEntityGraph.Core;
 using LazyEntityGraph.Core.Constraints;
-using Ploeh.AutoFixture;
+using AutoFixture;
 using System.Linq;
 using Xunit;
 

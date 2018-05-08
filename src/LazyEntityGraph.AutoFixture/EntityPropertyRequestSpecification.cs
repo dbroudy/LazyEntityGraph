@@ -1,4 +1,4 @@
-﻿using Ploeh.AutoFixture.Kernel;
+﻿using AutoFixture.Kernel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

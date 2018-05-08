@@ -15,7 +15,7 @@
     <tags>LazyEntityGraph AutoFixture</tags>
     <dependencies>
         <dependency id="LazyEntityGraph" version="1.0.0" />
-        <dependency id="AutoFixture" version="3.43.0" />
+        <dependency id="AutoFixture" version="4.0" />
     </dependencies>
   </metadata>
 </package>
