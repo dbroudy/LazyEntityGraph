@@ -16,9 +16,9 @@ The key benefits of LazyEntityGraph over AutoEntityFramework are:
 [For documentation, see this project's wiki page](/alexfoxgill/LazyEntityGraph/wiki)
 
 ## Objective
-When writing tests, we often need to create test objects without necessarily caring about the data used to populate them. There are many projects which accomplish this in .NET, among them [AutoFixture](/AutoFixture/AutoFixture), [ObjectHydrator](/PrintsCharming/ObjectHydrator), [NBuilder](/garethdown44/nbuilder/) and more.
+When writing tests, we often need to create test objects without necessarily caring about the data used to populate them. There are many projects which accomplish this in .NET, among them [AutoFixture](https://github.com/AutoFixture/AutoFixture), [ObjectHydrator](https://github.com/PrintsCharming/ObjectHydrator), [NBuilder](https://github.com/garethdown44/nbuilder) and more.
 
-Also popular in the .NET world are ORMs: libraries used to bridge the gap between data and code by representing relational data as C# objects. The most popular of these are [Entity Framework](/aspnet/EntityFramework) and [NHibernate](/nhibernate/nhibernate-core). These produce graphs of classes linked by relationship properties. 
+Also popular in the .NET world are ORMs: libraries used to bridge the gap between data and code by representing relational data as C# objects. The most popular of these are [Entity Framework](https://github.com/aspnet/EntityFrameworkCore) and [NHibernate](https://github.com/nhibernate/nhibernate-core). These produce graphs of classes linked by relationship properties. 
 
 ```CSharp
 public class Order
