@@ -1,8 +1,3 @@
-# Not actively maintained
-I have moved away from .NET and Windows in my work, so if anyone would like to take over the project, raise an issue and I'll see what I can do about handing it over.
-
----
-
 # LazyEntityGraph
 LazyEntityGraph is the successor to [AutoEntityFramework](//github.com/alexfoxgill/AutoFixture.AutoEntityFramework). This project aims to both improve upon the functionality of the original, and open the door to integration with other test object creators and ORMs.
 
@@ -13,12 +8,12 @@ The key benefits of LazyEntityGraph over AutoEntityFramework are:
 - **Constrained relationships**: Specify one-to-one, one-to-many or many-to-many relationships between entities and the generation process will respect those relationships
 - **Entity Framework integration**: Automatically generate model metadata from EDMX or Code First DbContexts, including foreign keys
 
-[For documentation, see this wiki page](//github.com/alexfoxgill/LazyEntityGraph/wiki)
+[For documentation, see this wiki page](//github.com/dbroudy/LazyEntityGraph/wiki)
 
 ## Objective
 When writing tests, we often need to create test objects without necessarily caring about the data used to populate them. There are many projects which accomplish this in .NET, among them [AutoFixture](https://github.com/AutoFixture/AutoFixture), [ObjectHydrator](https://github.com/PrintsCharming/ObjectHydrator), [NBuilder](https://github.com/garethdown44/nbuilder) and more.
 
-Also popular in the .NET world are ORMs: libraries used to bridge the gap between data and code by representing relational data as C# objects. The most popular of these are [Entity Framework](https://github.com/aspnet/EntityFrameworkCore) and [NHibernate](https://github.com/nhibernate/nhibernate-core). These produce graphs of classes linked by relationship properties. 
+Also popular in the .NET world are ORMs: libraries used to bridge the gap between data and code by representing relational data as C# objects. The most popular of these are [Entity Framework](https://docs.microsoft.com/en-us/ef/) and [NHibernate](https://github.com/nhibernate/nhibernate-core). These produce graphs of classes linked by relationship properties. 
 
 ```CSharp
 public class Order
