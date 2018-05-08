@@ -1,4 +1,4 @@
-version: 2.0.0-pre{build}
+version: 2.0.0-build{build}
 image: Visual Studio 2015
 init:
 - ps: >-
@@ -23,7 +23,8 @@ test:
     - '**\LazyEntityGraph*Tests.dll'
 deploy:
 - provider: NuGet
-  name: production
+  api_key:
+    secure: "8x3Mcgshdo54GCog2ht9GKbVqGvXqrIiNO2KFlyvrS2Oe2F7OCDKoEbPIr8EjlWP"
   on:
     appveyor_repo_tag: true
 
