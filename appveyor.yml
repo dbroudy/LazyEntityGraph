@@ -17,6 +17,10 @@ build:
   publish_nuget: true
   publish_nuget_symbols: true
   verbosity: minimal
+test:
+  assemblies:
+    only:
+    - '**\LazyEntityGraph*Tests.dll'
 deploy:
 - provider: NuGet
   name: production
