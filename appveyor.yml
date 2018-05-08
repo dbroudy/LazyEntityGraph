@@ -18,8 +18,8 @@ build:
   publish_nuget_symbols: true
   verbosity: minimal
 deploy:
-	- provider: NuGet
-    name: production
-    on:
-      appveyor_repo_tag: true
+- provider: NuGet
+  name: production
+  on:
+    appveyor_repo_tag: true
 
