@@ -17,6 +17,7 @@ namespace LazyEntityGraph.EntityFramework
     internal static class CodeFirstMetadataWorkspaceFactory<TContext> where TContext : DbContext
     {
         private static MetadataWorkspace _cachedWorkspace;
+        private static readonly object _syncRoot = new object();
 
         private static string GetCacheName()
         {
@@ -45,22 +46,32 @@ namespace LazyEntityGraph.EntityFramework
                 return _cachedWorkspace = GetMetadataWorkspace(xDoc);
             }
 
-            using (var ctx = createFromConnectionString("App=EntityFramework"))
-            using (var ms = new MemoryStream())
-            using (var writer = new XmlTextWriter(ms, Encoding.UTF8))
+            lock (_syncRoot)
             {
-                EdmxWriter.WriteEdmx(ctx, writer);
-
-                if (hardCache)
+                // check again inside lock
+                if (hardCache && File.Exists(cacheName))
                 {
-                    ms.Seek(0, SeekOrigin.Begin);
-                    using (var file = File.Create(cacheName))
-                        ms.WriteTo(file);
+                    var xDoc = XDocument.Load(cacheName);
+                    return _cachedWorkspace = GetMetadataWorkspace(xDoc);
                 }
 
-                ms.Seek(0, SeekOrigin.Begin);
-                var xDoc = XDocument.Load(ms);
-                return _cachedWorkspace = GetMetadataWorkspace(xDoc);
+                using (var ctx = createFromConnectionString("App=EntityFramework"))
+                using (var ms = new MemoryStream())
+                using (var writer = new XmlTextWriter(ms, Encoding.UTF8))
+                {
+                    EdmxWriter.WriteEdmx(ctx, writer);
+
+                    if (hardCache)
+                    {
+                        ms.Seek(0, SeekOrigin.Begin);
+                        using (var file = File.Create(cacheName))
+                            ms.WriteTo(file);
+                    }
+
+                    ms.Seek(0, SeekOrigin.Begin);
+                    var xDoc = XDocument.Load(ms);
+                    return _cachedWorkspace = GetMetadataWorkspace(xDoc);
+                }
             }
         }
 
