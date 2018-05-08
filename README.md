@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/tkuc0yafb7x8f8a9/branch/master?svg=true)](https://ci.appveyor.com/project/dbroudy/lazyentitygraph/branch/master) [![NuGet version](https://img.shields.io/nuget/vpre/LazyEntityGraph.svg)](https://www.nuget.org/packages/LazyEntityGraph)
+
 # LazyEntityGraph
 LazyEntityGraph is the successor to [AutoEntityFramework](//github.com/alexfoxgill/AutoFixture.AutoEntityFramework). This project aims to both improve upon the functionality of the original, and open the door to integration with other test object creators and ORMs.
 
