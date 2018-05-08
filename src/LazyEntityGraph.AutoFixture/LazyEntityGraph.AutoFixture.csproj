@@ -59,6 +59,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="LazyEntityGraph.AutoFixture.nuspec" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

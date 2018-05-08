@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>LazyEntityGraph.AutoFixture</id>
+    <version>$version$</version>
+    <title>LazyEntityGraph.AutoFixture</title>
+    <authors>dbroudy,alexfoxgill</authors>
+    <owners>dbroudy</owners>
+    <licenseUrl>https://github.com/dbroudy/LazyEntityGraph/blob/master/license.txt</licenseUrl>
+    <projectUrl>https://github.com/dbroudy/LazyEntityGraph</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An AutoFixture customization for lazy-loading entities using LazyEntityGraph</description>
+    <releaseNotes>Update AutoFixture to version 4 namespace</releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags>LazyEntityGraph AutoFixture</tags>
+    <dependencies>
+      <dependency id="LazyEntityGraph" version="[$version$]" />
+      <dependency id="AutoFixture" version="[4.0,5.0)" />
+    </dependencies>
+  </metadata>
+</package>

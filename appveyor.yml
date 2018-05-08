@@ -1,0 +1,25 @@
+version: 2.0.0-pre{build}
+image: Visual Studio 2015
+init:
+- ps: >-
+    if ($env:appveyor_repo_tag_name)
+    {
+      Update-AppveyorBuild -Version "$env:appveyor_repo_tag_name"
+    }
+before_build:
+- cmd: nuget restore src\LazyEntityGraph.sln
+assembly_info:
+  patch: true
+  assebmly_version: "2.0.0.0"
+  assebmly_file_version: "2.0.0.{build}"
+  assebmly_informational_version: "{version}"
+build:
+  publish_nuget: true
+  publish_nuget_symbols: true
+  verbosity: minimal
+deploy:
+	- provider: NuGet
+    name: production
+    on:
+      appveyor_repo_tag: true
+

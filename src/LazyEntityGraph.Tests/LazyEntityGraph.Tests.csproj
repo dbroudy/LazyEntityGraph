@@ -73,6 +73,14 @@
     <Reference Include="xunit.execution.desktop, Version=2.3.1.3858, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
       <HintPath>..\packages\xunit.extensibility.execution.2.3.1\lib\net452\xunit.execution.desktop.dll</HintPath>
     </Reference>
+    <Reference Include="xunit.runner.reporters.net452, Version=2.3.1.3858, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.runner.reporters.2.3.1\lib\net452\xunit.runner.reporters.net452.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.runner.utility.net452, Version=2.3.1.3858, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.runner.utility.2.3.1\lib\net452\xunit.runner.utility.net452.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityFramework\BlogModel.cs" />

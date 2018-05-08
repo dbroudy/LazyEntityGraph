@@ -61,6 +61,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="LazyEntityGraph.EntityFramework.nuspec" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
