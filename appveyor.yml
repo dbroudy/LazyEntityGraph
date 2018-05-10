@@ -1,5 +1,5 @@
 version: 2.0.0-build{build}
-image: Visual Studio 2015
+image: Visual Studio 2017
 init:
 - ps: >-
     if ($env:appveyor_repo_tag_name)
@@ -7,12 +7,16 @@ init:
       Update-AppveyorBuild -Version "$env:appveyor_repo_tag_name"
     }
 before_build:
+- cmd: dotnet restore src\LazyEntityGraph.sln
 - cmd: nuget restore src\LazyEntityGraph.sln
-assembly_info:
+dotnet_csproj:
   patch: true
-  assembly_version: "2.0.0.0"
-  assembly_file_version: "2.0.0.{build}"
-  assembly_informational_version: "{version}"
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
 build:
   publish_nuget: true
   publish_nuget_symbols: true
