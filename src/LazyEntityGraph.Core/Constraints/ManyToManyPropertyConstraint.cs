@@ -67,6 +67,12 @@ namespace LazyEntityGraph.Core.Constraints
                        (PropInfo != null ? PropInfo.GetHashCode() : 0);
             }
         }
+
         #endregion
+
+        public override string ToString()
+        {
+            return $"{typeof(THost).Name}.{PropInfo.Name} *..* {typeof(TProperty).Name}.{_inverse.Name}";
+        }
     }
 }

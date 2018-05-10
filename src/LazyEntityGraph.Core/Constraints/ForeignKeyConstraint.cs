@@ -63,5 +63,10 @@ namespace LazyEntityGraph.Core.Constraints
             }
         }
         #endregion
+
+        public override string ToString()
+        {
+            return $"{typeof(T).Name}.{PropInfo.Name}({_foreignKeyProp.Name}) references {typeof(TProp).Name}.{_idProp.Name}";
+        }
     }
 }
