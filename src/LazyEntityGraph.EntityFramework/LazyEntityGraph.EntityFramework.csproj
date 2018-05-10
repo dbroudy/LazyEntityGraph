@@ -14,6 +14,10 @@
     <PackageTags>LazyEntityGraph EF EntityFramework Entity Framework</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/dbroudy/LazyEntityGraph</RepositoryUrl>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <Version>0.0.0</Version>
+    <PackageVersion>0.0.0</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">

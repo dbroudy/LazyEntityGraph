@@ -9,14 +9,15 @@ init:
 before_build:
 - cmd: dotnet restore src\LazyEntityGraph.sln
 - cmd: nuget restore src\LazyEntityGraph.sln
+
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
-  version: '{version}'
   package_version: '{version}'
-  assembly_version: '{version}'
-  file_version: '{version}'
+  assembly_version: 2.0.0.0
+  file_version: '2.0.0.{build}'
   informational_version: '{version}'
+
 build:
   publish_nuget: true
   publish_nuget_symbols: true
