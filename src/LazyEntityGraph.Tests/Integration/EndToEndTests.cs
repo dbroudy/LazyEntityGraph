@@ -5,7 +5,6 @@ using LazyEntityGraph.Tests.EntityFramework;
 using AutoFixture;
 using AutoFixture.Xunit2;
 using Xunit;
-using System;
 
 namespace LazyEntityGraph.Tests.Integration
 {
@@ -19,7 +18,7 @@ namespace LazyEntityGraph.Tests.Integration
         {
             return new Fixture()
                 .Customize(new LazyEntityGraphCustomization(
-                                ModelMetadataGenerator.LoadFromCodeFirstContext(str => new BlogContext(str), true)));
+                                ModelMetadataGenerator.LoadFromCodeFirstContext(str => new BlogContext(str))));
         }
     }
 

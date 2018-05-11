@@ -1,5 +1,4 @@
 using FluentAssertions;
-using LazyEntityGraph.Core;
 using LazyEntityGraph.Core.Constraints;
 using AutoFixture;
 using System.Collections.Generic;

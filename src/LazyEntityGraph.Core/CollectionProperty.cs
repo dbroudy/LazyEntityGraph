@@ -11,8 +11,7 @@ namespace LazyEntityGraph.Core
             where T : class
             where TValue : class
         {
-            var propertyAccessor = obj as IPropertyAccessor<T>;
-            if (propertyAccessor == null)
+            if (!(obj is IPropertyAccessor<T> propertyAccessor))
             {
                 var collection = pi.GetValue(obj) as ICollection<TValue>;
                 collection?.Add(value);
@@ -29,8 +28,7 @@ namespace LazyEntityGraph.Core
         {
             if (obj == null)
                 return;
-            var propertyAccessor = obj as IPropertyAccessor<T>;
-            if (propertyAccessor == null)
+            if (!(obj is IPropertyAccessor<T> propertyAccessor))
             {
                 var collection = pi.GetValue(obj) as ICollection<TValue>;
                 collection?.Remove(value);
@@ -72,10 +70,7 @@ namespace LazyEntityGraph.Core
         {
             if (value == null)
             {
-                if (_collection != null)
-                {
-                    _collection.Clear();
-                }
+                _collection?.Clear();
             }
             else
             {

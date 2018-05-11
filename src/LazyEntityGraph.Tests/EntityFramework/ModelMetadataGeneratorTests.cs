@@ -2,7 +2,6 @@
 using LazyEntityGraph.Core;
 using LazyEntityGraph.Core.Constraints;
 using LazyEntityGraph.EntityFramework;
-using System.Collections;
 using Xunit;
 
 namespace LazyEntityGraph.Tests.EntityFramework
