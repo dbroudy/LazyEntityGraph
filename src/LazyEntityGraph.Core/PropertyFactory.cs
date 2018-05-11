@@ -1,4 +1,5 @@
 using LazyEntityGraph.Core.Constraints;
+using LazyEntityGraph.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace LazyEntityGraph.Core
                 ? typeof(CollectionProperty<,>).MakeGenericType(typeof(T), pi.PropertyType.GetGenericArguments()[0])
                 : typeof(Property<,>).MakeGenericType(typeof(T), pi.PropertyType);
 
-            var constraints = _constraints.Where(c => c.PropInfo == pi);
+            var constraints = _constraints.Where(c => c.PropInfo.PropertyEquals(pi));
 
             return (IProperty<T>)Activator.CreateInstance(t, host, pi, _instanceCreator, constraints);
         }

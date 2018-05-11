@@ -2,14 +2,14 @@
 
 namespace LazyEntityGraph.Core
 {
-    public interface IProperty<T>
+    public interface IProperty<out T>
     {
         PropertyInfo PropInfo { get; }
         void Set(object value);
         object Get();
     }
 
-    public interface IProperty<T, TProperty> : IProperty<T>
+    public interface IProperty<out T, TProperty> : IProperty<T>
     {
         void Set(TProperty value);
         new TProperty Get();

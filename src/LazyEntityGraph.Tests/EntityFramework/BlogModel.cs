@@ -40,6 +40,11 @@ namespace LazyEntityGraph.Tests.EntityFramework
         public virtual ICollection<Category> Categories { get; set; }
     }
 
+    public class Story : Post
+    {
+        
+    }
+
     public class Tag : Entity
     {
         public string TagName { get; set; }

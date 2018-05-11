@@ -25,6 +25,21 @@ namespace LazyEntityGraph.Tests.Integration
         }
 
         [Fact]
+        public void SetsInversePropertyOnDerivedGeneratedCollection()
+        {
+            // arrange
+            var fixture = IntegrationTest.GetFixture(new OneToManyPropertyConstraint<Foo, Bar>(f => f.Bars, b => b.Foo));
+            var foo = fixture.Create<Faz>();
+
+            // act
+            var bars = foo.Bars;
+
+            // assert
+            foreach (var bar in bars)
+                bar.Foo.Should().BeSameAs(foo);
+        }
+
+        [Fact]
         public void SetsInversePropertyOnExternalCollection()
         {
             // arrange

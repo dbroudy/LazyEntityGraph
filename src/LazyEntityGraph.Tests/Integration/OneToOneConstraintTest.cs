@@ -23,6 +23,20 @@ namespace LazyEntityGraph.Tests.Integration
         }
 
         [Fact]
+        public void SetsInversePropertyOnDerivedGeneratedProxy()
+        {
+            // arrange
+            var fixture = IntegrationTest.GetFixture(new OneToOnePropertyConstraint<Foo, Bar>(f => f.Bar, b => b.Foo));
+            var foo = fixture.Create<Faz>();
+
+            // act
+            var bar = foo.Bar;
+
+            // assert
+            bar.Foo.Should().BeSameAs(foo);
+        }
+
+        [Fact]
         public void SetsInversePropertyOnExternalProxy()
         {
             // arrange

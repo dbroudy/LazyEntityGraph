@@ -20,7 +20,7 @@ namespace LazyEntityGraph.Tests.EntityFramework
             // arrange
             var expected = new[]
             {
-                typeof (Post), typeof (User), typeof (Tag), typeof (ContactDetails), typeof (Category)
+                typeof (Post), typeof (User), typeof (Tag), typeof (ContactDetails), typeof (Category), typeof(Story)
             };
 
             // act
