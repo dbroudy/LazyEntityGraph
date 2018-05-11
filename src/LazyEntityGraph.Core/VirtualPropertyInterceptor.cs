@@ -6,18 +6,18 @@ using System.Reflection;
 
 namespace LazyEntityGraph.Core
 {
-    public interface IPropertyAccessor<T>
+    public interface IPropertyAccessor<out T>
     {
         IProperty<T, TProp> Get<TProp>(PropertyInfo propInfo);
     }
 
     class VirtualPropertyInterceptor<T> : IInterceptor, IPropertyAccessor<T>
     {
-        private IDictionary<PropertyInfo, IProperty<T>> _properties;
+        private IList<IProperty<T>> _properties;
 
         public void SetProperties(IEnumerable<IProperty<T>> properties)
         {
-            _properties = properties.ToDictionary(p => p.PropInfo);
+            _properties = properties.ToList();
         }
 
         public void Intercept(IInvocation invocation)
@@ -41,8 +41,8 @@ namespace LazyEntityGraph.Core
                 return;
             }
 
-            IProperty<T> property;
-            if (!_properties.TryGetValue(propInfo, out property))
+            IProperty<T> property = _properties.SingleOrDefault(p => p.PropInfo.PropertyEquals(propInfo));
+            if (property == null)
             {
                 invocation.Proceed();
                 return;
@@ -61,7 +61,7 @@ namespace LazyEntityGraph.Core
 
         public IProperty<T, TProp> Get<TProp>(PropertyInfo propInfo)
         {
-            return (IProperty<T, TProp>)_properties[propInfo];
+            return (IProperty<T, TProp>)_properties.SingleOrDefault(p => p.PropInfo.PropertyEquals(propInfo));
         }
     }
 }

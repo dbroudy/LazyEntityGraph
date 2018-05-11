@@ -25,6 +25,21 @@ namespace LazyEntityGraph.Tests.Integration
         }
 
         [Fact]
+        public void AddsItemToDerivedGeneratedCollection()
+        {
+            // arrange
+            var fixture = IntegrationTest.GetFixture(new ManyToManyPropertyConstraint<Foo, Bar>(f => f.Bars, b => b.Foos));
+            var foo = fixture.Create<Faz>();
+
+            // act
+            var bars = foo.Bars;
+
+            // assert
+            foreach (var bar in bars)
+                bar.Foos.Should().Contain(foo);
+        }
+
+        [Fact]
         public void RemovesItemFromCollection()
         {
             // arrange

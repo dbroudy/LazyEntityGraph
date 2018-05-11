@@ -39,5 +39,12 @@ namespace LazyEntityGraph.Tests.Integration
             foreach (var post in user.Posts)
                 post.PosterId.Should().Be(user.Id);
         }
+
+        [Theory, BlogModelData]
+        public void ForeignKeyPropertyOnDerivedOneToMany(Story story)
+        {
+            // assert
+            story.Poster.Id.Should().Be(story.PosterId);
+        }
     }
 }

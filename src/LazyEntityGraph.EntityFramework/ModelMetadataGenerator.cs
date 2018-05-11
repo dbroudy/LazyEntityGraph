@@ -30,7 +30,7 @@ namespace LazyEntityGraph.EntityFramework
 
             var types = entityTypes.Select(x => x.GetClrType());
             var constraints = entityTypes
-                .SelectMany(et => et.NavigationProperties)
+                .SelectMany(et => et.DeclaredNavigationProperties)
                 .GroupBy(np => np.RelationshipType)
                 .Select(r => r.ToList())
                 .Where(r => r.Count == 2)

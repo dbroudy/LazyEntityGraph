@@ -36,6 +36,34 @@ namespace LazyEntityGraph.Tests.Integration
         }
 
         [Fact]
+        public void SetsDerivedPropertyToGeneratedProxyProperty()
+        {
+            // arrange
+            var fixture = IntegrationTest.GetFixture(new ForeignKeyConstraint<Foo, Bar, int>(f => f.Bar, f => f.BarId, b => b.Id));
+            var foo = fixture.Create<Faz>();
+
+            // act
+            var bar = foo.Bar;
+
+            // assert
+            foo.BarId.Should().Be(bar.Id);
+        }
+        [Fact]
+        public void SetsDerivedPropertyToPOCOProperty()
+        {
+            // arrange
+            var fixture = IntegrationTest.GetFixture(new ForeignKeyConstraint<Foo, Bar, int>(f => f.Bar, f => f.BarId, b => b.Id));
+            var foo = fixture.Create<Faz>();
+            var bar = new Bar() { Id = fixture.Create<int>() };
+
+            // act
+            foo.Bar = bar;
+
+            // assert
+            foo.BarId.Should().Be(bar.Id);
+        }
+
+        [Fact]
         public void ConstraintsAreEqualWhenPropertiesAreEqual()
         {
             // arrange

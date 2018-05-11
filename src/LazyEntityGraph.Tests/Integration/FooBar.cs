@@ -26,4 +26,8 @@ namespace LazyEntityGraph.Tests.Integration
         public virtual Foo Foo { get; set; }
         public virtual ICollection<Foo> Foos { get; set; }
     }
+
+    public class Faz : Foo
+    {
+    }
 }
