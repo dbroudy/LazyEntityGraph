@@ -11,7 +11,7 @@ namespace LazyEntityGraph.Tests.EntityFramework
     {
         public static ModelMetadata GetMetadata()
         {
-            return ModelMetadataGenerator.LoadFromCodeFirstContext(str => new BlogContext(str), true);
+            return ModelMetadataGenerator.LoadFromCodeFirstContext(str => new BlogContext(str), false);
         }
 
         [Fact]

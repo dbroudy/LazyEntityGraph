@@ -19,7 +19,7 @@ namespace LazyEntityGraph.Tests.Integration
         {
             return new Fixture()
                 .Customize(new LazyEntityGraphCustomization(
-                                ModelMetadataGenerator.LoadFromCodeFirstContext(str => new BlogContext(str), true)));
+                                ModelMetadataGenerator.LoadFromCodeFirstContext(str => new BlogContext(str), false)));
         }
     }
 
