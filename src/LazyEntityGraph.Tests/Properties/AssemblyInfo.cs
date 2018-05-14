@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("LazyEntityGraph.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Alex Fox Gill")]
+[assembly: AssemblyCompany("David Broudy")]
 [assembly: AssemblyProduct("LazyEntityGraph.Tests")]
-[assembly: AssemblyCopyright("Copyright © Alex Fox Gill 2016")]
+[assembly: AssemblyCopyright("Copyright © 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

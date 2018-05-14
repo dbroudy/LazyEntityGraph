@@ -4,13 +4,13 @@
     <id>LazyEntityGraph</id>
     <version>$version$</version>
     <title>LazyEntityGraph</title>
-    <authors>dbroudy,alexfoxgill</authors>
-    <owners>dbroudy</owners>
+    <authors>David Broudy,Alex Fox Gill</authors>
+    <owners>David Broudy</owners>
     <licenseUrl>https://github.com/dbroudy/LazyEntityGraph/blob/master/license.txt</licenseUrl>
     <projectUrl>https://github.com/dbroudy/LazyEntityGraph</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Create lazy-loaded object graphs</description>
-    <releaseNotes>Update dependencies</releaseNotes>
+    <releaseNotes>Support derived entities</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>LazyEntityGraph</tags>
     <dependencies>
