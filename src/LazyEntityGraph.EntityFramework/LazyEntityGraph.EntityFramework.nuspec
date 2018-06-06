@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/dbroudy/LazyEntityGraph</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Configure LazyEntityGraph with Entity Framework metadata (Code First or EDMX)</description>
-    <releaseNotes>Support derived entities</releaseNotes>
+    <releaseNotes>Fix bug setting null properties</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>LazyEntityGraph EF EF6 EntityFramework Entity Framework</tags>
     <dependencies>

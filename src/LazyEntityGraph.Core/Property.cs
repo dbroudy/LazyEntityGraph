@@ -11,6 +11,9 @@ namespace LazyEntityGraph.Core
             where T : class
             where TValue : class
         {
+            if (obj == null)
+                return;
+
             var propertyAccessor = obj as IPropertyAccessor<T>;
             if (propertyAccessor == null)
             {

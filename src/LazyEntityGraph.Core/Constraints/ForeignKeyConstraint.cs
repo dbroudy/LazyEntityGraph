@@ -27,7 +27,7 @@ namespace LazyEntityGraph.Core.Constraints
 
         public void Rebind(T host, TProp previousValue, TProp value)
         {
-            var key = _idProp.GetValue(value);
+            var key = value == null ? null : _idProp.GetValue(value);
             _foreignKeyProp.SetValue(host, key);
         }
 

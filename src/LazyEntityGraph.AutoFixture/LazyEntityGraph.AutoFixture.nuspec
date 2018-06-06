@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/dbroudy/LazyEntityGraph</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>An AutoFixture customization for lazy-loading entities using LazyEntityGraph</description>
-    <releaseNotes>Support derived entities</releaseNotes>
+    <releaseNotes>Fix bug setting null properties</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>LazyEntityGraph AutoFixture</tags>
     <dependencies>

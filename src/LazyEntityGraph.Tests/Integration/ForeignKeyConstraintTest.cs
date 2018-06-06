@@ -34,6 +34,20 @@ namespace LazyEntityGraph.Tests.Integration
             // assert
             foo.BarId.Should().Be(bar.Id);
         }
+        [Fact]
+        public void SetsPropertyToNull()
+        {
+            // arrange
+            var fixture = IntegrationTest.GetFixture(new ForeignKeyConstraint<Foo, Bar, int>(f => f.Bar, f => f.BarId, b => b.Id));
+            var foo = fixture.Create<Foo>();
+            Bar bar = null;
+
+            // act
+            foo.Bar = bar;
+
+            // assert
+            foo.BarId.Should().Be(0);
+        }
 
         [Fact]
         public void SetsDerivedPropertyToGeneratedProxyProperty()

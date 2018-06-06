@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/dbroudy/LazyEntityGraph</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Create lazy-loaded object graphs</description>
-    <releaseNotes>Support derived entities</releaseNotes>
+    <releaseNotes>Fix bug setting null properties</releaseNotes>
     <copyright>$copyright$</copyright>
     <tags>LazyEntityGraph</tags>
     <dependencies>
