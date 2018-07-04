@@ -17,10 +17,9 @@ build:
   publish_nuget: true
   publish_nuget_symbols: true
   verbosity: minimal
-test:
-  assemblies:
-    only:
-    - '**\LazyEntityGraph*Tests.dll'
+test_script:
+  - dotnet test 'src\LazyEntityGraph.Tests'
+  - dotnet test 'src\LazyEntityGraph.EntityFramework.Tests'
 deploy:
 - provider: NuGet
   api_key:
