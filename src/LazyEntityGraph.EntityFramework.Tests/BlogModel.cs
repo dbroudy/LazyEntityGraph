@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 
-namespace LazyEntityGraph.Tests.EntityFramework
+namespace LazyEntityGraph.EntityFramework.Tests
 {
     public class Entity
     {

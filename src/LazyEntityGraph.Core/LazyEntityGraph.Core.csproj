@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net452</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>LazyEntityGraph</PackageId>
     <Version>1.0.0</Version>
@@ -13,7 +13,7 @@
     <PackageProjectUrl>https://github.com/dbroudy/LazyEntityGraph</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Castle.Core" Version="[4,5)" />
+    <PackageReference Include="Castle.Core" Version="[4.1.0,5)" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
