@@ -1,13 +1,11 @@
 ﻿using FluentAssertions;
 using LazyEntityGraph.AutoFixture;
-using LazyEntityGraph.EntityFramework;
-using LazyEntityGraph.Tests.EntityFramework;
 using AutoFixture;
 using AutoFixture.Xunit2;
 using Xunit;
 using System;
 
-namespace LazyEntityGraph.Tests.Integration
+namespace LazyEntityGraph.EntityFramework.Tests
 {
     public class BlogModelDataAttribute : AutoDataAttribute
     {

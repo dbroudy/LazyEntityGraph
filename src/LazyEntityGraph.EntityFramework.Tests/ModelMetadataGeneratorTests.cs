@@ -5,7 +5,7 @@ using LazyEntityGraph.EntityFramework;
 using System.Collections;
 using Xunit;
 
-namespace LazyEntityGraph.Tests.EntityFramework
+namespace LazyEntityGraph.EntityFramework.Tests
 {
     public class ModelMetadataGeneratorTests
     {
