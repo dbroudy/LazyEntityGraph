@@ -1,8 +1,6 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
-MinimumVisualStudioVersion = 10.0.40219.1
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+MinimumVisualStudioVersion = 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyEntityGraph.Core", "LazyEntityGraph.Core\LazyEntityGraph.Core.csproj", "{22FF6382-B4A4-4259-91B4-7554D0BD050D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyEntityGraph.AutoFixture", "LazyEntityGraph.AutoFixture\LazyEntityGraph.AutoFixture.csproj", "{A2560FE5-D76D-49CD-9D9F-E34B6235B0F3}"
