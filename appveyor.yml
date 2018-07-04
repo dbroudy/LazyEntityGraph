@@ -11,8 +11,8 @@ before_build:
 dotnet_csproj:
   patch: true
   assembly_version: "2.0.0.0"
-  assembly_file_version: "2.1.0.{build}"
-  assembly_informational_version: "{version}"
+  file_version: "2.1.0.{build}"
+  informational_version: "{version}"
 build:
   publish_nuget: true
   publish_nuget_symbols: true
