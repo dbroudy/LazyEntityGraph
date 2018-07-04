@@ -10,7 +10,7 @@
     <PackageTags>LazyEntityGraph;AutoFixture;ORM;Testing</PackageTags>
     <PackageLicenseUrl>https://github.com/dbroudy/LazyEntityGraph/blob/master/license.txt</PackageLicenseUrl>
     <Description>An AutoFixture customization for lazy-loading entities using LazyEntityGraph.</Description>
-    <PackageProjectUrl>ttps://github.com/dbroudy/LazyEntityGraph</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/dbroudy/LazyEntityGraph</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AutoFixture" Version="[4.2.0,5)" />

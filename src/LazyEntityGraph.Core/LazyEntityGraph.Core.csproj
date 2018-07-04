@@ -10,7 +10,7 @@
     <PackageTags>LazyEntityGraph;ORM;Testing</PackageTags>
     <PackageLicenseUrl>https://github.com/dbroudy/LazyEntityGraph/blob/master/license.txt</PackageLicenseUrl>
     <Description>Create lazy-loaded object graphs</Description>
-    <PackageProjectUrl>ttps://github.com/dbroudy/LazyEntityGraph</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/dbroudy/LazyEntityGraph</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Castle.Core" Version="[4,5)" />

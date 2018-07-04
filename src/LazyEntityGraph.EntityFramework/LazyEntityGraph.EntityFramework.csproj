@@ -10,7 +10,7 @@
     <PackageTags>LazyEntityGraph;EntityFramework;EF6;Entity Framework;ORM;Testing</PackageTags>
     <PackageLicenseUrl>https://github.com/dbroudy/LazyEntityGraph/blob/master/license.txt</PackageLicenseUrl>
     <Description>Configure LazyEntityGraph with Entity Framework metadata (Code First or EDMX)</Description>
-    <PackageProjectUrl>ttps://github.com/dbroudy/LazyEntityGraph</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/dbroudy/LazyEntityGraph</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="[6.1.3,7)" />
