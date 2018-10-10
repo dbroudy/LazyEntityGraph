@@ -7,11 +7,11 @@
     <Authors>David Broudy;Alex Fox Gill</Authors>
     <Company>David Broudy</Company>
     <Copyright>Copyright © 2018</Copyright>
-    <PackageTags>LazyEntityGraph;EntityFramework;EF6;Entity Framework;ORM;Testing</PackageTags>
+    <PackageTags>LazyEntityGraph;EntityFramework;EF Core;Entity Framework;ORM;Testing</PackageTags>
     <PackageLicenseUrl>https://github.com/dbroudy/LazyEntityGraph/blob/master/license.txt</PackageLicenseUrl>
-    <Description>Configure LazyEntityGraph with Entity Framework metadata (Code First or EDMX)</Description>
+    <Description>Configure LazyEntityGraph with Entity Framework Core</Description>
     <PackageProjectUrl>https://github.com/dbroudy/LazyEntityGraph</PackageProjectUrl>
-    <PackageReleaseNotes>Update to support core library's added support for .NET Standard 2.0. This library won't support netstandard because of the dependency on EF6</PackageReleaseNotes>
+    <PackageReleaseNotes>Added support for EF Core</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.0" />

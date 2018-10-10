@@ -20,6 +20,7 @@ build:
 test_script:
   - dotnet test .\src\LazyEntityGraph.Tests\LazyEntityGraph.Tests.csproj
   - dotnet test .\src\LazyEntityGraph.EntityFramework.Tests\LazyEntityGraph.EntityFramework.Tests.csproj
+  - dotnet test .\src\LazyEntityGraph.EntityFrameworkCore.Tests\LazyEntityGraph.EntityFrameworkCore.Tests.csproj
 deploy:
 - provider: NuGet
   api_key:
