@@ -1,4 +1,4 @@
-version: 2.1.0-build{build}
+version: 2.2.0-build{build}
 image: Visual Studio 2017
 init:
 - ps: >-
@@ -11,7 +11,7 @@ before_build:
 dotnet_csproj:
   patch: true
   assembly_version: "2.0.0.0"
-  file_version: "2.1.0.{build}"
+  file_version: "2.2.0.{build}"
   informational_version: "{version}"
 build:
   publish_nuget: true
