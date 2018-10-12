@@ -11,7 +11,7 @@
     <PackageLicenseUrl>https://github.com/dbroudy/LazyEntityGraph/blob/master/license.txt</PackageLicenseUrl>
     <Description>Create lazy-loaded object graphs</Description>
     <PackageProjectUrl>https://github.com/dbroudy/LazyEntityGraph</PackageProjectUrl>
-    <PackageReleaseNotes>Added support for .NET Standard 2.0</PackageReleaseNotes>
+    <PackageReleaseNotes>Added support for EF Core</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Castle.Core" Version="[4.2.0,5)" />

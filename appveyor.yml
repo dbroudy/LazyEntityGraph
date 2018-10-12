@@ -1,4 +1,4 @@
-version: 2.1.0-build{build}
+version: 2.2.0-build{build}
 image: Visual Studio 2017
 init:
 - ps: >-
@@ -11,7 +11,7 @@ before_build:
 dotnet_csproj:
   patch: true
   assembly_version: "2.0.0.0"
-  file_version: "2.1.0.{build}"
+  file_version: "2.2.0.{build}"
   informational_version: "{version}"
 build:
   publish_nuget: true
@@ -20,10 +20,11 @@ build:
 test_script:
   - dotnet test .\src\LazyEntityGraph.Tests\LazyEntityGraph.Tests.csproj
   - dotnet test .\src\LazyEntityGraph.EntityFramework.Tests\LazyEntityGraph.EntityFramework.Tests.csproj
+  - dotnet test .\src\LazyEntityGraph.EntityFrameworkCore.Tests\LazyEntityGraph.EntityFrameworkCore.Tests.csproj
 deploy:
 - provider: NuGet
   api_key:
-    secure: "8x3Mcgshdo54GCog2ht9GKbVqGvXqrIiNO2KFlyvrS2Oe2F7OCDKoEbPIr8EjlWP"
+    secure: "NYAJYyj62yrjRGci/b0YwMA9kQJcjdc0+mtYS7HScHrM8Osg2GTmiSq9B9qRhImY"
   on:
     appveyor_repo_tag: true
 

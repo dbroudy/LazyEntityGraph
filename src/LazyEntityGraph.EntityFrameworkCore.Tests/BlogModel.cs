@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
 
-namespace LazyEntityGraph.EntityFramework.Tests
+namespace LazyEntityGraph.EntityFrameworkCore.Tests
 {
     public class Entity
     {
@@ -23,8 +23,8 @@ namespace LazyEntityGraph.EntityFramework.Tests
 
     public class ContactDetails
     {
-        [Key, ForeignKey(nameof(User))]
-        public int UserId { get; set; }
+        [Key]
+        public virtual int UserId { get; set; }
         public virtual User User { get; set; }
     }
 
@@ -38,21 +38,12 @@ namespace LazyEntityGraph.EntityFramework.Tests
         public int PosterId { get; set; }
         public virtual User Poster { get; set; }
 
-        public virtual ICollection<Tag> Tags { get; set; }
-
         public virtual ICollection<Category> Categories { get; set; }
     }
-
+   
     public class Story : Post
     {
         
-    }
-
-    public class Tag : Entity
-    {
-        public string TagName { get; set; }
-
-        public virtual ICollection<Post> Posts { get; set; }
     }
 
     public class Category : Entity
@@ -62,34 +53,24 @@ namespace LazyEntityGraph.EntityFramework.Tests
 
     public class BlogContext : DbContext
     {
-        public BlogContext()
-            : base("BlogContext")
-        {
-
-        }
-
-        public BlogContext(string connectionString)
-            : base(connectionString)
-        {
-
-        }
+        public BlogContext(DbContextOptions<BlogContext> options)
+                : base(options)
+        { }
 
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Story> Stories { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Post>()
-                .HasMany(p => p.Tags)
-                .WithMany(t => t.Posts);
-
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Posts)
-                .WithRequired(p => p.Poster)
+                .WithOne(p => p.Poster).IsRequired()
                 .HasForeignKey(p => p.PosterId);
 
             modelBuilder.Entity<ContactDetails>()
-                .HasRequired(cd => cd.User)
-                .WithOptional(u => u.ContactDetails);
+                .HasOne(cd => cd.User)
+                .WithOne(u => u.ContactDetails)
+                .HasForeignKey<ContactDetails>(cd => cd.UserId);
         }
     }
 }
