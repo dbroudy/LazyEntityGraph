@@ -41,7 +41,7 @@ namespace LazyEntityGraph.EntityFramework
 
         private static IPropertyConstraint CreateGenericConstraint(Type openGeneric, PropertyInfo a, PropertyInfo b)
         {
-            var closedGeneric = openGeneric.MakeGenericType(a.DeclaringType, b.DeclaringType);
+            var closedGeneric = openGeneric.MakeGenericType(a.ReflectedType, b.ReflectedType);
             return (IPropertyConstraint)Activator.CreateInstance(closedGeneric, a, b);
         }
 
