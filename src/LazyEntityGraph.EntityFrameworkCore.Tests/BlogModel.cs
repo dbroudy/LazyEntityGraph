@@ -12,6 +12,17 @@ namespace LazyEntityGraph.EntityFrameworkCore.Tests
         public int Id { get; set; }
     }
 
+    public abstract class Localization : Entity
+    {
+        public string LanguageCode { get; set; }
+    }
+    
+    public abstract class LocalizedEntity<T> : Entity
+        where T : Localization
+    {
+        public virtual ICollection<T> Localizations { get; set; }
+    }
+
     public class User : Entity
     {
         public string Username { get; set; }
@@ -28,7 +39,7 @@ namespace LazyEntityGraph.EntityFrameworkCore.Tests
         public virtual User User { get; set; }
     }
 
-    public class Post : Entity
+    public class Post : LocalizedEntity<PostLocalized>
     {
         public string Title { get; set; }
         public string Content { get; set; }
@@ -40,15 +51,37 @@ namespace LazyEntityGraph.EntityFrameworkCore.Tests
 
         public virtual ICollection<Category> Categories { get; set; }
     }
+
+    public class PostLocalized : Localization
+    {
+        [ForeignKey(nameof(LocalizationFor))]
+        public int PostId { get; set; }
+        
+        public string Title { get; set; }
+        
+        public string Content { get; set; }
+        
+        public virtual Post LocalizationFor { get; set; }
+    }
    
     public class Story : Post
     {
         
     }
 
-    public class Category : Entity
+    public class Category : LocalizedEntity<CategoryLocalized>
     {
         public string CategoryName { get; set; }
+    }
+
+    public class CategoryLocalized : Localization
+    {
+        [ForeignKey(nameof(LocalizationFor))]
+        public int CategoryId { get; set; }
+        
+        public string CategoryName { get; set; }
+        
+        public virtual Category LocalizationFor { get; set; }
     }
 
     public class BlogContext : DbContext
@@ -59,6 +92,7 @@ namespace LazyEntityGraph.EntityFrameworkCore.Tests
 
         public DbSet<Post> Posts { get; set; }
         public DbSet<Story> Stories { get; set; }
+        public DbSet<PostLocalized> PostsLocalized { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -71,6 +105,26 @@ namespace LazyEntityGraph.EntityFrameworkCore.Tests
                 .HasOne(cd => cd.User)
                 .WithOne(u => u.ContactDetails)
                 .HasForeignKey<ContactDetails>(cd => cd.UserId);
+
+            modelBuilder.Entity<Post>()
+                .HasMany(p => p.Localizations)
+                .WithOne(pl => pl.LocalizationFor).IsRequired()
+                .HasForeignKey(pl => pl.PostId);
+            
+            modelBuilder.Entity<Category>()
+                .HasMany(c => c.Localizations)
+                .WithOne(cl => cl.LocalizationFor).IsRequired()
+                .HasForeignKey(pl => pl.CategoryId);
+            
+            modelBuilder.Entity<PostLocalized>()
+                .HasAlternateKey(
+                    nameof(Post.Id), 
+                    nameof(PostLocalized.LanguageCode));
+            
+            modelBuilder.Entity<CategoryLocalized>()
+                .HasAlternateKey(
+                    nameof(Category.Id), 
+                    nameof(CategoryLocalized.LanguageCode));
         }
     }
 }
