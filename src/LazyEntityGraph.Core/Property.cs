@@ -1,40 +1,11 @@
-using LazyEntityGraph.Core.Constraints;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using LazyEntityGraph.Core.Constraints;
 
 namespace LazyEntityGraph.Core
 {
-    public static class Property
-    {
-        public static void Set<T, TValue>(T obj, PropertyInfo pi, TValue value)
-            where T : class
-            where TValue : class
-        {
-            if (obj == null)
-                return;
-
-            var propertyAccessor = obj as IPropertyAccessor<T>;
-            if (propertyAccessor == null)
-            {
-                // property object is not proxy but we can still set the value
-                pi.SetValue(obj, value);
-                return;
-            }
-
-            var property = propertyAccessor.Get<TValue>(pi);
-            if (property == null)
-                return;
-
-            TValue existing;
-            if (property.TryGet(out existing) && existing == value)
-                return;
-
-            property.Set(value);
-        }
-    }
-
-    public class Property<THost, TProperty> : IProperty<THost, TProperty>
+    public class Property<THost, TProperty> : IProperty<TProperty>
         where TProperty : class
     {
         private readonly IEnumerable<IPropertyConstraint<THost, TProperty>> _constraints;
@@ -81,12 +52,12 @@ namespace LazyEntityGraph.Core
             return !_generate;
         }
 
-        void IProperty<THost>.Set(object value)
+        void IProperty.Set(object value)
         {
             Set((TProperty)value);
         }
 
-        object IProperty<THost>.Get()
+        object IProperty.Get()
         {
             return Get();
         }

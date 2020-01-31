@@ -1,37 +1,42 @@
 ﻿using FluentAssertions;
-using LazyEntityGraph.AutoFixture;
-using AutoFixture;
-using AutoFixture.Xunit2;
 using Xunit;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using LazyEntityGraph.EntityFrameworkCore.Tests.Model;
+using LazyEntityGraph.EntityFrameworkCore.Tests.Model.TPH;
+using Microsoft.EntityFrameworkCore;
+// ReSharper disable InconsistentNaming
 
 namespace LazyEntityGraph.EntityFrameworkCore.Tests
 {
-    public class BlogModelDataAttribute : AutoDataAttribute
+    public class EndToEndTests : IDisposable
     {
-        public BlogModelDataAttribute() : base(CreateFixture)
+        private readonly BlogContext _context;
+
+        public EndToEndTests()
         {
+            var options = new DbContextOptionsBuilder<BlogContext>()
+                .UseInMemoryDatabase(databaseName: "App=EntityFrameworkCore")
+                .Options;
+            _context = new BlogContext(options);
         }
 
-        private static IFixture CreateFixture()
+        public void Dispose()
         {
-            return new Fixture()
-                .Customize(new LazyEntityGraphCustomization(
-                                ModelMetadataGenerator.LoadFromContext<BlogContext>(options => new BlogContext(options))));
+            _context.Database.EnsureDeleted();
+            _context.Database.EnsureCreated();
         }
-    }
 
-    public class EndToEndTests
-    {
         [Theory, BlogModelData]
-        public void ForeignKeyPropertyOnOneToMany(Post post)
+        public void ForeignKeyPropertyOnTPHBaseOneToMany(Post post)
         {
             // assert
             post.Poster.Id.Should().Be(post.PosterId);
         }
 
         [Theory, BlogModelData]
-        public void ForeignKeyPropertyOnManyToOne(User user)
+        public void ForeignKeyPropertyOnTPHManyToOne(User user)
         {
             // assert
             foreach (var post in user.Posts)
@@ -39,10 +44,50 @@ namespace LazyEntityGraph.EntityFrameworkCore.Tests
         }
 
         [Theory, BlogModelData]
-        public void ForeignKeyPropertyOnDerivedOneToMany(Story story)
+        public void ForeignKeyPropertyOnTPHDerivedOneToMany(Story story)
         {
             // assert
             story.Poster.Id.Should().Be(story.PosterId);
+        }
+
+        [Theory, BlogModelData]
+        public void TPHBaseCanBeAddedToDatabase(Post post)
+        {
+            // arrange
+            var allPosts = new List<Post> { post };
+            allPosts.AddRange(post.Poster.Posts);
+            allPosts = allPosts.GroupBy(x => x.Id).Select(x => x.First()).ToList();
+
+            // act
+            Action act = () =>
+            {
+                _context.Add(post);
+                _context.SaveChanges();
+            };
+
+            // assert
+            act.Should().NotThrow();
+            _context.Posts.ToList().Should().BeEquivalentTo(allPosts);
+        }
+
+        [Theory, BlogModelData]
+        public void TPHDerivedCanBeAddedToDatabase(Story story)
+        {
+            // arrange
+            var allStories = new List<Story> { story };
+            allStories.AddRange(story.Poster.Posts.OfType<Story>());
+            allStories = allStories.GroupBy(x => x.Id).Select(x => x.First()).ToList();
+
+            // act
+            Action act = () =>
+            {
+                _context.Add(story);
+                _context.SaveChanges();
+            };
+
+            // assert
+            act.Should().NotThrow();
+            _context.Stories.ToList().Should().BeEquivalentTo(allStories);
         }
     }
 }

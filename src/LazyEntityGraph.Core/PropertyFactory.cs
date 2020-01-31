@@ -22,7 +22,7 @@ namespace LazyEntityGraph.Core
             _constraints = constraints;
         }
 
-        public IEnumerable<IProperty<T>> Get(T host)
+        public IEnumerable<IProperty> Get(T host)
         {
             return typeof(T)
                 .GetProperties()
@@ -31,7 +31,7 @@ namespace LazyEntityGraph.Core
                 .Select(pi => GetProperty(pi, host));
         }
 
-        private IProperty<T> GetProperty(PropertyInfo pi, T host)
+        private IProperty GetProperty(PropertyInfo pi, T host)
         {
             var t = IsCollection(pi.PropertyType)
                 ? typeof(CollectionProperty<,>).MakeGenericType(typeof(T), pi.PropertyType.GetGenericArguments()[0])
@@ -39,7 +39,7 @@ namespace LazyEntityGraph.Core
 
             var constraints = _constraints.Where(c => c.PropInfo.PropertyEquals(pi));
 
-            return (IProperty<T>)Activator.CreateInstance(t, host, pi, _instanceCreator, constraints);
+            return (IProperty)Activator.CreateInstance(t, host, pi, _instanceCreator, constraints);
         }
     }
 }

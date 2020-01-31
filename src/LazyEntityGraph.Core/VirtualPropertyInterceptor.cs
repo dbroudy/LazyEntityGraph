@@ -6,16 +6,11 @@ using System.Reflection;
 
 namespace LazyEntityGraph.Core
 {
-    public interface IPropertyAccessor<out T>
-    {
-        IProperty<T, TProp> Get<TProp>(PropertyInfo propInfo);
-    }
-
     class VirtualPropertyInterceptor<T> : IInterceptor, IPropertyAccessor<T>
     {
-        private IList<IProperty<T>> _properties;
+        private IList<IProperty> _properties;
 
-        public void SetProperties(IEnumerable<IProperty<T>> properties)
+        public void SetProperties(IEnumerable<IProperty> properties)
         {
             _properties = properties.ToList();
         }
@@ -41,7 +36,7 @@ namespace LazyEntityGraph.Core
                 return;
             }
 
-            IProperty<T> property = _properties.SingleOrDefault(p => p.PropInfo.PropertyEquals(propInfo));
+            IProperty property = _properties.SingleOrDefault(p => p.PropInfo.PropertyEquals(propInfo));
             if (property == null)
             {
                 invocation.Proceed();
@@ -59,9 +54,9 @@ namespace LazyEntityGraph.Core
             }
         }
 
-        public IProperty<T, TProp> Get<TProp>(PropertyInfo propInfo)
+        public IProperty<TProp> Get<TProp>(PropertyInfo propInfo)
         {
-            return (IProperty<T, TProp>)_properties.SingleOrDefault(p => p.PropInfo.PropertyEquals(propInfo));
+            return (IProperty<TProp>)_properties.SingleOrDefault(p => p.PropInfo.PropertyEquals(propInfo));
         }
     }
 }

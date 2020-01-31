@@ -27,8 +27,8 @@ namespace LazyEntityGraph.Core.Constraints
 
         public void Rebind(THost host, TProperty previousValue, TProperty value)
         {
-            CollectionProperty.Remove(previousValue, _inverse, host);
-            CollectionProperty.Add(value, _inverse, host);
+            CollectionPropertyHelper.Remove(previousValue, _inverse, host);
+            CollectionPropertyHelper.Add(value, _inverse, host);
         }
 
         public PropertyInfo PropInfo { get; }

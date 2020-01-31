@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using LazyEntityGraph.Core;
 using LazyEntityGraph.Core.Constraints;
-using LazyEntityGraph.EntityFrameworkCore;
-using System.Collections;
 using System.Linq;
+using LazyEntityGraph.EntityFrameworkCore.Tests.Model;
+using LazyEntityGraph.EntityFrameworkCore.Tests.Model.TPH;
 using Xunit;
 
 namespace LazyEntityGraph.EntityFrameworkCore.Tests
@@ -21,7 +21,8 @@ namespace LazyEntityGraph.EntityFrameworkCore.Tests
             // arrange
             var expected = new[]
             {
-                typeof (Post), typeof (PostLocalized), typeof (User), typeof (ContactDetails), typeof (Category), typeof (CategoryLocalized), typeof(Story)
+                typeof (Post), typeof (PostLocalized), typeof (User), typeof (ContactDetails), typeof (Category),
+                typeof (CategoryLocalized), typeof (Story),
             };
 
             // act
@@ -57,7 +58,7 @@ namespace LazyEntityGraph.EntityFrameworkCore.Tests
             var metadata = GetMetadata();
 
             // assert
-            var actual = metadata.Constraints.OrderBy(x => x.PropInfo.ToString()); 
+            var actual = metadata.Constraints.OrderBy(x => x.PropInfo.ToString());
             actual.Should().BeEquivalentTo(expected);
         }
     }

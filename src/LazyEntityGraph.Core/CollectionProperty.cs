@@ -5,51 +5,6 @@ using System.Reflection;
 
 namespace LazyEntityGraph.Core
 {
-    public static class CollectionProperty
-    {
-        public static void Add<T, TValue>(T obj, PropertyInfo pi, TValue value)
-            where T : class
-            where TValue : class
-        {
-            var propertyAccessor = obj as IPropertyAccessor<T>;
-            if (propertyAccessor == null)
-            {
-                var collection = pi.GetValue(obj) as ICollection<TValue>;
-                collection?.Add(value);
-                return;
-            }
-
-            var collectionProperty = (ICollectionProperty<T, TValue>)propertyAccessor.Get<ICollection<TValue>>(pi);
-            collectionProperty.Insert(value);
-        }
-
-        public static void Remove<T, TValue>(T obj, PropertyInfo pi, TValue value)
-            where T : class
-            where TValue : class
-        {
-            if (obj == null)
-                return;
-            var propertyAccessor = obj as IPropertyAccessor<T>;
-            if (propertyAccessor == null)
-            {
-                var collection = pi.GetValue(obj) as ICollection<TValue>;
-                collection?.Remove(value);
-                return;
-            }
-
-            var collectionProperty = (ICollectionProperty<T, TValue>)propertyAccessor.Get<ICollection<TValue>>(pi);
-            collectionProperty.Remove(value);
-        }
-    }
-
-    public interface ICollectionProperty<T, TProperty> : IProperty<T, ICollection<TProperty>>
-    {
-        void Insert(TProperty item);
-        void Remove(TProperty item);
-
-        event CollectionEventHandler<TProperty> ItemAdded;
-    }
-
     public class CollectionProperty<T, TProperty> : ICollectionProperty<T, TProperty>
         where TProperty : class
     {
@@ -118,12 +73,12 @@ namespace LazyEntityGraph.Core
 
         public PropertyInfo PropInfo { get; }
 
-        void IProperty<T>.Set(object value)
+        void IProperty.Set(object value)
         {
             Set((ICollection<TProperty>)value);
         }
 
-        object IProperty<T>.Get()
+        object IProperty.Get()
         {
             return Get();
         }
