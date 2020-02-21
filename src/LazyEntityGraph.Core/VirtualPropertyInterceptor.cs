@@ -6,6 +6,11 @@ using System.Reflection;
 
 namespace LazyEntityGraph.Core
 {
+    public interface IPropertyAccessor<out T>
+    {
+        IProperty<TProp> Get<TProp>(PropertyInfo propInfo);
+    }
+
     class VirtualPropertyInterceptor<T> : IInterceptor, IPropertyAccessor<T>
     {
         private IList<IProperty> _properties;

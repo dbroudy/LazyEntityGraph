@@ -31,11 +31,11 @@ namespace LazyEntityGraph.Core.Constraints
         {
             var lazyCollection = collection as LazyEntityCollection<TProperty>;
             if (lazyCollection != null)
-                lazyCollection.ItemAdded += x => PropertyHelper.Set(x, _inverse, host);
+                lazyCollection.ItemAdded += x => Property.Set(x, _inverse, host);
 
             foreach (var item in collection)
             {
-                PropertyHelper.Set(item, _inverse, host);
+                Property.Set(item, _inverse, host);
             }
         }
 

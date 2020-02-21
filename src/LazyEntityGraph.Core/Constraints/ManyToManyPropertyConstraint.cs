@@ -30,13 +30,13 @@ namespace LazyEntityGraph.Core.Constraints
             var lazyCollection = collection as LazyEntityCollection<TProperty>;
             if (lazyCollection != null)
             {
-                lazyCollection.ItemAdded += x => CollectionPropertyHelper.Add(x, _inverse, host);
-                lazyCollection.ItemRemoved += x => CollectionPropertyHelper.Remove(x, _inverse, host);
+                lazyCollection.ItemAdded += x => CollectionProperty.Add(x, _inverse, host);
+                lazyCollection.ItemRemoved += x => CollectionProperty.Remove(x, _inverse, host);
             }
 
             foreach (var x in collection)
             {
-                CollectionPropertyHelper.Add(x, _inverse, host);
+                CollectionProperty.Add(x, _inverse, host);
             }
         }
 
