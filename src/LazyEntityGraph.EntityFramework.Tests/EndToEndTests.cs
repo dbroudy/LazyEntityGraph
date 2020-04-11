@@ -26,8 +26,9 @@ namespace LazyEntityGraph.EntityFramework.Tests
         [Theory, BlogModelData]
         public void ForeignKeyPropertyOnOneToMany(Post post)
         {
+            var posterId = post.PosterId;
             // assert
-            post.Poster.Id.Should().Be(post.PosterId);
+            post.Poster.Id.Should().Be(posterId);
         }
 
         [Theory, BlogModelData]
@@ -39,10 +40,33 @@ namespace LazyEntityGraph.EntityFramework.Tests
         }
 
         [Theory, BlogModelData]
-        public void ForeignKeyPropertyOnDerivedOneToMany(Story story)
+        public void ForeignKeyPropertyOnDerivedOneToManyObjectFirst(Story story)
         {
             // assert
             story.Poster.Id.Should().Be(story.PosterId);
+        }
+
+        [Theory, BlogModelData]
+        public void ForeignKeyPropertyOnDerivedOneToManyIdFirst(Story story)
+        {
+            var posterId = story.PosterId;
+            // assert
+            story.Poster.Id.Should().Be(posterId);
+        }
+
+        [Theory, BlogModelData]
+        public void ForeignKeyPropertyOnOneToOne(User user)
+        {
+            // assert
+            user.Id.Should().Be(user.ContactDetails.UserId);
+        }
+
+        [Theory, BlogModelData]
+        public void ForeignKeyPropertyOnOneToOneInverse(ContactDetails contact)
+        {
+            var userId = contact.UserId;
+            // assert
+            userId.Should().Be(contact.User.Id);
         }
     }
 }
