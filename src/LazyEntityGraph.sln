@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 15
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyEntityGraph.Core", "LazyEntityGraph.Core\LazyEntityGraph.Core.csproj", "{22FF6382-B4A4-4259-91B4-7554D0BD050D}"
 EndProject
