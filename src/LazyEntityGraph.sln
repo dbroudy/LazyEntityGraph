@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 15
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyEntityGraph.Core", "LazyEntityGraph.Core\LazyEntityGraph.Core.csproj", "{22FF6382-B4A4-4259-91B4-7554D0BD050D}"
 EndProject
@@ -16,6 +16,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyEntityGraph.EntityFrameworkCore", "LazyEntityGraph.EntityFrameworkCore\LazyEntityGraph.EntityFrameworkCore.csproj", "{A6FD3285-16AB-4E20-B2A0-52684B45A121}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyEntityGraph.EntityFrameworkCore.Tests", "LazyEntityGraph.EntityFrameworkCore.Tests\LazyEntityGraph.EntityFrameworkCore.Tests.csproj", "{079FCFA7-D9B8-41A2-B0C6-953308BA2606}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BA6BD3CD-8E52-4738-8AA9-4FB7CACF98F1}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+		..\appveyor.yml = ..\appveyor.yml
+		..\license.txt = ..\license.txt
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
