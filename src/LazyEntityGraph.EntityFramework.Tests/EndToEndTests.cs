@@ -4,6 +4,7 @@ using AutoFixture;
 using AutoFixture.Xunit2;
 using Xunit;
 using System;
+using System.Linq;
 
 namespace LazyEntityGraph.EntityFramework.Tests
 {
@@ -42,31 +43,37 @@ namespace LazyEntityGraph.EntityFramework.Tests
         [Theory, BlogModelData]
         public void ForeignKeyPropertyOnDerivedOneToManyObjectFirst(Story story)
         {
+            var relatedPosterId = story.Poster.Id;
+            var posterId = story.PosterId;
             // assert
-            story.Poster.Id.Should().Be(story.PosterId);
+            posterId.Should().Be(relatedPosterId);
         }
 
         [Theory, BlogModelData]
         public void ForeignKeyPropertyOnDerivedOneToManyIdFirst(Story story)
         {
             var posterId = story.PosterId;
+            var relatedPosterId = story.Poster.Id;
             // assert
-            story.Poster.Id.Should().Be(posterId);
+            relatedPosterId.Should().Be(posterId);
         }
 
         [Theory, BlogModelData]
         public void ForeignKeyPropertyOnOneToOne(User user)
         {
+            var userId = user.Id;
+            var relatedUserId = user.ContactDetails.UserId;
             // assert
-            user.Id.Should().Be(user.ContactDetails.UserId);
+            relatedUserId.Should().Be(userId);
         }
 
         [Theory, BlogModelData]
         public void ForeignKeyPropertyOnOneToOneInverse(ContactDetails contact)
         {
             var userId = contact.UserId;
+            var relatedUserId = contact.User.Id;
             // assert
-            userId.Should().Be(contact.User.Id);
+            relatedUserId.Should().Be(userId);
         }
     }
 }
