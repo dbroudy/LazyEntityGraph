@@ -6,7 +6,7 @@
     <Version>1.0.0</Version>
     <Authors>David Broudy;Alex Fox Gill</Authors>
     <Company>David Broudy</Company>
-    <Copyright>Copyright © 2018</Copyright>
+    <Copyright>Copyright © 2020</Copyright>
     <PackageTags>LazyEntityGraph;AutoFixture;ORM;Testing</PackageTags>
     <PackageLicenseUrl></PackageLicenseUrl>
     <Description>An AutoFixture customization for lazy-loading entities using LazyEntityGraph.</Description>

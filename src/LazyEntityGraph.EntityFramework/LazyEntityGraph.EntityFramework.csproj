@@ -6,13 +6,13 @@
     <Version>1.0.0</Version>
     <Authors>David Broudy;Alex Fox Gill</Authors>
     <Company>David Broudy</Company>
-    <Copyright>Copyright © 2018</Copyright>
+    <Copyright>Copyright © 2020</Copyright>
     <PackageTags>LazyEntityGraph;EntityFramework;EF6;Entity Framework;ORM;Testing</PackageTags>
     <PackageLicenseUrl></PackageLicenseUrl>
     <Description>Configure LazyEntityGraph with Entity Framework metadata (Code First or EDMX)</Description>
     <PackageProjectUrl>https://github.com/dbroudy/LazyEntityGraph</PackageProjectUrl>
     <PackageReleaseNotes>Added target for netstandard2.1 with EF6.4.
-.NET Framework only required EF6.1</PackageReleaseNotes>
+.NET Framework only requires EF6.1</PackageReleaseNotes>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
