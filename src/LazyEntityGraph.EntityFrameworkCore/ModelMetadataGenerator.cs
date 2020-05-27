@@ -83,9 +83,11 @@ namespace LazyEntityGraph.EntityFrameworkCore
             var fromType = navProp.DeclaringEntityType.ClrType;
             var toType = fkProp.PrincipalEntityType.ClrType;
 
+            // Use IPropertyBase because it works in EF Core 2.1, where ClrType is defined in IPropertyBase and IProperty and EF Core 3.1 where it's only defined in IPropertyBase
+            IPropertyBase fkPrincipalProp = fkProp.PrincipalKey.Properties.Single();
             var foreignKeyPropInfo = fkProp.Properties.Single().PropertyInfo;
-            var keyPropInfo = fkProp.PrincipalKey.Properties.Single().PropertyInfo;
-            var keyType = fkProp.PrincipalKey.Properties.Single().ClrType;
+            var keyPropInfo = fkPrincipalProp.PropertyInfo;
+            var keyType = fkPrincipalProp.ClrType;
 
             var type = typeof(ForeignKeyConstraint<,,>)
                 .MakeGenericType(fromType, toType, keyType);
