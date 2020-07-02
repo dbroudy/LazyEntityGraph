@@ -16,6 +16,7 @@ dotnet_csproj:
 build:
   publish_nuget: true
   publish_nuget_symbols: true
+  use_snupkg_format: true
   verbosity: minimal
 test_script:
   - dotnet test .\src\LazyEntityGraph.Tests\LazyEntityGraph.Tests.csproj
