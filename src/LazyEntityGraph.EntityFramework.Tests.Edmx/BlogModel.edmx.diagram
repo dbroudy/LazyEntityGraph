@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3569c83ccf974c808be2782ee72fb931" Name="Diagram1" >
+        <EntityTypeShape EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Post" Width="1.5" PointX="7.625" PointY="1.75" />
+        <EntityTypeShape EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.User" Width="1.5" PointX="7.5" PointY="5" />
+        <EntityTypeShape EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Tag" Width="1.5" PointX="10.75" PointY="3.25" />
+        <EntityTypeShape EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.ContactDetails" Width="1.5" PointX="9.5" PointY="5" />
+        <EntityTypeShape EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Category" Width="1.5" PointX="10.75" PointY="1.75" />
+        <EntityTypeShape EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Story" Width="1.5" PointX="4.25" PointY="2.75" />
+        <AssociationConnector Association="LazyEntityGraph.EntityFramework.Tests.Edmx.PostTag" />
+        <AssociationConnector Association="LazyEntityGraph.EntityFramework.Tests.Edmx.PostUser" />
+        <InheritanceConnector EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Story" />
+        <AssociationConnector Association="LazyEntityGraph.EntityFramework.Tests.Edmx.UserContactDetails" />
+        <AssociationConnector Association="LazyEntityGraph.EntityFramework.Tests.Edmx.PostCategory" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
