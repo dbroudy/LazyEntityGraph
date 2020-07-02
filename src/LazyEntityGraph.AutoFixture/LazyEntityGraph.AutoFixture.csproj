@@ -11,7 +11,7 @@
     <PackageLicenseUrl></PackageLicenseUrl>
     <Description>An AutoFixture customization for lazy-loading entities using LazyEntityGraph.</Description>
     <PackageProjectUrl>https://github.com/dbroudy/LazyEntityGraph</PackageProjectUrl>
-    <PackageReleaseNotes>Added target for netstandard2.1</PackageReleaseNotes>
+    <PackageReleaseNotes>Fix Loading EDMX model.</PackageReleaseNotes>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
   </PropertyGroup>
   <ItemGroup>

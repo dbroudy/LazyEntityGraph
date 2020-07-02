@@ -11,7 +11,7 @@
     <PackageLicenseUrl></PackageLicenseUrl>
     <Description>Create lazy-loaded object graphs</Description>
     <PackageProjectUrl>https://github.com/dbroudy/LazyEntityGraph</PackageProjectUrl>
-    <PackageReleaseNotes>Fix EF Core 3.1 forward compatibility.</PackageReleaseNotes>
+    <PackageReleaseNotes>Fix Loading EDMX model.</PackageReleaseNotes>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
   </PropertyGroup>
   <ItemGroup>
