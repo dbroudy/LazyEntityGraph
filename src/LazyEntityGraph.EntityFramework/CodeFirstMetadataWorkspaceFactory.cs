@@ -55,7 +55,9 @@ namespace LazyEntityGraph.EntityFramework
                     return _cachedWorkspace = GetMetadataWorkspace(xDoc);
                 }
 
-                using (var ctx = createFromConnectionString("App=EntityFramework"))
+                Database.SetInitializer<TContext>(null);
+
+                using (var ctx = createFromConnectionString("App=EntityFramework;Connection Timeout=1;ConnectRetryCount=0"))
                 using (var ms = new MemoryStream())
                 using (var writer = new XmlTextWriter(ms, Encoding.UTF8))
                 {

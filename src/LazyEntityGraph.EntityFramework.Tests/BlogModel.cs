@@ -62,16 +62,9 @@ namespace LazyEntityGraph.EntityFramework.Tests
 
     public class BlogContext : DbContext
     {
-        public BlogContext()
-            : base("BlogContext")
-        {
-
-        }
-
         public BlogContext(string connectionString)
             : base(connectionString)
         {
-
         }
 
         public DbSet<Post> Posts { get; set; }
