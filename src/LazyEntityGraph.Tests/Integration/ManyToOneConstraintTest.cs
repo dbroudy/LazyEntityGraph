@@ -22,6 +22,21 @@ namespace LazyEntityGraph.Tests.Integration
             bar.Foos.Should().Contain(foo);
         }
 
+
+        [Fact]
+        public void SetsNullOnGeneratedProxy()
+        {
+            // arrange 
+            var fixture = IntegrationTest.GetFixture(new ManyToOnePropertyConstraint<Foo, Bar>(f => f.Bar, b => b.Foos));
+            var foo = fixture.Create<Foo>();
+
+            // act
+            foo.Bar = null;
+
+            // assert
+            foo.Bar.Should().BeNull();
+        }
+
         [Fact]
         public void AddsDerivedItemToGeneratedCollection()
         {
