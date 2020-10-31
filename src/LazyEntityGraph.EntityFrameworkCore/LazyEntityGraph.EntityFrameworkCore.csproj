@@ -11,7 +11,7 @@
     <PackageLicenseUrl></PackageLicenseUrl>
     <Description>Configure LazyEntityGraph with Entity Framework Core</Description>
     <PackageProjectUrl>https://github.com/dbroudy/LazyEntityGraph</PackageProjectUrl>
-    <PackageReleaseNotes>Fix Loading EDMX model.</PackageReleaseNotes>
+    <PackageReleaseNotes>Fix null Many to One property</PackageReleaseNotes>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
   </PropertyGroup>
   <ItemGroup>

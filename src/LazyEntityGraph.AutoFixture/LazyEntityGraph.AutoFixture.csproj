@@ -11,7 +11,7 @@
     <PackageLicenseUrl></PackageLicenseUrl>
     <Description>An AutoFixture customization for lazy-loading entities using LazyEntityGraph.</Description>
     <PackageProjectUrl>https://github.com/dbroudy/LazyEntityGraph</PackageProjectUrl>
-    <PackageReleaseNotes>Fix Loading EDMX model.</PackageReleaseNotes>
+    <PackageReleaseNotes>Fix null Many to One property</PackageReleaseNotes>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
   </PropertyGroup>
   <ItemGroup>
