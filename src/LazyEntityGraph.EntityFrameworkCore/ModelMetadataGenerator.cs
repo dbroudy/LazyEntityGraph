@@ -89,8 +89,8 @@ namespace LazyEntityGraph.EntityFrameworkCore
             var keyPropInfo = fkPrincipalProp.PropertyInfo;
             var keyType = fkPrincipalProp.ClrType;
 
-            var type = typeof(ForeignKeyConstraint<,,>)
-                .MakeGenericType(fromType, toType, keyType);
+            var type = typeof(ForeignKeyConstraint<,>)
+                .MakeGenericType(fromType, toType);
             return (IPropertyConstraint)Activator.CreateInstance(type, navProp.PropertyInfo, foreignKeyPropInfo, keyPropInfo);
         }
     }

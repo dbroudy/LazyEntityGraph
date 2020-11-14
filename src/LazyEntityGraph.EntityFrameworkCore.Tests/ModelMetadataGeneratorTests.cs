@@ -41,8 +41,8 @@ namespace LazyEntityGraph.EntityFrameworkCore.Tests
                 new ManyToOnePropertyConstraint<Post, User>(p => p.Poster, u => u.Posts),
                 new OneToOnePropertyConstraint<User,ContactDetails>(u => u.ContactDetails, c => c.User),
                 new OneToOnePropertyConstraint<ContactDetails, User>(c => c.User, u => u.ContactDetails),
-                new ForeignKeyConstraint<Post, User, int>(p => p.Poster, p => p.PosterId, u => u.Id),
-                new ForeignKeyConstraint<ContactDetails, User, int>(c => c.User, c => c.UserId, u => u.Id)
+                ForeignKeyConstraint<Post, User>.Create(p => p.Poster, p => p.PosterId, u => u.Id),
+                ForeignKeyConstraint<ContactDetails, User>.Create(c => c.User, c => c.UserId, u => u.Id)
             };
 
             // act

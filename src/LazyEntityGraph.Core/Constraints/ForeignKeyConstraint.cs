@@ -5,17 +5,19 @@ using System.Reflection;
 
 namespace LazyEntityGraph.Core.Constraints
 {
-    public class ForeignKeyConstraint<T, TProp, TKey> : IPropertyConstraint<T, TProp>
+    public class ForeignKeyConstraint<T, TProp> : IPropertyConstraint<T, TProp>
         where T : class
         where TProp : class
     {
         private readonly PropertyInfo _foreignKeyProp;
         private readonly PropertyInfo _idProp;
 
-        public ForeignKeyConstraint(Expression<Func<T, TProp>> navProp, Expression<Func<T, TKey>> foreignKeyProp,
-            Expression<Func<TProp, TKey>> idProp)
-            : this(navProp.GetProperty(), foreignKeyProp.GetProperty(), idProp.GetProperty())
+        public static ForeignKeyConstraint<T, TProp> Create<TKey>(
+                Expression<Func<T, TProp>> navProp,
+                Expression<Func<T, TKey>> foreignKeyProp,
+                Expression<Func<TProp, TKey>> idProp)
         {
+            return new ForeignKeyConstraint<T, TProp>(navProp.GetProperty(), foreignKeyProp.GetProperty(), idProp.GetProperty());
         }
 
         public ForeignKeyConstraint(PropertyInfo propInfo, PropertyInfo foreignKeyProp, PropertyInfo idProp)
@@ -34,7 +36,7 @@ namespace LazyEntityGraph.Core.Constraints
         public PropertyInfo PropInfo { get; }
 
         #region Equality
-        protected bool Equals(ForeignKeyConstraint<T, TProp, TKey> other)
+        protected bool Equals(ForeignKeyConstraint<T, TProp> other)
         {
             return _foreignKeyProp.PropertyEquals(other._foreignKeyProp)
                    && _idProp.PropertyEquals(other._idProp)
@@ -49,7 +51,7 @@ namespace LazyEntityGraph.Core.Constraints
                 return true;
             if (obj.GetType() != GetType())
                 return false;
-            return Equals((ForeignKeyConstraint<T, TProp, TKey>)obj);
+            return Equals((ForeignKeyConstraint<T, TProp>)obj);
         }
 
         public override int GetHashCode()
