@@ -3,6 +3,7 @@ using LazyEntityGraph.Core;
 using LazyEntityGraph.Core.Constraints;
 using AutoFixture;
 using Xunit;
+using LazyEntityGraph.TestUtils;
 
 namespace LazyEntityGraph.Tests.Integration
 {
@@ -12,7 +13,7 @@ namespace LazyEntityGraph.Tests.Integration
         public void SetsInversePropertyOnGeneratedProxy()
         {
             // arrange
-            var fixture = IntegrationTest.GetFixture(new OneToOnePropertyConstraint<Foo, Bar>(f => f.Bar, b => b.Foo));
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateOneToOne<Foo, Bar>(f => f.Bar, b => b.Foo));
             var foo = fixture.Create<Foo>();
 
             // act
@@ -26,7 +27,7 @@ namespace LazyEntityGraph.Tests.Integration
         public void SetsNullOnGeneratedProxy()
         {
             // arrange
-            var fixture = IntegrationTest.GetFixture(new OneToOnePropertyConstraint<Foo, Bar>(f => f.Bar, b => b.Foo));
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateOneToOne<Foo, Bar>(f => f.Bar, b => b.Foo));
             var foo = fixture.Create<Foo>();
             var bar = foo.Bar;
 
@@ -41,7 +42,7 @@ namespace LazyEntityGraph.Tests.Integration
         public void SetsInversePropertyOnDerivedGeneratedProxy()
         {
             // arrange
-            var fixture = IntegrationTest.GetFixture(new OneToOnePropertyConstraint<Foo, Bar>(f => f.Bar, b => b.Foo));
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateOneToOne<Foo, Bar>(f => f.Bar, b => b.Foo));
             var foo = fixture.Create<Faz>();
 
             // act
@@ -55,7 +56,7 @@ namespace LazyEntityGraph.Tests.Integration
         public void SetsInversePropertyOnExternalProxy()
         {
             // arrange
-            var fixture = IntegrationTest.GetFixture(new OneToOnePropertyConstraint<Foo, Bar>(f => f.Bar, b => b.Foo));
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateOneToOne<Foo, Bar>(f => f.Bar, b => b.Foo));
             var foo = fixture.Create<Foo>();
             var bar = fixture.Create<Bar>();
 
@@ -70,7 +71,7 @@ namespace LazyEntityGraph.Tests.Integration
         public void SetsInversePropertyOnPOCO()
         {
             // arrange
-            var fixture = IntegrationTest.GetFixture(new OneToOnePropertyConstraint<Foo, Bar>(f => f.Bar, b => b.Foo));
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateOneToOne<Foo, Bar>(f => f.Bar, b => b.Foo));
             var foo = fixture.Create<Foo>();
             var bar = new Bar();
 
@@ -85,8 +86,8 @@ namespace LazyEntityGraph.Tests.Integration
         public void ConstraintsAreEqualWhenPropertiesAreEqual()
         {
             // arrange
-            var first = new OneToOnePropertyConstraint<Foo, Bar>(f => f.Bar, b => b.Foo);
-            var second = new OneToOnePropertyConstraint<Foo, Bar>(x => x.Bar, x => x.Foo);
+            var first = ExpectedConstraints.CreateOneToOne<Foo, Bar>(f => f.Bar, b => b.Foo);
+            var second = ExpectedConstraints.CreateOneToOne<Foo, Bar>(x => x.Bar, x => x.Foo);
 
             // act and assert
             first.Should().Be(second);

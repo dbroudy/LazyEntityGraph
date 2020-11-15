@@ -11,13 +11,6 @@ namespace LazyEntityGraph.Core.Constraints
     {
         private readonly PropertyInfo _inverse;
 
-        public OneToOnePropertyConstraint(
-            Expression<Func<THost, TProperty>> propExpr,
-            Expression<Func<TProperty, THost>> inverseExpr)
-            : this(propExpr.GetProperty(), inverseExpr.GetProperty())
-        {
-        }
-
         public OneToOnePropertyConstraint(PropertyInfo propInfo, PropertyInfo inverse)
         {
             PropInfo = propInfo;

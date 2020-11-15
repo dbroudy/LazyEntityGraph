@@ -11,13 +11,7 @@ namespace LazyEntityGraph.Core.Constraints
     {
         private readonly PropertyInfo _foreignKeyProp;
         private readonly PropertyInfo _idProp;
-
-        public ForeignKeyConstraint(Expression<Func<T, TProp>> navProp, Expression<Func<T, TKey>> foreignKeyProp,
-            Expression<Func<TProp, TKey>> idProp)
-            : this(navProp.GetProperty(), foreignKeyProp.GetProperty(), idProp.GetProperty())
-        {
-        }
-
+       
         public ForeignKeyConstraint(PropertyInfo propInfo, PropertyInfo foreignKeyProp, PropertyInfo idProp)
         {
             _foreignKeyProp = foreignKeyProp;

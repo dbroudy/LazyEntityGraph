@@ -7,11 +7,6 @@ namespace LazyEntityGraph.Core.Extensions
 {
     static class ReflectionExtensions
     {
-        public static PropertyInfo GetProperty<T, TProp>(this Expression<Func<T, TProp>> expr)
-        {
-            return (PropertyInfo)((MemberExpression)expr.Body).Member;
-        }
-
         public static bool IsAssignableToGenericType(this Type givenType, Type genericType)
         {
             var interfaceTypes = givenType.GetInterfaces();
