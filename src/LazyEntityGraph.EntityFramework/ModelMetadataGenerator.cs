@@ -100,7 +100,7 @@ namespace LazyEntityGraph.EntityFramework
 
             var type = typeof(ForeignKeyConstraint<,>)
                 .MakeGenericType(fromType, toType);
-            return (IPropertyConstraint)Activator.CreateInstance(type, navPropInfo, foreignKeyPropInfo, keyPropInfo);
+            return (IPropertyConstraint)Activator.CreateInstance(type, navPropInfo, new[] { foreignKeyPropInfo }, new [] { keyPropInfo });
         }
     }
 }

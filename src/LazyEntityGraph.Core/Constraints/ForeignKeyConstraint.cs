@@ -1,5 +1,6 @@
 ﻿using LazyEntityGraph.Core.Extensions;
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -9,28 +10,31 @@ namespace LazyEntityGraph.Core.Constraints
         where T : class
         where TProp : class
     {
-        private readonly PropertyInfo _foreignKeyProp;
-        private readonly PropertyInfo _idProp;
+        private readonly PropertyInfo[] _foreignKeyProps;
+        private readonly PropertyInfo[] _idProps;
 
         public static ForeignKeyConstraint<T, TProp> Create<TKey>(
                 Expression<Func<T, TProp>> navProp,
                 Expression<Func<T, TKey>> foreignKeyProp,
                 Expression<Func<TProp, TKey>> idProp)
         {
-            return new ForeignKeyConstraint<T, TProp>(navProp.GetProperty(), foreignKeyProp.GetProperty(), idProp.GetProperty());
+            return new ForeignKeyConstraint<T, TProp>(navProp.GetProperty(), new[] { foreignKeyProp.GetProperty() }, new[] { idProp.GetProperty() });
         }
 
-        public ForeignKeyConstraint(PropertyInfo propInfo, PropertyInfo foreignKeyProp, PropertyInfo idProp)
+        public ForeignKeyConstraint(PropertyInfo propInfo, PropertyInfo[] foreignKeyProps, PropertyInfo[] idProp)
         {
-            _foreignKeyProp = foreignKeyProp;
-            _idProp = idProp;
+            _foreignKeyProps = foreignKeyProps;
+            _idProps = idProp;
             PropInfo = propInfo;
         }
 
         public void Rebind(T host, TProp previousValue, TProp value)
         {
-            var key = value == null ? null : _idProp.GetValue(value);
-            _foreignKeyProp.SetValue(host, key);
+            for (var idx = 0; idx < _idProps.Length; idx++)
+            {
+                var key = value == null ? null : _idProps[idx].GetValue(value);
+                _foreignKeyProps[idx].SetValue(host, key);
+            }
         }
 
         public PropertyInfo PropInfo { get; }
@@ -38,8 +42,8 @@ namespace LazyEntityGraph.Core.Constraints
         #region Equality
         protected bool Equals(ForeignKeyConstraint<T, TProp> other)
         {
-            return _foreignKeyProp.PropertyEquals(other._foreignKeyProp)
-                   && _idProp.PropertyEquals(other._idProp)
+            return _foreignKeyProps.SequenceEqual(other._foreignKeyProps, new PropertyComparer())
+                   && _idProps.SequenceEqual(other._idProps, new PropertyComparer())
                    && PropInfo.PropertyEquals(other.PropInfo);
         }
 
@@ -58,8 +62,8 @@ namespace LazyEntityGraph.Core.Constraints
         {
             unchecked
             {
-                var hashCode = (_foreignKeyProp != null ? _foreignKeyProp.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (_idProp != null ? _idProp.GetHashCode() : 0);
+                var hashCode = (_foreignKeyProps != null ? _foreignKeyProps.Aggregate(0, (a, p) => a ^ p.GetHashCode()) : 0);
+                hashCode = (hashCode * 397) ^ (_idProps != null ? _idProps.Aggregate(0, (a, p) => a ^ p.GetHashCode()) : 0);
                 hashCode = (hashCode * 397) ^ (PropInfo != null ? PropInfo.GetHashCode() : 0);
                 return hashCode;
             }
@@ -68,7 +72,9 @@ namespace LazyEntityGraph.Core.Constraints
 
         public override string ToString()
         {
-            return $"{typeof(T).Name}.{PropInfo.Name}({_foreignKeyProp.Name}) references {typeof(TProp).Name}.{_idProp.Name}";
+            return $@"{typeof(T).Name}.{PropInfo.Name}({
+                string.Join(",", _foreignKeyProps.Select(p => p.Name))}) references {typeof(TProp).Name}.{
+                string.Join(",", _idProps.Select(p => p.Name))}";
         }
     }
 }
