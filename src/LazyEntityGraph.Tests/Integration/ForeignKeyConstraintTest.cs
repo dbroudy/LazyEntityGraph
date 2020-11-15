@@ -20,6 +20,7 @@ namespace LazyEntityGraph.Tests.Integration
             // assert
             foo.BarId.Should().Be(bar.Id);
         }
+
         [Fact]
         public void SetsPropertyToPOCOProperty()
         {
@@ -34,6 +35,7 @@ namespace LazyEntityGraph.Tests.Integration
             // assert
             foo.BarId.Should().Be(bar.Id);
         }
+
         [Fact]
         public void SetsPropertyToNull()
         {
@@ -62,6 +64,7 @@ namespace LazyEntityGraph.Tests.Integration
             // assert
             faz.BarId.Should().Be(bar.Id);
         }
+
         [Fact]
         public void SetsDerivedPropertyToPOCOProperty()
         {
@@ -115,6 +118,62 @@ namespace LazyEntityGraph.Tests.Integration
             // act and assert
             first.Should().Be(second);
             first.GetHashCode().Should().Be(second.GetHashCode());
+        }
+
+        [Fact]
+        public void MultiSetsPropertyToGeneratedProxyProperty()
+        {
+            // arrange
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateForeignKey<MultiFoo, MultiBar, long, string>(
+                f => f.Bar,
+                (f => f.BarId1, f => f.BarId2),
+                (b => b.Id1, b => b.Id2)));
+            var foo = fixture.Create<MultiFoo>();
+
+            // act
+            var bar = foo.Bar;
+
+            // assert
+            foo.BarId1.Should().Be(bar.Id1);
+            foo.BarId2.Should().Be(bar.Id2);
+        }
+
+        [Fact]
+        public void MultiSetsPropertyToPOCOProperty()
+        {
+            // arrange
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateForeignKey<MultiFoo, MultiBar, long, string>(
+                f => f.Bar,
+                ( f => f.BarId1, f => f.BarId2 ),
+                ( b => b.Id1, b => b.Id2 )));
+            var foo = fixture.Create<MultiFoo>();
+            var bar = new MultiBar() { Id1 = fixture.Create<long>(), Id2 = fixture.Create<string>() };
+
+            // act
+            foo.Bar = bar;
+
+            // assert
+            foo.BarId1.Should().Be(bar.Id1);
+            foo.BarId2.Should().Be(bar.Id2);
+        }
+
+        [Fact]
+        public void MultiSetsPropertyToNull()
+        {
+            // arrange
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateForeignKey<MultiFoo, MultiBar, long, string>(
+                f => f.Bar,
+                ( f => f.BarId1, f => f.BarId2 ),
+                ( b => b.Id1, b => b.Id2 )));
+            var foo = fixture.Create<MultiFoo>();
+            MultiBar bar = null;
+
+            // act
+            foo.Bar = bar;
+
+            // assert
+            foo.BarId1.Should().Be(0);
+            foo.BarId2.Should().Be(null);
         }
     }
 }

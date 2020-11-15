@@ -47,7 +47,6 @@ namespace LazyEntityGraph.TestUtils
             return new ManyToManyPropertyConstraint<THost, TProperty>(GetProperty(propExpr), GetProperty(inverseExpr));
         }
 
-
         public static ForeignKeyConstraint<T, TProp> CreateForeignKey<T, TProp, TKey>(
                 Expression<Func<T, TProp>> navProp,
                 Expression<Func<T, TKey>> foreignKeyProp,
@@ -56,6 +55,24 @@ namespace LazyEntityGraph.TestUtils
             where TProp : class
         {
             return new ForeignKeyConstraint<T, TProp>(GetProperty(navProp), new[] { GetProperty(foreignKeyProp) }, new[] { GetProperty(idProp) });
+        }
+
+        public static ForeignKeyConstraint<T, TProp> CreateForeignKey<T, TProp, TKey1, TKey2>(
+                Expression<Func<T, TProp>> navProp,
+                ValueTuple<Expression<Func<T, TKey1>>, Expression<Func<T, TKey2>>> foreignKeyProps,
+                ValueTuple<Expression<Func<TProp, TKey1>>, Expression<Func<TProp, TKey2>>> idProps)
+            where T : class
+            where TProp : class
+        {
+            return new ForeignKeyConstraint<T, TProp>(GetProperty(navProp),
+                new[] {
+                    GetProperty(foreignKeyProps.Item1),
+                    GetProperty(foreignKeyProps.Item2)
+                },
+                new[] {
+                    GetProperty(idProps.Item1),
+                    GetProperty(idProps.Item2)
+                });
         }
 
         public static PropertyInfo GetProperty<T, TProp>(Expression<Func<T, TProp>> expr)

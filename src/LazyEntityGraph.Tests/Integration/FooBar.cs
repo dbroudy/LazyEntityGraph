@@ -35,4 +35,19 @@ namespace LazyEntityGraph.Tests.Integration
 
         public virtual Foo Foo { get; set; }
     }
+
+    public class MultiFoo
+    {
+        public int Id { get; set; }
+
+        public long BarId1 { get; set; }
+        public string BarId2 { get; set; }
+        public virtual MultiBar Bar { get; set; }
+    }
+
+    public class MultiBar
+    {
+        public long Id1 { get; set; }
+        public string Id2 { get; set; }
+    }
 }
