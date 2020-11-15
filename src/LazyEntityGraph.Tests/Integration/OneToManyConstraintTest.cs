@@ -4,6 +4,7 @@ using LazyEntityGraph.Core.Constraints;
 using AutoFixture;
 using System.Collections.Generic;
 using Xunit;
+using LazyEntityGraph.TestUtils;
 
 namespace LazyEntityGraph.Tests.Integration
 {
@@ -13,7 +14,7 @@ namespace LazyEntityGraph.Tests.Integration
         public void SetsInversePropertyOnGeneratedCollection()
         {
             // arrange
-            var fixture = IntegrationTest.GetFixture(new OneToManyPropertyConstraint<Foo, Bar>(f => f.Bars, b => b.Foo));
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateOneToMany<Foo, Bar>(f => f.Bars, b => b.Foo));
             var foo = fixture.Create<Foo>();
 
             // act
@@ -28,7 +29,7 @@ namespace LazyEntityGraph.Tests.Integration
         public void SetsInversePropertyOnDerivedGeneratedCollection()
         {
             // arrange
-            var fixture = IntegrationTest.GetFixture(new OneToManyPropertyConstraint<Foo, Bar>(f => f.Bars, b => b.Foo));
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateOneToMany<Foo, Bar>(f => f.Bars, b => b.Foo));
             var foo = fixture.Create<Faz>();
 
             // act
@@ -43,7 +44,7 @@ namespace LazyEntityGraph.Tests.Integration
         public void SetsInversePropertyOnExternalCollection()
         {
             // arrange
-            var fixture = IntegrationTest.GetFixture(new OneToManyPropertyConstraint<Foo, Bar>(f => f.Bars, b => b.Foo));
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateOneToMany<Foo, Bar>(f => f.Bars, b => b.Foo));
             var foo = fixture.Create<Foo>();
 
             // act
@@ -58,7 +59,7 @@ namespace LazyEntityGraph.Tests.Integration
         public void SetsInversePropertyOnPOCOAddedToGeneratedCollection()
         {
             // arrange
-            var fixture = IntegrationTest.GetFixture(new OneToManyPropertyConstraint<Foo, Bar>(f => f.Bars, b => b.Foo));
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateOneToMany<Foo, Bar>(f => f.Bars, b => b.Foo));
             var foo = fixture.Create<Foo>();
             var bar = new Bar();
 
@@ -73,7 +74,7 @@ namespace LazyEntityGraph.Tests.Integration
         public void SetsInversePropertyOnProxyAddedToGeneratedCollection()
         {
             // arrange
-            var fixture = IntegrationTest.GetFixture(new OneToManyPropertyConstraint<Foo, Bar>(f => f.Bars, b => b.Foo));
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateOneToMany<Foo, Bar>(f => f.Bars, b => b.Foo));
             var foo = fixture.Create<Foo>();
             var bar = fixture.Create<Bar>();
 
@@ -88,8 +89,8 @@ namespace LazyEntityGraph.Tests.Integration
         public void ConstraintsAreEqualWhenPropertiesAreEqual()
         {
             // arrange
-            var first = new OneToManyPropertyConstraint<Foo, Bar>(f => f.Bars, b => b.Foo);
-            var second = new OneToManyPropertyConstraint<Foo, Bar>(x => x.Bars, x => x.Foo);
+            var first = ExpectedConstraints.CreateOneToMany<Foo, Bar>(f => f.Bars, b => b.Foo);
+            var second = ExpectedConstraints.CreateOneToMany<Foo, Bar>(x => x.Bars, x => x.Foo);
 
             // act and assert
             first.Should().Be(second);
