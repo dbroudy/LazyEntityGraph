@@ -16,6 +16,7 @@
         <InheritanceConnector EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Story" />
         <AssociationConnector Association="LazyEntityGraph.EntityFramework.Tests.Edmx.UserContactDetails" />
         <AssociationConnector Association="LazyEntityGraph.EntityFramework.Tests.Edmx.PostCategory" />
+        <AssociationConnector Association="LazyEntityGraph.EntityFramework.Tests.Edmx.UserDefaultCategory" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

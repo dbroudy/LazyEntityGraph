@@ -29,7 +29,6 @@ namespace LazyEntityGraph.EntityFrameworkCore
             var types = entityTypes.Select(x => x.ClrType);
             var constraints = entityTypes
                 .SelectMany(et => et.GetNavigations())
-                .Where(r => r.FindInverse() != null)
                 .SelectMany(r => GetConstraints(r.FindInverse(), r));
 
             return new ModelMetadata(types, constraints);
@@ -43,25 +42,28 @@ namespace LazyEntityGraph.EntityFrameworkCore
 
         private static IEnumerable<IPropertyConstraint> GetConstraints(INavigation from, INavigation to)
         {
-            var fromProp = from.PropertyInfo;
-            var toProp = to.PropertyInfo;
-            var fromMultiplicity = from.IsCollection();
-            var toMultiplicity = to.IsCollection();
+            var fromProp = from?.PropertyInfo;
+            var toProp = to?.PropertyInfo;
+            var fromMultiplicity = from?.IsCollection() ?? false;
+            var toMultiplicity = to?.IsCollection() ?? false;
 
-            if (toMultiplicity)
+            if (fromProp != null && toProp != null)
             {
-                yield return CreateGenericConstraint(typeof(ManyToOnePropertyConstraint<,>), fromProp, toProp);
-                yield return CreateGenericConstraint(typeof(OneToManyPropertyConstraint<,>), toProp, fromProp);
-            }
-            else if (fromMultiplicity)
-            {
-                yield return CreateGenericConstraint(typeof(OneToManyPropertyConstraint<,>), fromProp, toProp);
-                yield return CreateGenericConstraint(typeof(ManyToOnePropertyConstraint<,>), toProp, fromProp);
-            }
-            else
-            {
-                yield return CreateGenericConstraint(typeof(OneToOnePropertyConstraint<,>), fromProp, toProp);
-                yield return CreateGenericConstraint(typeof(OneToOnePropertyConstraint<,>), toProp, fromProp);
+                if (toMultiplicity)
+                {
+                    yield return CreateGenericConstraint(typeof(ManyToOnePropertyConstraint<,>), fromProp, toProp);
+                    yield return CreateGenericConstraint(typeof(OneToManyPropertyConstraint<,>), toProp, fromProp);
+                }
+                else if (fromMultiplicity)
+                {
+                    yield return CreateGenericConstraint(typeof(OneToManyPropertyConstraint<,>), fromProp, toProp);
+                    yield return CreateGenericConstraint(typeof(ManyToOnePropertyConstraint<,>), toProp, fromProp);
+                }
+                else
+                {
+                    yield return CreateGenericConstraint(typeof(OneToOnePropertyConstraint<,>), fromProp, toProp);
+                    yield return CreateGenericConstraint(typeof(OneToOnePropertyConstraint<,>), toProp, fromProp);
+                }
             }
 
             var fromForeignKey = GetForeignKeyConstraint(from);
@@ -75,6 +77,9 @@ namespace LazyEntityGraph.EntityFrameworkCore
 
         private static IPropertyConstraint GetForeignKeyConstraint(INavigation navProp)
         {
+            if (navProp == null)
+                return null;
+
             if (!navProp.IsDependentToPrincipal() || navProp.IsCollection())
                 return null;
 

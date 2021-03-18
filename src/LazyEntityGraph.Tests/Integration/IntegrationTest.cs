@@ -14,7 +14,7 @@ namespace LazyEntityGraph.Tests.Integration
         {
             var customization = new LazyEntityGraphCustomization(
                 new ModelMetadata(
-                    new[] { typeof(Foo), typeof(Bar), typeof(Faz) },
+                    new[] { typeof(Foo), typeof(Bar), typeof(Faz), typeof(Baz) },
                     constraints));
 
             var fixture = new Fixture();

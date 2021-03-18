@@ -1,369 +1,407 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
-  <!-- EF Runtime content -->
-  <edmx:Runtime>
-    <!-- SSDL content -->
-    <edmx:StorageModels>
-    <Schema Namespace="BlogModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="BlogModelStoreContainer">
-    <EntitySet Name="Posts" EntityType="BlogModel.Store.Posts" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Users" EntityType="BlogModel.Store.Users" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Tags" EntityType="BlogModel.Store.Tags" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ContactDetails" EntityType="BlogModel.Store.ContactDetails" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Categories" EntityType="BlogModel.Store.Categories" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Posts_Story" EntityType="BlogModel.Store.Posts_Story" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="PostTag" EntityType="BlogModel.Store.PostTag" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="PostCategory" EntityType="BlogModel.Store.PostCategory" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="FK_PostTag_Post" Association="BlogModel.Store.FK_PostTag_Post">
-      <End Role="Post" EntitySet="Posts" />
-      <End Role="PostTag" EntitySet="PostTag" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PostTag_Tag" Association="BlogModel.Store.FK_PostTag_Tag">
-      <End Role="Tag" EntitySet="Tags" />
-      <End Role="PostTag" EntitySet="PostTag" />
-    </AssociationSet>
-    <AssociationSet Name="PostUser" Association="BlogModel.Store.PostUser">
-      <End Role="Post" EntitySet="Posts" />
-      <End Role="User" EntitySet="Users" />
-    </AssociationSet>
-    <AssociationSet Name="UserContactDetails" Association="BlogModel.Store.UserContactDetails">
-      <End Role="User" EntitySet="Users" />
-      <End Role="ContactDetails" EntitySet="ContactDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PostCategory_Post" Association="BlogModel.Store.FK_PostCategory_Post">
-      <End Role="Post" EntitySet="Posts" />
-      <End Role="PostCategory" EntitySet="PostCategory" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PostCategory_Category" Association="BlogModel.Store.FK_PostCategory_Category">
-      <End Role="Category" EntitySet="Categories" />
-      <End Role="PostCategory" EntitySet="PostCategory" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Story_inherits_Post" Association="BlogModel.Store.FK_Story_inherits_Post">
-      <End Role="Post" EntitySet="Posts" />
-      <End Role="Story" EntitySet="Posts_Story" />
-    </AssociationSet>
-  </EntityContainer>
-  <EntityType Name="Posts">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="PosterId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Users">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Tags">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ContactDetails">
-    <Key>
-      <PropertyRef Name="UserId" />
-    </Key>
-    <Property Name="UserId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Categories">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Posts_Story">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="PostTag">
-    <Key>
-      <PropertyRef Name="Posts_Id" />
-      <PropertyRef Name="Tags_Id" />
-    </Key>
-    <Property Name="Posts_Id" Type="int" Nullable="false" />
-    <Property Name="Tags_Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="PostCategory">
-    <Key>
-      <PropertyRef Name="PostCategory_Category_Id" />
-      <PropertyRef Name="Categories_Id" />
-    </Key>
-    <Property Name="PostCategory_Category_Id" Type="int" Nullable="false" />
-    <Property Name="Categories_Id" Type="int" Nullable="false" />
-  </EntityType>
-  <Association Name="PostUser">
-    <End Role="Post" Type="BlogModel.Store.Posts" Multiplicity="*" />
-    <End Role="User" Type="BlogModel.Store.Users" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Post">
-        <PropertyRef Name="PosterId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="UserContactDetails">
-    <End Role="User" Type="BlogModel.Store.Users" Multiplicity="1" />
-    <End Role="ContactDetails" Type="BlogModel.Store.ContactDetails" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ContactDetails">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PostTag_Post">
-    <End Role="Post" Type="BlogModel.Store.Posts" Multiplicity="1" />
-    <End Role="PostTag" Type="BlogModel.Store.PostTag" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Post">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="PostTag">
-        <PropertyRef Name="Posts_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PostTag_Tag">
-    <End Role="PostTag" Type="BlogModel.Store.PostTag" Multiplicity="*" />
-    <End Role="Tag" Type="BlogModel.Store.Tags" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="Tag">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="PostTag">
-        <PropertyRef Name="Tags_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PostCategory_Post">
-    <End Role="Post" Type="BlogModel.Store.Posts" Multiplicity="1" />
-    <End Role="PostCategory" Type="BlogModel.Store.PostCategory" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Post">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="PostCategory">
-        <PropertyRef Name="PostCategory_Category_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PostCategory_Category">
-    <End Role="PostCategory" Type="BlogModel.Store.PostCategory" Multiplicity="*" />
-    <End Role="Category" Type="BlogModel.Store.Categories" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="Category">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="PostCategory">
-        <PropertyRef Name="Categories_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Story_inherits_Post">
-    <End Role="Post" Type="BlogModel.Store.Posts" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Story" Type="BlogModel.Store.Posts_Story" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="Post">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Story">
-        <PropertyRef Name="Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-</Schema></edmx:StorageModels>
-    <!-- CSDL content -->
-    <edmx:ConceptualModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="LazyEntityGraph.EntityFramework.Tests.Edmx" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
-        <EntityContainer Name="BlogModelContainer" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Posts" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Post" />
-          <EntitySet Name="Users" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.User" />
-          <EntitySet Name="Tags" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Tag" />
-          <EntitySet Name="ContactDetails" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.ContactDetails" />
-          <EntitySet Name="Categories" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Category" />
-          <AssociationSet Name="PostTag" Association="LazyEntityGraph.EntityFramework.Tests.Edmx.PostTag">
-            <End Role="Post" EntitySet="Posts" />
-            <End Role="Tag" EntitySet="Tags" />
-          </AssociationSet>
-          <AssociationSet Name="PostUser" Association="LazyEntityGraph.EntityFramework.Tests.Edmx.PostUser">
-            <End Role="Post" EntitySet="Posts" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="UserContactDetails" Association="LazyEntityGraph.EntityFramework.Tests.Edmx.UserContactDetails">
-            <End Role="User" EntitySet="Users" />
-            <End Role="ContactDetails" EntitySet="ContactDetails" />
-          </AssociationSet>
-          <AssociationSet Name="PostCategory" Association="LazyEntityGraph.EntityFramework.Tests.Edmx.PostCategory">
-            <End Role="Post" EntitySet="Posts" />
-            <End Role="Category" EntitySet="Categories" />
-          </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="Post">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Tags" Relationship="LazyEntityGraph.EntityFramework.Tests.Edmx.PostTag" FromRole="Post" ToRole="Tag" />
-          <NavigationProperty Name="Poster" Relationship="LazyEntityGraph.EntityFramework.Tests.Edmx.PostUser" FromRole="Post" ToRole="User" />
-          <NavigationProperty Name="Categories" Relationship="LazyEntityGraph.EntityFramework.Tests.Edmx.PostCategory" FromRole="Post" ToRole="Category" />
-          <Property Name="PosterId" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Posts" Relationship="LazyEntityGraph.EntityFramework.Tests.Edmx.PostUser" FromRole="User" ToRole="Post" />
-          <NavigationProperty Name="ContactDetails" Relationship="LazyEntityGraph.EntityFramework.Tests.Edmx.UserContactDetails" FromRole="User" ToRole="ContactDetails" />
-        </EntityType>
-        <EntityType Name="Tag">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Posts" Relationship="LazyEntityGraph.EntityFramework.Tests.Edmx.PostTag" FromRole="Tag" ToRole="Post" />
-        </EntityType>
-        <EntityType Name="ContactDetails">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <NavigationProperty Name="User" Relationship="LazyEntityGraph.EntityFramework.Tests.Edmx.UserContactDetails" FromRole="ContactDetails" ToRole="User" />
-        </EntityType>
-        <EntityType Name="Category">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
-        <EntityType Name="Story" BaseType="LazyEntityGraph.EntityFramework.Tests.Edmx.Post">
-        </EntityType>
-        <Association Name="PostTag">
-          <End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Post" Role="Post" Multiplicity="*" />
-          <End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Tag" Role="Tag" Multiplicity="*" />
-        </Association>
-        <Association Name="PostUser">
-          <End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Post" Role="Post" Multiplicity="*" />
-          <End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.User" Role="User" Multiplicity="1" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Post">
-              <PropertyRef Name="PosterId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="UserContactDetails">
-          <End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.User" Role="User" Multiplicity="1" />
-          <End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.ContactDetails" Role="ContactDetails" Multiplicity="1" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ContactDetails">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="PostCategory">
-          <End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Post" Role="Post" Multiplicity="*" />
-          <End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Category" Role="Category" Multiplicity="*" />
-        </Association>
-      </Schema>
-    </edmx:ConceptualModels>
-    <!-- C-S mapping content -->
-    <edmx:Mappings>
-    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="BlogModelStoreContainer" CdmEntityContainer="BlogModelContainer">
-    <EntitySetMapping Name="Posts">
-      <EntityTypeMapping TypeName="IsTypeOf(LazyEntityGraph.EntityFramework.Tests.Edmx.Post)">
-        <MappingFragment StoreEntitySet="Posts">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="PosterId" ColumnName="PosterId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(LazyEntityGraph.EntityFramework.Tests.Edmx.Story)">
-        <MappingFragment StoreEntitySet="Posts_Story">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="IsTypeOf(LazyEntityGraph.EntityFramework.Tests.Edmx.User)">
-        <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Tags">
-      <EntityTypeMapping TypeName="IsTypeOf(LazyEntityGraph.EntityFramework.Tests.Edmx.Tag)">
-        <MappingFragment StoreEntitySet="Tags">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ContactDetails">
-      <EntityTypeMapping TypeName="IsTypeOf(LazyEntityGraph.EntityFramework.Tests.Edmx.ContactDetails)">
-        <MappingFragment StoreEntitySet="ContactDetails">
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Categories">
-      <EntityTypeMapping TypeName="IsTypeOf(LazyEntityGraph.EntityFramework.Tests.Edmx.Category)">
-        <MappingFragment StoreEntitySet="Categories">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <AssociationSetMapping Name="PostTag" TypeName="LazyEntityGraph.EntityFramework.Tests.Edmx.PostTag" StoreEntitySet="PostTag">
-      <EndProperty Name="Post">
-        <ScalarProperty Name="Id" ColumnName="Posts_Id" />
-      </EndProperty>
-      <EndProperty Name="Tag">
-        <ScalarProperty Name="Id" ColumnName="Tags_Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="PostCategory" TypeName="LazyEntityGraph.EntityFramework.Tests.Edmx.PostCategory" StoreEntitySet="PostCategory">
-      <EndProperty Name="Post">
-        <ScalarProperty Name="Id" ColumnName="PostCategory_Category_Id" />
-      </EndProperty>
-      <EndProperty Name="Category">
-        <ScalarProperty Name="Id" ColumnName="Categories_Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-  </EntityContainerMapping>
-</Mapping></edmx:Mappings>
-  </edmx:Runtime>
-  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
-    <edmx:Connection>
-      <DesignerInfoPropertySet>
-        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
-      </DesignerInfoPropertySet>
-    </edmx:Connection>
-    <edmx:Options>
-      <DesignerInfoPropertySet>
-        <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
-        <DesignerProperty Name="UseLegacyProvider" Value="False" />
-      </DesignerInfoPropertySet>
-    </edmx:Options>
-    <!-- Diagram content (shape and connector positions) -->
-    <edmx:Diagrams>
-    </edmx:Diagrams>
-  </edmx:Designer>
+	<!-- EF Runtime content -->
+	<edmx:Runtime>
+		<!-- SSDL content -->
+		<edmx:StorageModels>
+			<Schema Namespace="LazyEntityGraph.EntityFramework.Tests.Edmx.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+				<EntityContainer Name="LazyEntityGraphEntityFrameworkTestsEdmxStoreContainer">
+					<EntitySet Name="Posts" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.Posts" store:Type="Tables" Schema="dbo" />
+					<EntitySet Name="Users" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.Users" store:Type="Tables" Schema="dbo" />
+					<EntitySet Name="Tags" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.Tags" store:Type="Tables" Schema="dbo" />
+					<EntitySet Name="ContactDetails" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.ContactDetails" store:Type="Tables" Schema="dbo" />
+					<EntitySet Name="Categories" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.Categories" store:Type="Tables" Schema="dbo" />
+					<EntitySet Name="Posts_Story" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.Posts_Story" store:Type="Tables" Schema="dbo" />
+					<EntitySet Name="PostTag" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.PostTag" store:Type="Tables" Schema="dbo" />
+					<EntitySet Name="PostCategory" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.PostCategory" store:Type="Tables" Schema="dbo" />
+					<AssociationSet Name="FK_PostTag_Post" Association="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.FK_PostTag_Post">
+						<End Role="Post" EntitySet="Posts" />
+						<End Role="PostTag" EntitySet="PostTag" />
+					</AssociationSet>
+					<AssociationSet Name="FK_PostTag_Tag" Association="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.FK_PostTag_Tag">
+						<End Role="Tag" EntitySet="Tags" />
+						<End Role="PostTag" EntitySet="PostTag" />
+					</AssociationSet>
+					<AssociationSet Name="PostUser" Association="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.PostUser">
+						<End Role="Post" EntitySet="Posts" />
+						<End Role="User" EntitySet="Users" />
+					</AssociationSet>
+					<AssociationSet Name="UserContactDetails" Association="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.UserContactDetails">
+						<End Role="User" EntitySet="Users" />
+						<End Role="ContactDetails" EntitySet="ContactDetails" />
+					</AssociationSet>
+					<AssociationSet Name="FK_PostCategory_Post" Association="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.FK_PostCategory_Post">
+						<End Role="Post" EntitySet="Posts" />
+						<End Role="PostCategory" EntitySet="PostCategory" />
+					</AssociationSet>
+					<AssociationSet Name="FK_PostCategory_Category" Association="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.FK_PostCategory_Category">
+						<End Role="Category" EntitySet="Categories" />
+						<End Role="PostCategory" EntitySet="PostCategory" />
+					</AssociationSet>
+					<AssociationSet Name="UserDefaultCategory" Association="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.UserDefaultCategory">
+						<End Role="User" EntitySet="Users" />
+						<End Role="Category" EntitySet="Categories" />
+					</AssociationSet>
+					<AssociationSet Name="FK_Story_inherits_Post" Association="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.FK_Story_inherits_Post">
+						<End Role="Post" EntitySet="Posts" />
+						<End Role="Story" EntitySet="Posts_Story" />
+					</AssociationSet>
+				</EntityContainer>
+				<EntityType Name="Posts">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+					<Property Name="PosterId" Type="int" Nullable="false" />
+				</EntityType>
+				<EntityType Name="Users">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+					<Property Name="DefaultCategoryId" Type="int" Nullable="false" />
+				</EntityType>
+				<EntityType Name="Tags">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+				</EntityType>
+				<EntityType Name="ContactDetails">
+					<Key>
+						<PropertyRef Name="UserId" />
+					</Key>
+					<Property Name="UserId" Type="int" Nullable="false" />
+				</EntityType>
+				<EntityType Name="Categories">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+				</EntityType>
+				<EntityType Name="Posts_Story">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Name="Id" Type="int" Nullable="false" />
+				</EntityType>
+				<EntityType Name="PostTag">
+					<Key>
+						<PropertyRef Name="Posts_Id" />
+						<PropertyRef Name="Tags_Id" />
+					</Key>
+					<Property Name="Posts_Id" Type="int" Nullable="false" />
+					<Property Name="Tags_Id" Type="int" Nullable="false" />
+				</EntityType>
+				<EntityType Name="PostCategory">
+					<Key>
+						<PropertyRef Name="PostCategory_Category_Id" />
+						<PropertyRef Name="Categories_Id" />
+					</Key>
+					<Property Name="PostCategory_Category_Id" Type="int" Nullable="false" />
+					<Property Name="Categories_Id" Type="int" Nullable="false" />
+				</EntityType>
+				<Association Name="PostUser">
+					<End Role="Post" Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.Posts" Multiplicity="*" />
+					<End Role="User" Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.Users" Multiplicity="1" />
+					<ReferentialConstraint>
+						<Principal Role="User">
+							<PropertyRef Name="Id" />
+						</Principal>
+						<Dependent Role="Post">
+							<PropertyRef Name="PosterId" />
+						</Dependent>
+					</ReferentialConstraint>
+				</Association>
+				<Association Name="UserContactDetails">
+					<End Role="User" Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.Users" Multiplicity="1" />
+					<End Role="ContactDetails" Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.ContactDetails" Multiplicity="0..1" />
+					<ReferentialConstraint>
+						<Principal Role="User">
+							<PropertyRef Name="Id" />
+						</Principal>
+						<Dependent Role="ContactDetails">
+							<PropertyRef Name="UserId" />
+						</Dependent>
+					</ReferentialConstraint>
+				</Association>
+				<Association Name="UserDefaultCategory">
+					<End Role="User" Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.Users" Multiplicity="*" />
+					<End Role="Category" Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.Categories" Multiplicity="1" />
+					<ReferentialConstraint>
+						<Principal Role="Category">
+							<PropertyRef Name="Id" />
+						</Principal>
+						<Dependent Role="User">
+							<PropertyRef Name="DefaultCategoryId" />
+						</Dependent>
+					</ReferentialConstraint>
+				</Association>
+				<Association Name="FK_PostTag_Post">
+					<End Role="Post" Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.Posts" Multiplicity="1" />
+					<End Role="PostTag" Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.PostTag" Multiplicity="*" />
+					<ReferentialConstraint>
+						<Principal Role="Post">
+							<PropertyRef Name="Id" />
+						</Principal>
+						<Dependent Role="PostTag">
+							<PropertyRef Name="Posts_Id" />
+						</Dependent>
+					</ReferentialConstraint>
+				</Association>
+				<Association Name="FK_PostTag_Tag">
+					<End Role="PostTag" Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.PostTag" Multiplicity="*" />
+					<End Role="Tag" Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.Tags" Multiplicity="1" />
+					<ReferentialConstraint>
+						<Principal Role="Tag">
+							<PropertyRef Name="Id" />
+						</Principal>
+						<Dependent Role="PostTag">
+							<PropertyRef Name="Tags_Id" />
+						</Dependent>
+					</ReferentialConstraint>
+				</Association>
+				<Association Name="FK_PostCategory_Post">
+					<End Role="Post" Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.Posts" Multiplicity="1" />
+					<End Role="PostCategory" Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.PostCategory" Multiplicity="*" />
+					<ReferentialConstraint>
+						<Principal Role="Post">
+							<PropertyRef Name="Id" />
+						</Principal>
+						<Dependent Role="PostCategory">
+							<PropertyRef Name="PostCategory_Category_Id" />
+						</Dependent>
+					</ReferentialConstraint>
+				</Association>
+				<Association Name="FK_PostCategory_Category">
+					<End Role="PostCategory" Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.PostCategory" Multiplicity="*" />
+					<End Role="Category" Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.Categories" Multiplicity="1" />
+					<ReferentialConstraint>
+						<Principal Role="Category">
+							<PropertyRef Name="Id" />
+						</Principal>
+						<Dependent Role="PostCategory">
+							<PropertyRef Name="Categories_Id" />
+						</Dependent>
+					</ReferentialConstraint>
+				</Association>
+				<Association Name="FK_Story_inherits_Post">
+					<End Role="Post" Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.Posts" Multiplicity="1">
+						<OnDelete Action="Cascade" />
+					</End>
+					<End Role="Story" Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Store.Posts_Story" Multiplicity="0..1" />
+					<ReferentialConstraint>
+						<Principal Role="Post">
+							<PropertyRef Name="Id" />
+						</Principal>
+						<Dependent Role="Story">
+							<PropertyRef Name="Id" />
+						</Dependent>
+					</ReferentialConstraint>
+				</Association>
+			</Schema>
+		</edmx:StorageModels>
+		<!-- CSDL content -->
+		<edmx:ConceptualModels>
+			<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="LazyEntityGraph.EntityFramework.Tests.Edmx" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+				<EntityContainer Name="BlogModelContainer" annotation:LazyLoadingEnabled="true">
+					<EntitySet Name="Posts" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Post" />
+					<EntitySet Name="Users" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.User" />
+					<EntitySet Name="Tags" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Tag" />
+					<EntitySet Name="ContactDetails" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.ContactDetails" />
+					<EntitySet Name="Categories" EntityType="LazyEntityGraph.EntityFramework.Tests.Edmx.Category" />
+					<AssociationSet Name="PostTag" Association="LazyEntityGraph.EntityFramework.Tests.Edmx.PostTag">
+						<End Role="Post" EntitySet="Posts" />
+						<End Role="Tag" EntitySet="Tags" />
+					</AssociationSet>
+					<AssociationSet Name="PostUser" Association="LazyEntityGraph.EntityFramework.Tests.Edmx.PostUser">
+						<End Role="Post" EntitySet="Posts" />
+						<End Role="User" EntitySet="Users" />
+					</AssociationSet>
+					<AssociationSet Name="UserContactDetails" Association="LazyEntityGraph.EntityFramework.Tests.Edmx.UserContactDetails">
+						<End Role="User" EntitySet="Users" />
+						<End Role="ContactDetails" EntitySet="ContactDetails" />
+					</AssociationSet>
+					<AssociationSet Name="PostCategory" Association="LazyEntityGraph.EntityFramework.Tests.Edmx.PostCategory">
+						<End Role="Post" EntitySet="Posts" />
+						<End Role="Category" EntitySet="Categories" />
+					</AssociationSet>
+					<AssociationSet Name="UserDefaultCategory" Association="LazyEntityGraph.EntityFramework.Tests.Edmx.UserDefaultCategory">
+						<End Role="User" EntitySet="Users" />
+						<End Role="Category" EntitySet="Categories" />
+					</AssociationSet>
+				</EntityContainer>
+				<EntityType Name="Post">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<NavigationProperty Name="Tags" Relationship="LazyEntityGraph.EntityFramework.Tests.Edmx.PostTag" FromRole="Post" ToRole="Tag" />
+					<NavigationProperty Name="Poster" Relationship="LazyEntityGraph.EntityFramework.Tests.Edmx.PostUser" FromRole="Post" ToRole="User" />
+					<NavigationProperty Name="Categories" Relationship="LazyEntityGraph.EntityFramework.Tests.Edmx.PostCategory" FromRole="Post" ToRole="Category" />
+					<Property Name="PosterId" Type="Int32" Nullable="false" />
+				</EntityType>
+				<EntityType Name="User">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<NavigationProperty Name="Posts" Relationship="LazyEntityGraph.EntityFramework.Tests.Edmx.PostUser" FromRole="User" ToRole="Post" />
+					<NavigationProperty Name="ContactDetails" Relationship="LazyEntityGraph.EntityFramework.Tests.Edmx.UserContactDetails" FromRole="User" ToRole="ContactDetails" />
+					<NavigationProperty Name="DefaultCategory" Relationship="LazyEntityGraph.EntityFramework.Tests.Edmx.UserDefaultCategory" FromRole="User" ToRole="Category" />
+					<Property Name="DefaultCategoryId" Type="Int32" Nullable="false" />
+				</EntityType>
+				<EntityType Name="Tag">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<NavigationProperty Name="Posts" Relationship="LazyEntityGraph.EntityFramework.Tests.Edmx.PostTag" FromRole="Tag" ToRole="Post" />
+				</EntityType>
+				<EntityType Name="ContactDetails">
+					<Key>
+						<PropertyRef Name="UserId" />
+					</Key>
+					<Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+					<NavigationProperty Name="User" Relationship="LazyEntityGraph.EntityFramework.Tests.Edmx.UserContactDetails" FromRole="ContactDetails" ToRole="User" />
+				</EntityType>
+				<EntityType Name="Category">
+					<Key>
+						<PropertyRef Name="Id" />
+					</Key>
+					<Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+				</EntityType>
+				<EntityType Name="Story" BaseType="LazyEntityGraph.EntityFramework.Tests.Edmx.Post">
+				</EntityType>
+				<Association Name="PostTag">
+					<End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Post" Role="Post" Multiplicity="*" />
+					<End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Tag" Role="Tag" Multiplicity="*" />
+				</Association>
+				<Association Name="PostUser">
+					<End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Post" Role="Post" Multiplicity="*" />
+					<End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.User" Role="User" Multiplicity="1" />
+					<ReferentialConstraint>
+						<Principal Role="User">
+							<PropertyRef Name="Id" />
+						</Principal>
+						<Dependent Role="Post">
+							<PropertyRef Name="PosterId" />
+						</Dependent>
+					</ReferentialConstraint>
+				</Association>
+				<Association Name="UserContactDetails">
+					<End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.User" Role="User" Multiplicity="1" />
+					<End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.ContactDetails" Role="ContactDetails" Multiplicity="1" />
+					<ReferentialConstraint>
+						<Principal Role="User">
+							<PropertyRef Name="Id" />
+						</Principal>
+						<Dependent Role="ContactDetails">
+							<PropertyRef Name="UserId" />
+						</Dependent>
+					</ReferentialConstraint>
+				</Association>
+				<Association Name="PostCategory">
+					<End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Post" Role="Post" Multiplicity="*" />
+					<End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Category" Role="Category" Multiplicity="*" />
+				</Association>
+				<Association Name="UserDefaultCategory">
+					<End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.User" Role="User" Multiplicity="*" />
+					<End Type="LazyEntityGraph.EntityFramework.Tests.Edmx.Category" Role="Category" Multiplicity="1" />
+					<ReferentialConstraint>
+						<Principal Role="Category">
+							<PropertyRef Name="Id" />
+						</Principal>
+						<Dependent Role="User">
+							<PropertyRef Name="DefaultCategoryId" />
+						</Dependent>
+					</ReferentialConstraint>
+				</Association>
+			</Schema>
+		</edmx:ConceptualModels>
+		<!-- C-S mapping content -->
+		<edmx:Mappings>
+			<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+				<EntityContainerMapping StorageEntityContainer="LazyEntityGraphEntityFrameworkTestsEdmxStoreContainer" CdmEntityContainer="BlogModelContainer">
+					<EntitySetMapping Name="Posts">
+						<EntityTypeMapping TypeName="IsTypeOf(LazyEntityGraph.EntityFramework.Tests.Edmx.Post)">
+							<MappingFragment StoreEntitySet="Posts">
+								<ScalarProperty Name="Id" ColumnName="Id" />
+								<ScalarProperty Name="PosterId" ColumnName="PosterId" />
+							</MappingFragment>
+						</EntityTypeMapping>
+						<EntityTypeMapping TypeName="IsTypeOf(LazyEntityGraph.EntityFramework.Tests.Edmx.Story)">
+							<MappingFragment StoreEntitySet="Posts_Story">
+								<ScalarProperty Name="Id" ColumnName="Id" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<EntitySetMapping Name="Users">
+						<EntityTypeMapping TypeName="IsTypeOf(LazyEntityGraph.EntityFramework.Tests.Edmx.User)">
+							<MappingFragment StoreEntitySet="Users">
+								<ScalarProperty Name="Id" ColumnName="Id" />
+								<ScalarProperty Name="DefaultCategoryId" ColumnName="DefaultCategoryId" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<EntitySetMapping Name="Tags">
+						<EntityTypeMapping TypeName="IsTypeOf(LazyEntityGraph.EntityFramework.Tests.Edmx.Tag)">
+							<MappingFragment StoreEntitySet="Tags">
+								<ScalarProperty Name="Id" ColumnName="Id" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<EntitySetMapping Name="ContactDetails">
+						<EntityTypeMapping TypeName="IsTypeOf(LazyEntityGraph.EntityFramework.Tests.Edmx.ContactDetails)">
+							<MappingFragment StoreEntitySet="ContactDetails">
+								<ScalarProperty Name="UserId" ColumnName="UserId" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<EntitySetMapping Name="Categories">
+						<EntityTypeMapping TypeName="IsTypeOf(LazyEntityGraph.EntityFramework.Tests.Edmx.Category)">
+							<MappingFragment StoreEntitySet="Categories">
+								<ScalarProperty Name="Id" ColumnName="Id" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<AssociationSetMapping Name="PostTag" TypeName="LazyEntityGraph.EntityFramework.Tests.Edmx.PostTag" StoreEntitySet="PostTag">
+						<EndProperty Name="Post">
+							<ScalarProperty Name="Id" ColumnName="Posts_Id" />
+						</EndProperty>
+						<EndProperty Name="Tag">
+							<ScalarProperty Name="Id" ColumnName="Tags_Id" />
+						</EndProperty>
+					</AssociationSetMapping>
+					<AssociationSetMapping Name="PostCategory" TypeName="LazyEntityGraph.EntityFramework.Tests.Edmx.PostCategory" StoreEntitySet="PostCategory">
+						<EndProperty Name="Post">
+							<ScalarProperty Name="Id" ColumnName="PostCategory_Category_Id" />
+						</EndProperty>
+						<EndProperty Name="Category">
+							<ScalarProperty Name="Id" ColumnName="Categories_Id" />
+						</EndProperty>
+					</AssociationSetMapping>
+				</EntityContainerMapping>
+			</Mapping>
+		</edmx:Mappings>
+	</edmx:Runtime>
+	<!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+	<edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+		<edmx:Connection>
+			<DesignerInfoPropertySet>
+				<DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+			</DesignerInfoPropertySet>
+		</edmx:Connection>
+		<edmx:Options>
+			<DesignerInfoPropertySet>
+				<DesignerProperty Name="ValidateOnBuild" Value="true" />
+				<DesignerProperty Name="EnablePluralization" Value="True" />
+				<DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+				<DesignerProperty Name="UseLegacyProvider" Value="False" />
+			</DesignerInfoPropertySet>
+		</edmx:Options>
+		<!-- Diagram content (shape and connector positions) -->
+		<edmx:Diagrams>
+		</edmx:Diagrams>
+	</edmx:Designer>
 </edmx:Edmx>

@@ -21,9 +21,11 @@ namespace LazyEntityGraph.EntityFramework.Tests.Edmx
         }
     
         public int Id { get; set; }
+        public int DefaultCategoryId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ContactDetails ContactDetails { get; set; }
+        public virtual Category DefaultCategory { get; set; }
     }
 }

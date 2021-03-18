@@ -45,7 +45,8 @@ namespace LazyEntityGraph.EntityFramework.Tests
                 ExpectedConstraints.CreateOneToOne<User, ContactDetails>(u => u.ContactDetails, c => c.User),
                 ExpectedConstraints.CreateOneToOne<ContactDetails, User>(c => c.User, u => u.ContactDetails),
                 ExpectedConstraints.CreateForeignKey<Post, User, int>(p => p.Poster, p => p.PosterId, u => u.Id),
-                ExpectedConstraints.CreateForeignKey<ContactDetails, User, int>(c => c.User, c => c.UserId, u => u.Id)
+                ExpectedConstraints.CreateForeignKey<ContactDetails, User, int>(c => c.User, c => c.UserId, u => u.Id),
+                ExpectedConstraints.CreateForeignKey<User, Category, int>(u => u.DefaultCategory, u => u.DefaultCategoryId, c => c.Id)
             };
 
             // act
