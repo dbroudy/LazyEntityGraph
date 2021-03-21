@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using LazyEntityGraph.Core.Constraints;
 using AutoFixture;
 using Xunit;
 using LazyEntityGraph.TestUtils;
@@ -55,27 +54,55 @@ namespace LazyEntityGraph.Tests.Integration
         {
             // arrange
             var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateForeignKey<Foo, Bar, int>(f => f.Bar, f => f.BarId, b => b.Id));
-            var foo = fixture.Create<Faz>();
+            var faz = fixture.Create<Faz>();
 
             // act
-            var bar = foo.Bar;
+            var bar = faz.Bar;
 
             // assert
-            foo.BarId.Should().Be(bar.Id);
+            faz.BarId.Should().Be(bar.Id);
         }
         [Fact]
         public void SetsDerivedPropertyToPOCOProperty()
         {
             // arrange
             var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateForeignKey<Foo, Bar, int>(f => f.Bar, f => f.BarId, b => b.Id));
-            var foo = fixture.Create<Faz>();
+            var faz = fixture.Create<Faz>();
             var bar = new Bar() { Id = fixture.Create<int>() };
 
             // act
-            foo.Bar = bar;
+            faz.Bar = bar;
 
             // assert
-            foo.BarId.Should().Be(bar.Id);
+            faz.BarId.Should().Be(bar.Id);
+        }
+
+        [Fact]
+        public void SetsOneSidedPropertyToGeneratedProxyProperty()
+        {
+            // arrange
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateForeignKey<Baz, Foo, int>(b => b.Foo, b => b.FooId, f => f.Id));
+            var baz = fixture.Create<Baz>();
+
+            // act
+            var foo = baz.Foo;
+
+            // assert
+            baz.FooId.Should().Be(foo.Id);
+        }
+        [Fact]
+        public void SetsOneSidedPropertyToPOCOProperty()
+        {
+            // arrange
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateForeignKey<Baz, Foo, int>(b => b.Foo, b => b.FooId, f => f.Id));
+            var baz = fixture.Create<Baz>();
+            var foo = new Foo() { Id = fixture.Create<int>() };
+
+            // act
+            baz.Foo = foo;
+
+            // assert
+            baz.FooId.Should().Be(foo.Id);
         }
 
         [Fact]
