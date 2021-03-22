@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;net472</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net472;net5.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AutoFixture" Version="[4.2.0,5)" />
@@ -10,13 +10,15 @@
     <PackageReference Include="xunit.runner.reporters" Version="[2.3.1,3)" />
     <PackageReference Include="xunit.runner.visualstudio" Version="[2.3.1,3)" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
     <PackageReference Include="EntityFramework" Version="[6.1.3,7)" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <PackageReference Include="EntityFramework" Version="[6.4,7)" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
+    <PackageReference Include="EntityFramework" Version="[6.4,7)" />
+  </ItemGroup>  <ItemGroup>
     <ProjectReference Include="..\LazyEntityGraph.AutoFixture\LazyEntityGraph.AutoFixture.csproj" />
     <ProjectReference Include="..\LazyEntityGraph.Core\LazyEntityGraph.Core.csproj" />
     <ProjectReference Include="..\LazyEntityGraph.EntityFramework\LazyEntityGraph.EntityFramework.csproj" />
