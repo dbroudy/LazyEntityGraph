@@ -32,9 +32,7 @@ namespace LazyEntityGraph.EntityFramework
             var constraints = entityTypes
                 .SelectMany(et => et.DeclaredNavigationProperties)
                 .GroupBy(np => np.RelationshipType)
-                .Select(r => r.ToList())
-                .Where(r => r.Count == 2)
-                .SelectMany(r => GetConstraints(r[0], r[1], contextAssembly));
+                .SelectMany(r => GetConstraints(r.First(), r.Skip(1).FirstOrDefault(), contextAssembly));
 
             return new ModelMetadata(types, constraints);
         }
@@ -47,30 +45,33 @@ namespace LazyEntityGraph.EntityFramework
 
         private static IEnumerable<IPropertyConstraint> GetConstraints(NavigationProperty from, NavigationProperty to, Assembly contextAssembly)
         {
-            var fromProp = from.GetProperty(contextAssembly);
-            var toProp = to.GetProperty(contextAssembly);
-            var fromMultiplicity = from.FromEndMember.RelationshipMultiplicity;
-            var toMultiplicity = from.ToEndMember.RelationshipMultiplicity;
+            var fromProp = from?.GetProperty(contextAssembly);
+            var toProp = to?.GetProperty(contextAssembly);
+            var fromMultiplicity = from?.FromEndMember.RelationshipMultiplicity ?? RelationshipMultiplicity.One;
+            var toMultiplicity = from?.ToEndMember.RelationshipMultiplicity ?? RelationshipMultiplicity.One;
 
-            if (fromMultiplicity == RelationshipMultiplicity.Many && toMultiplicity == RelationshipMultiplicity.Many)
+            if (fromProp != null && toProp != null)
             {
-                yield return CreateGenericConstraint(typeof(ManyToManyPropertyConstraint<,>), fromProp, toProp);
-                yield return CreateGenericConstraint(typeof(ManyToManyPropertyConstraint<,>), toProp, fromProp);
-            }
-            else if (fromMultiplicity == RelationshipMultiplicity.Many)
-            {
-                yield return CreateGenericConstraint(typeof(ManyToOnePropertyConstraint<,>), fromProp, toProp);
-                yield return CreateGenericConstraint(typeof(OneToManyPropertyConstraint<,>), toProp, fromProp);
-            }
-            else if (toMultiplicity == RelationshipMultiplicity.Many)
-            {
-                yield return CreateGenericConstraint(typeof(OneToManyPropertyConstraint<,>), fromProp, toProp);
-                yield return CreateGenericConstraint(typeof(ManyToOnePropertyConstraint<,>), toProp, fromProp);
-            }
-            else
-            {
-                yield return CreateGenericConstraint(typeof(OneToOnePropertyConstraint<,>), fromProp, toProp);
-                yield return CreateGenericConstraint(typeof(OneToOnePropertyConstraint<,>), toProp, fromProp);
+                if (fromMultiplicity == RelationshipMultiplicity.Many && toMultiplicity == RelationshipMultiplicity.Many)
+                {
+                    yield return CreateGenericConstraint(typeof(ManyToManyPropertyConstraint<,>), fromProp, toProp);
+                    yield return CreateGenericConstraint(typeof(ManyToManyPropertyConstraint<,>), toProp, fromProp);
+                }
+                else if (fromMultiplicity == RelationshipMultiplicity.Many)
+                {
+                    yield return CreateGenericConstraint(typeof(ManyToOnePropertyConstraint<,>), fromProp, toProp);
+                    yield return CreateGenericConstraint(typeof(OneToManyPropertyConstraint<,>), toProp, fromProp);
+                }
+                else if (toMultiplicity == RelationshipMultiplicity.Many)
+                {
+                    yield return CreateGenericConstraint(typeof(OneToManyPropertyConstraint<,>), fromProp, toProp);
+                    yield return CreateGenericConstraint(typeof(ManyToOnePropertyConstraint<,>), toProp, fromProp);
+                }
+                else
+                {
+                    yield return CreateGenericConstraint(typeof(OneToOnePropertyConstraint<,>), fromProp, toProp);
+                    yield return CreateGenericConstraint(typeof(OneToOnePropertyConstraint<,>), toProp, fromProp);
+                }
             }
 
             var fromForeignKey = GetForeignKeyConstraint(from, contextAssembly);
@@ -84,6 +85,9 @@ namespace LazyEntityGraph.EntityFramework
 
         private static IPropertyConstraint GetForeignKeyConstraint(NavigationProperty navProp, Assembly contextAssembly)
         {
+            if (navProp == null)
+                return null;
+
             if (navProp.GetDependentProperties().Count() != 1
                 || navProp.ToEndMember.GetEntityType().KeyProperties.Count != 1)
                 return null;

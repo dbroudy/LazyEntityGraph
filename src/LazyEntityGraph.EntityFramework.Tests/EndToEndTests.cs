@@ -41,6 +41,13 @@ namespace LazyEntityGraph.EntityFramework.Tests
         }
 
         [Theory, BlogModelData]
+        public void ForeignKeyPropertyOnOneSided(User user)
+        {
+            // assert
+            user.DefaultCategory.Id.Should().Be(user.DefaultCategoryId);
+        }
+
+        [Theory, BlogModelData]
         public void ForeignKeyPropertyOnDerivedOneToManyObjectFirst(Story story)
         {
             var relatedPosterId = story.Poster.Id;

@@ -4,6 +4,7 @@ using LazyEntityGraph.Core.Constraints;
 using AutoFixture;
 using System.Linq;
 using Xunit;
+using LazyEntityGraph.TestUtils;
 
 namespace LazyEntityGraph.Tests.Integration
 {
@@ -13,7 +14,7 @@ namespace LazyEntityGraph.Tests.Integration
         public void AddsItemToGeneratedCollection()
         {
             // arrange
-            var fixture = IntegrationTest.GetFixture(new ManyToManyPropertyConstraint<Foo, Bar>(f => f.Bars, b => b.Foos));
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateManyToMany<Foo, Bar>(f => f.Bars, b => b.Foos));
             var foo = fixture.Create<Foo>();
 
             // act
@@ -28,7 +29,7 @@ namespace LazyEntityGraph.Tests.Integration
         public void AddsItemToDerivedGeneratedCollection()
         {
             // arrange
-            var fixture = IntegrationTest.GetFixture(new ManyToManyPropertyConstraint<Foo, Bar>(f => f.Bars, b => b.Foos));
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateManyToMany<Foo, Bar>(f => f.Bars, b => b.Foos));
             var foo = fixture.Create<Faz>();
 
             // act
@@ -43,7 +44,7 @@ namespace LazyEntityGraph.Tests.Integration
         public void RemovesItemFromCollection()
         {
             // arrange
-            var fixture = IntegrationTest.GetFixture(new ManyToManyPropertyConstraint<Foo, Bar>(f => f.Bars, b => b.Foos));
+            var fixture = IntegrationTest.GetFixture(ExpectedConstraints.CreateManyToMany<Foo, Bar>(f => f.Bars, b => b.Foos));
             var foo = fixture.Create<Foo>();
             var bar = foo.Bars.First();
 
@@ -59,8 +60,8 @@ namespace LazyEntityGraph.Tests.Integration
         public void ConstraintsAreEqualWhenPropertiesAreEqual()
         {
             // arrange
-            var first = new ManyToManyPropertyConstraint<Foo, Bar>(f => f.Bars, b => b.Foos);
-            var second = new ManyToManyPropertyConstraint<Foo, Bar>(x => x.Bars, x => x.Foos);
+            var first = ExpectedConstraints.CreateManyToMany<Foo, Bar>(f => f.Bars, b => b.Foos);
+            var second = ExpectedConstraints.CreateManyToMany<Foo, Bar>(x => x.Bars, x => x.Foos);
 
             // act and assert
             first.Should().Be(second);

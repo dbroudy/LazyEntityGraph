@@ -19,6 +19,9 @@ namespace LazyEntityGraph.EntityFrameworkCore.Tests
         public virtual ContactDetails ContactDetails { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }
+
+        public int DefaultCategoryId { get; set; }
+        public virtual Category DefaultCategory { get; set; }
     }
 
     public class ContactDetails
@@ -40,10 +43,10 @@ namespace LazyEntityGraph.EntityFrameworkCore.Tests
 
         public virtual ICollection<Category> Categories { get; set; }
     }
-   
+
     public class Story : Post
     {
-        
+
     }
 
     public class Category : Entity
@@ -66,6 +69,11 @@ namespace LazyEntityGraph.EntityFrameworkCore.Tests
                 .HasMany(u => u.Posts)
                 .WithOne(p => p.Poster).IsRequired()
                 .HasForeignKey(p => p.PosterId);
+
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.DefaultCategory)
+                .WithMany()
+                .HasForeignKey(u => u.DefaultCategoryId);
 
             modelBuilder.Entity<ContactDetails>()
                 .HasOne(cd => cd.User)

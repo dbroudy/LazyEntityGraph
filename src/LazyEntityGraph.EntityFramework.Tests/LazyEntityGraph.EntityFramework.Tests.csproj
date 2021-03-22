@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;net452</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net472</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AutoFixture" Version="[4.2.0,5)" />
@@ -20,6 +20,7 @@
     <ProjectReference Include="..\LazyEntityGraph.AutoFixture\LazyEntityGraph.AutoFixture.csproj" />
     <ProjectReference Include="..\LazyEntityGraph.Core\LazyEntityGraph.Core.csproj" />
     <ProjectReference Include="..\LazyEntityGraph.EntityFramework\LazyEntityGraph.EntityFramework.csproj" />
+    <ProjectReference Include="..\LazyEntityGraph.TestUtils\LazyEntityGraph.TestUtils.csproj" />
   </ItemGroup>
 </Project>
 
