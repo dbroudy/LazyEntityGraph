@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;net452</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;net462</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>LazyEntityGraph.EntityFramework</PackageId>
     <Version>1.0.0</Version>
@@ -14,7 +14,7 @@
     <PackageReleaseNotes>Add support for .NET 6</PackageReleaseNotes>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
   </PropertyGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
     <PackageReference Include="EntityFramework" Version="[6.1.3,7)" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
