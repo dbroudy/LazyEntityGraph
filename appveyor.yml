@@ -7,7 +7,7 @@ init:
       Update-AppveyorBuild -Version "$env:appveyor_repo_tag_name"
     }
 before_build:
-- cmd: dotnet restore src\LazyEntityGraph.sln
+- cmd: dotnet restore src/LazyEntityGraph.sln
 dotnet_csproj:
   patch: true
   assembly_version: "2.0.0.0"
@@ -19,9 +19,9 @@ build:
   use_snupkg_format: true
   verbosity: minimal
 test_script:
-  - dotnet test .\src\LazyEntityGraph.Tests\LazyEntityGraph.Tests.csproj
-  - dotnet test .\src\LazyEntityGraph.EntityFramework.Tests\LazyEntityGraph.EntityFramework.Tests.csproj
-  - dotnet test .\src\LazyEntityGraph.EntityFrameworkCore.Tests\LazyEntityGraph.EntityFrameworkCore.Tests.csproj
+  - dotnet test ./src/LazyEntityGraph.Tests/LazyEntityGraph.Tests.csproj
+  - dotnet test ./src/LazyEntityGraph.EntityFramework.Tests/LazyEntityGraph.EntityFramework.Tests.csproj
+  - dotnet test ./src/LazyEntityGraph.EntityFrameworkCore.Tests/LazyEntityGraph.EntityFrameworkCore.Tests.csproj
 deploy:
 - provider: NuGet
   api_key:
