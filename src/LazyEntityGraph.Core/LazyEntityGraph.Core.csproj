@@ -4,7 +4,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>LazyEntityGraph</PackageId>
     <Version>1.0.0</Version>
-    <Authors>David Broudy;Alex Fox Gill</Authors>
+    <Authors>David Broudy,Alex Fox Gill</Authors>
     <Company>David Broudy</Company>
     <Copyright>Copyright © 2020</Copyright>
     <PackageTags>LazyEntityGraph;ORM;Testing</PackageTags>
