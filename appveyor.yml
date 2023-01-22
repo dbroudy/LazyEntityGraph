@@ -18,10 +18,10 @@ build:
   publish_nuget_symbols: true
   use_snupkg_format: true
   verbosity: minimal
-test_script:
-  - dotnet test ./src/LazyEntityGraph.Tests/LazyEntityGraph.Tests.csproj
-  - dotnet test ./src/LazyEntityGraph.EntityFramework.Tests/LazyEntityGraph.EntityFramework.Tests.csproj
-  - dotnet test ./src/LazyEntityGraph.EntityFrameworkCore.Tests/LazyEntityGraph.EntityFrameworkCore.Tests.csproj
+test:
+  assemblies:
+    only:
+      - '**\*.Tests.dll'
 deploy:
 - provider: NuGet
   api_key:
