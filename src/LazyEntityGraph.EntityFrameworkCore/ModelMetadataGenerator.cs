@@ -29,7 +29,11 @@ namespace LazyEntityGraph.EntityFrameworkCore
             var types = entityTypes.Select(x => x.ClrType);
             var constraints = entityTypes
                 .SelectMany(et => et.GetNavigations())
+#if NET6_0_OR_GREATER
+                .SelectMany(r => GetConstraints(r.Inverse, r));
+#else
                 .SelectMany(r => GetConstraints(r.FindInverse(), r));
+#endif
 
             return new ModelMetadata(types, constraints);
         }
@@ -44,8 +48,13 @@ namespace LazyEntityGraph.EntityFrameworkCore
         {
             var fromProp = from?.PropertyInfo;
             var toProp = to?.PropertyInfo;
+#if NET6_0_OR_GREATER
+            var fromMultiplicity = from?.IsCollection ?? false;
+            var toMultiplicity = to?.IsCollection ?? false;
+#else
             var fromMultiplicity = from?.IsCollection() ?? false;
             var toMultiplicity = to?.IsCollection() ?? false;
+#endif
 
             if (fromProp != null && toProp != null)
             {
@@ -80,7 +89,11 @@ namespace LazyEntityGraph.EntityFrameworkCore
             if (navProp == null)
                 return null;
 
+#if NET6_0_OR_GREATER
+            if (!navProp.IsOnDependent || navProp.IsCollection)
+#else
             if (!navProp.IsDependentToPrincipal() || navProp.IsCollection())
+#endif
                 return null;
 
             var fkProp = navProp.ForeignKey;
