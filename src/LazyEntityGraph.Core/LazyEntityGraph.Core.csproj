@@ -19,6 +19,10 @@
     <PackageReference Include="Castle.Core" Version="[4.2.0,5)" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>  
     <None Include="..\..\license.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

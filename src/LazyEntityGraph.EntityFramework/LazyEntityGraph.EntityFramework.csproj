@@ -25,6 +25,10 @@
     <ProjectReference Include="..\LazyEntityGraph.Core\LazyEntityGraph.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
     <None Include="..\..\license.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
