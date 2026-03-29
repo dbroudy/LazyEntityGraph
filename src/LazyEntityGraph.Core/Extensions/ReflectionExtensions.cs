@@ -47,6 +47,8 @@ namespace LazyEntityGraph.Core.Extensions
         {
             if (x == y)
                 return true;
+            if (x == null || y == null)
+                return false;
             if (x.MetadataToken != y.MetadataToken)
                 return false;
             if (x.Name != y.Name)
